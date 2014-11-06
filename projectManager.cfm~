@@ -1,0 +1,72 @@
+<!---
+            Bug Tracker - Project Manager CFM
+            October 30, 2014
+            Author: CF Freshers 2014
+--->
+
+<cfinclude template="layouts/header.cfm"><!--- including header --->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <cfset Session.highlight1="active">
+        <cfset Session.highlight2="inactive">
+        <cfset Session.highlight3="inactive">
+        <cfset Session.highlight4="inactive">
+        <cfinclude template="layouts/sidebar.cfm"><!--- including sidebar --->
+        <div class="span9" id="content">
+            <div class="row-fluid">
+                <div class="block">
+                    <div class="navbar navbar-inner block-header">
+                        <div class="muted pull-left">
+                            <form class="form-search" action=" " method="post">
+                                <input type="text" class="input-medium search-query" name="search" placeholder="Search Project"/>
+                                <select class="input-medium">
+                                    <option value="">item1</option>
+                                    <option value="">item1</option>
+                                </select>
+                                <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
+                            </form>
+                        </div>
+                        <div class="muted pull-right">
+                            <a href="add_new_project.cfm" class="btn btn-large btn-primary">
+                                <i class="icon-plus-sign"></i>&nbsp;Project
+                            </a>
+                        </div>
+                    </div>
+                    <div class="block-content collapse in">
+                        <div class="span12">
+                            <table class="table table bordered">
+                                <tr>
+                                    <td>Project ID</td>
+                                    <td>Project Name</td>
+                                    <td>Members</td>
+                                    <td>Bugs</td>
+                                    <td> Start Date</td>
+                                    <td>End Date</td>
+                                    <td>Status</td>
+                                    <td>Description</td>
+                                    <td></td>
+                                </tr>
+                                <cfoutput>
+                                <tr>
+                                    <td><a href="project_deatails.cfm">Pid</a></td>
+                                    <td>Project Name</td>
+                                    <td><a href="pm_project_members.cfm">Members</a></td>
+                                    <td>Bugs</td>
+                                    <td> Start Date</td>
+                                    <td>End Date</td>
+                                    <td>Status</td>
+                                    <td>Description</td>
+                                    <td>
+                                        <a href=" " class="btn  btn-mini btn-danger"><i class="icon-remove"></i></a>&nbsp;&nbsp;
+                                        <a href="edit_project.cfm" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>
+                                    </td>
+                                </tr>   
+                            </cfoutput>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<cfinclude template="layouts/footer.cfm">
