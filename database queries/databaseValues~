@@ -1,0 +1,14 @@
+insert into roles(name) values ('Project Manager'), ('Project Lead'), ('Software Developer'), ('Software Tester');
+
+insert into status(name) values ('Resolved'),('Unresolved'),('Pending'),('Ongoing'),('Testing'),('Dropped');
+
+insert into activities(name) values ('Logged In'), ('Logged Out'), ('User added'), ('User deleted'), ('Project Added'), ('Project Removed'), ('Project Completed'), ('Project Dropped'), (' Project Pending');
+
+insert into severities(name) values ('Critical'), ('Major'), ('Moderate'), ('Minor'), ('Cosmetic');
+
+insert into severities(name) values ('High'), ('Medium'), ('Low');
+
+insert into designations(name) values ('Project Manager'), ('Project Lead'), ('Senior Software Developer'), ('Associate Software Developer'), ('Senior Software Tester'), ('Associate Software Tester'), ('Senior UI Developer'), ('Associate UI Developer');
+
+insert into users(userName, employeeID, email, password, salt, roleID) values ('Master Admin', 'TV0001', 'masteradmin@techversantinfotech.com', '1E36B44132219C59F0CFF6BDBA212508B3D82C367D7013A9D7C7806B2F45B2914C7E219A788368E0793399F3163AC8B62446ACD647974618A752468C71FBC3F7 ',' D557D66EDC5F3D1FF84D2FF18764D5854D2E878A029734265A47045B929202C2C465926E2D529746699CFE495738BF2D8D07DC32949228C9C0468DB2F077AFDD',1);
+

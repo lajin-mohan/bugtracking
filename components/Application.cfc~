@@ -1,0 +1,7 @@
+<cfcomponent>
+    <cfset this.name="leoshop">
+    <cfset this.Sessionmanagement=true>
+    <cfset this.Sessiontimeout="#createtimespan(0,0,10,0)#">
+    <cfset this.applicationtimeout="#createtimespan(5,0,0,0)#">
+</cfcomponent>
+
