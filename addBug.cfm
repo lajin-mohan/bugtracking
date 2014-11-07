@@ -52,7 +52,7 @@
                                     </div>
                                     
                                     <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname  from projectUsers as pu inner join users as u  on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu inner join users as u  on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
                                 </cfquery>
                                     
                                     
@@ -63,12 +63,14 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                           <span class="required">*</span>  
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="teamMemberID">
+					                        <select class="span6 m-wrap" name="teamMemberID" required>
                                             <cfset loopName0= #bugaddmember#>
                                                     <option value="">Select Member .....</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
+                                                <cfif loopname0.phide eq 0>
                                                     <option value="#loopName0.userID#">#loopName0.uname#</option>
+                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
@@ -120,7 +122,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                             <span class="required">*</span>
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="priorityID">
+					                        <select class="span6 m-wrap" name="priorityID" required>
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
                                                     <option value="">Select.....</option>
                                             <cfloop query="loopName2">
@@ -137,7 +139,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                             <span class="required">*</span>
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="severityID">
+					                        <select class="span6 m-wrap" name="severityID" required>
                                             <cfset loopName3= #addUserObject.getDesignation("severities")#>
                                                     <option value="">Select.....</option>
                                             <cfloop query="loopName3">

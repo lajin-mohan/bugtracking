@@ -181,6 +181,10 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-primary" name="submit">Update</button>
+                                            <a href="projectDetails.cfm"><button type="button" class="btn">Cancel</button></a>
+                                        </div>
                                         <div class="control-group">
                                             <label class="control-label"><span class="required"></span></label>
                                             <div class="controls">
@@ -227,11 +231,7 @@
                                                 </cfoutput>
                                             </table>
                                         </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary" name="submit">Add Details</button>
-                                        <a href="projectDetails.cfm"><button type="button" class="btn">Cancel</button></a>
-                                    </div>
+                                    </div> 
                                 </fieldset>
                             </form>
                         </div>

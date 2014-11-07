@@ -18,10 +18,7 @@ select u.userName as uname,u.employeeID as ueid,u.email as uemail,u.contactNumbe
             <div class="row-fluid">
                 
                 <div class="block">
-                    <div class="navbar navbar-inner block-header">
-                        
-                        <center> <h3>MEMBER  </h3></center>
-                    </div>
+                    <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
                                                      <form action=" " class="form-horizontal" method="post">

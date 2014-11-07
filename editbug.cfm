@@ -6,7 +6,7 @@ select b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate
 select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
 </cfquery>
  <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname from projectUsers as pu inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
 </cfquery>
 <script>
     function checkDate() {
@@ -44,26 +44,34 @@ select pu.userID,u.userName as uname from projectUsers as pu inner join users as
 <div class="container-fluid">
         <div class="row-fluid">
             <cfset Session.highlight1="inactive"/>
-            <cfset Session.highlight2="inactive"/>
-            <cfset Session.highlight3="active"/>
+            <cfset Session.highlight2="active"/>
+            <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
                     <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-left"> <cfoutput>
+                    <div class="muted pull-left">
+                            <cfoutput>
+                        <cfif isdefined('url.bugview')>
+                                <a href="bugview.cfm?bid=#url.bgid#" class="btn btn-default btn-primary" style="display:inline">
+                                <i class="icon-arrow-left"></i>&nbsp;Bug Profile
+                            </a>
+                            <cfelse>
                         <a href="bugDetails.cfm?pid=#sample.prid#" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-arrow-left"></i>&nbsp;Bug Details
-                            </cfoutput>
                         </a>
+                        </cfif>
+                            </cfoutput>
                     </div>
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">Update Bug Information</div>
+                        <div class="muted pull-left"></div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                            <legend>Edit Bug Details</legend>
                             <cfoutput>
                                 <form action="editbug.cfm?bgid=#url.bgid#&p=#url.p#" class="form-horizontal" method="post" onsubmit="return checkDate()">
                                     <fieldset>
@@ -93,7 +101,9 @@ select pu.userID,u.userName as uname from projectUsers as pu inner join users as
                                                     <option value="0">#bugviewmember.uname#</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
+                                                <cfif (loopname0.uname neq bugviewmember.uname) and (phide eq 0)> 
                                                     <option value="#loopName0.userID#">#loopName0.uname#</option>
+                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>

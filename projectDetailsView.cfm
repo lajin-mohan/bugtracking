@@ -22,10 +22,7 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                     </div>
                 </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header">
-                        
-                        <center> <h3>Project Details  </h3></center>
-                    </div>
+                    <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
                           <form action=" " class="form-horizontal" method="post">
@@ -73,7 +70,7 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                                              
                                         
                                          <div class="control-group">
-                                            <label class="control-label">status</label>
+                                            <label class="control-label">Status</label>
                                             <div class="controls">
                                                 <input type="text" name="bugdesc" data-required="1" class="span6 m-wrap"  disabled value="#projview.status#"/>
                                             </div>

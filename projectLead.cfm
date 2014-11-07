@@ -19,10 +19,10 @@
             <div class="row-fluid">
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <center> <h3>PROJECTS</h3></center>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                        <legend>Projects</legend>
                            <table class="table table-striped">
                                 <tr>
 					                <td><strong>Project Name</strong></td>
@@ -47,10 +47,10 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <center> <h3>TEAM MEMBERS </h3></center>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                            <legend>Team Members</legend>
                              <table class="table table-striped">
                                 <tr>
 					                <td><strong>Name</strong></td>
@@ -60,14 +60,22 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                 </tr>
                                  <cfloop query="getbugID">
                                     <cfquery name="viewdetails" datasource="bugTracking">
-select b.bugID,bu.bugName as bugname, pu.userID as puID, u.userName as uname,d.name as dname,proj.projectName as projname from users as u inner join designations as d inner join projectUsers as pu inner join bugUsers as b inner join bugs as bu inner join projects as proj on u.userID=pu.userID and u.designationID=d.designationID and pu.projectID=#getbugID.projectID# and isLead=0 and b.userID=pu.userID and b.bugID=bu.bugID and proj.projectID=#getbugID.projectID# ;
+                                        select u.userName uname, d.name dname, b.bugName bugname,
+                                        p.projectName projname, u.userID, p.projectID, b.bugID
+                                        from users u inner join projectUsers pu inner join
+                                        bugUsers bu inner join bugs b inner join projects p
+                                        inner join designations d
+                                        where p.projectID=#getbugID.projectID# and u.userID=pu.userID 
+                                        and u.designationID=d.designationID and pu.isLead=0 and
+                                        b.projectID=pu.projectID and b.bugID=bu.bugID 
+                                        and bu.userID=pu.userID and p.projectID=b.projectID
                                     </cfquery>
                                     <cfoutput query="viewdetails">
                                         <tr>
-                                            <td>#viewdetails.uname#</td>
+                                            <td><a href="userView.cfm?userID=#viewdetails.userID#">#viewdetails.uname#</a></td>
                                             <td>#viewdetails.dname#</td>
-                                            <td>#viewdetails.bugname#</td>
-                                            <td>#viewdetails.projname#</td>
+                                            <td><a href="bugview.cfm?bid=#viewdetails.bugID#">#viewdetails.bugname#</a></td>
+                                            <td><a href="projectDetailsView.cfm?pid=#viewdetails.projectID#">#viewdetails.projname#</a></td>
                                         </tr>   
                                     </cfoutput> 
                                  </cfloop>

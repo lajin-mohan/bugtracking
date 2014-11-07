@@ -18,10 +18,10 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
             <div class="row-fluid">
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                         <center> <h3>PROJECTS</h3></center>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                            <legend>My Projects</legend>
                            <table class="table table-striped">
                                 <tr>
 					               <td><h5>Project Name</h5></td>
@@ -38,6 +38,7 @@ select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from pr
                                         <td><a href="bugDetails.cfm?pid=#getbugID.projectID#"                                                                                    onclick="project_return()">#viewproject.pname# </a></td>
                                             <td>#dateformat(viewproject.eed,"yyyy-mm-dd")#</td>
                                                 <td>#viewproject.status#</td>
+                                        
                                         
                                         
                                     </tr>   

@@ -22,9 +22,15 @@
             update users set hide=1 where userID=#url.userID#;
         </cfquery>
         <cflocation url="employeeDetails.cfm" addToken="false"/>
+    <cfelseif isdefined('url.bugID')>
+        <cfquery name="deleteBug" datasource="bugTracking">
+            update bugs set statusID=6 where bugID=#url.bugID#;
+        </cfquery>
+        <cflocation url="bugDetails.cfm?pid=#url.projectID#" addToken="false"/>
     <cfelseif isdefined('url.projectID')>
         <cfquery name="deleteProject" datasource="bugTracking">
             update projects set statusID=6 where projectID=#url.projectID#;
         </cfquery>
         <cflocation url="projectDetails.cfm" addToken="false"/>
+        
 </cfif>

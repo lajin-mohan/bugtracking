@@ -14,21 +14,27 @@
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-right">
                       <cfoutput>
-                        <a href="addBug.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
-                            <i class="icon-plus-sign"></i>&nbsp;BUG
-                        </a>
-                    </div>
                      <div class="muted pull-left"> <cfoutput>
                         <a href="bugProjectDetails.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline">
-                            <i class="icon-arrow-left"></i>&nbsp;Project Details
+                            <i class="icon-arrow-left"></i>&nbsp;My Projects
                             </cfoutput>
+                        </a>
+                    </div>
+                    <div class="muted pull-right">
+                        <a href="addBug.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
+                            <i class="icon-plus-sign"></i>&nbsp;Bug
                         </a>
                     </div>
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                    <div class="muted pull-left">
+                      <cfoutput>
+                        <a href="projectDetailsView.cfm?pid=#url.pid#" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
+                            <i class="icon-plus-sign"></i>&nbsp;Project Profile
+                        </a>
+                    </div>
                         <div class="muted pull-right">
                             <form class="form-search" action=" " method="post">
                                 <input type="text" class="input-medium search-query" name="search" placeholder="Search Bug"/>
@@ -38,6 +44,7 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                            <legend>Bug Details</legend>
                             <table class="table table-striped">
                                 <tr>
 					               
@@ -49,7 +56,7 @@
                                     <td></td>
                                 </tr>
                                 <cfquery name="bug" datasource="bugTracking">
-select b.bugID, b.bugName,b.estimatedEndDate,p.name as n ,s.name as s from bugs as b inner join priorities as p inner join status as s on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=#url.pid#  order by b.bugName desc;
+select b.bugID, b.bugName,b.projectID,b.estimatedEndDate,p.name as n ,s.name as s from bugs as b inner join priorities as p inner join status as s on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=#url.pid# and b.statusID!=6 order by b.bugName desc;
                                 </cfquery>
                                 <cfoutput query="bug">
                                     <tr>
@@ -62,7 +69,7 @@ select b.bugID, b.bugName,b.estimatedEndDate,p.name as n ,s.name as s from bugs 
                                             
                                             <a href="editbug.cfm?bgid=#bug.bugID#&p=#url.pid#" class="btn  btn-mini btn-primary">
                                             <i class="icon-edit"></i></a>&nbsp;&nbsp;
-                                            <a href=" " class="btn  btn-mini btn-danger">
+                                            <a href="deleteRecord.cfm?bugID=#bug.bugID#&projectID=#bug.projectID#" class="btn  btn-mini btn-danger">
                                             <i class="icon-remove"></i></a>
                                         </td>
                                     </tr>   

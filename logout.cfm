@@ -16,4 +16,4 @@
 <cfset StructDelete(Session,'menu2')/>
 <cfset StructDelete(Session,'menu3')/>
 <cfset StructDelete(Session,'menu4')/>
-<cflocation url="index.cfm" addToken="true"/>
+<cflocation url="index.cfm" addToken="false"/>

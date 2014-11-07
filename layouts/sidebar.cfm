@@ -26,10 +26,10 @@
                 <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
             </li>
             <li class="#Session.highlight2#">
-                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Projects</a>
+                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Projects</a>
             </li>
             <li class="#Session.highlight3#">
-                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Project Members</a>
+                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Team Members</a>
             </li>
             <li class="#Session.highlight4#">
                 <a href="#Session.menu4#"><i class="icon-chevron-right"></i>History</a>
@@ -43,7 +43,7 @@
                 <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Bugs</a>
             </li>
             <li class="#Session.highlight3#">
-                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Employees</a>
+                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Team Members</a>
             </li>
             <li class="#Session.highlight4#">
                 <a href="#Session.menu4#"><i class="icon-chevron-right"></i>History</a>
@@ -53,10 +53,10 @@
                 <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
             </li>
             <li class="#Session.highlight2#">
-                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Projects</a>
+                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Bugs</a>
             </li>
             <li class="#Session.highlight3#">
-                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Employees</a>
+                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Team Members</a>
             </li>
             <li class="#Session.highlight4#">
                 <a href="#Session.menu4#"><i class="icon-chevron-right"></i>History</a>

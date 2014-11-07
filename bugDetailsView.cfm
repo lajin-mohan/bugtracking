@@ -3,8 +3,9 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
+
 <cfquery name="bugview" datasource="bugTracking">
-select b.bugName as bname,b.estimatedStartDate as esd,b.actualStartDate as asd,b.estimatedEndDate as eed,b.actualEndDate as aed,s.name as status,p.name as priority,se.name as severity from bugs b inner join status as s inner join priorities as p inner join  severities as se on b.bugID=#url.bid# and s.statusID=b.statusID and p.priorityID=b.priorityID and se.severityID=b.severityID;
+select b.projectID,b.bugName as bname,b.estimatedStartDate as esd,b.actualStartDate as asd,b.estimatedEndDate as eed,b.actualEndDate as aed,s.name as status,p.name as priority,se.name as severity from bugs b inner join status as s inner join priorities as p inner join  severities as se on b.bugID=#url.bid# and s.statusID=b.statusID and p.priorityID=b.priorityID and se.severityID=b.severityID;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -17,20 +18,26 @@ select b.bugName as bname,b.estimatedStartDate as esd,b.actualStartDate as asd,b
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
-                    
-                     <div class="muted pull-left"> 
+                     <div class="muted pull-right">
+                         <cfif isdefined('url.flag')>
+                            <cfoutput><a href="editbug.cfm?bgid=#url.bid#&p=#bugview.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
+                                <i class="icon-arrow-left"></i>&nbsp;Edit Bug
+                            </a>
+                            <cfelse>
+                                <cfoutput><a href="editbug.cfm?bgid=#url.bid#&p=#bugview.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
+                                    <i class="icon-plus-sign"></i>&nbsp;Edit Bug
+                                </a>
+                        </cfif>
                     </div>
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        
-                        <center> <h3>Bug Details  </h3></center>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
+                            <legend>Bug Profile</legend>
                           <form action=" " class="form-horizontal" method="post">
                                     <fieldset>
-                                        <legend>Bug Profile</legend>
                                         <cfoutput>
 
 
