@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getbugID" datasource="bugTracking">
-select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0;
+select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0 and projectID!=1;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -22,36 +22,53 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                     <div class="block-content collapse in">
                         <div class="span12">
                             <legend>Team Members</legend>
-                          <table class="table table-striped">
+                            <table class="table table-striped">
                                 <tr>
                                     <th>Name</th>
-                                    <th>Designation</th>
-                                    <th>Bug Name</th>
-                                    <th>Project Name</th>
-                                    <th></th>
+                                    <th>Assigned Bugs</th>
                                 </tr>
-                                 <cfloop query="getbugID">
-                                <cfquery name="viewdetails" datasource="bugTracking">
-                                    select u.userName uname, u.userID uid, d.name dname, b.bugName bugname,
-                                    p.projectName projname, b.bugID bid, p.projectID pid
-                                    from users u inner join projectUsers pu inner join
-                                    bugUsers bu inner join bugs b inner join projects p
-                                    inner join designations d
-                                    where p.projectID=#getbugID.projectID# and u.userID=pu.userID 
-                                    and u.designationID=d.designationID and pu.isLead=0 and
-                                    b.projectID=pu.projectID and b.bugID=bu.bugID 
-                                    and bu.userID=pu.userID and p.projectID=b.projectID 
-                                    group by #getbugID.projectID#
-                                </cfquery>
+                                <cfoutput>
+                                    <cfloop query="getbugID">
+                                        <cfquery name="viewdetails" datasource="bugTracking">
+                                            select u.userName name,u.userID id,p.projectName, p.projectID pid
+                                            from users u inner join projectUsers pu inner join projects p
+                                            on u.userID=pu.userID and pu.projectID=p.projectID and 
+                                            p.projectID=#getbugID.projectID#;
+                                        </cfquery>
+                                        <tr><td>
+                                            <div class="navbar navbar-inner block-header">
+                                                <div class="muted pull-left">
+                                                    <strong>Project Name: #viewdetails.projectName#</strong>
+                                                </div>
+                                            </div>
+                                        </td><td>
+                                            <div class="navbar navbar-inner block-header">
+                                                <div class="muted pull-right">
+                                                    <strong>View Information</strong>
+                                                </div>
+                                            </div>
+                                        </td></tr>
                                
-                                <cfoutput query="viewdetails">
-                                    <tr>
-                                        <td><a href="userView.cfm?userID=#viewdetails.uid#">#viewdetails.uname#</a></td>
-                                        <td>#viewdetails.dname#</td>
-                                        <td><a href="bugDetailsView.cfm?bid=#viewdetails.bid#"                                                                                    onclick="project_return()">#viewdetails.bugname# </a></td>
-                                        <td><a href="projectDetailsView.cfm?pid=#viewdetails.pid#"                                                                                    onclick="project_return()">#viewdetails.projname#</a></td>
-                                         </tr>   
-                                </cfoutput> </cfloop>
+                                        <cfloop query="viewdetails">
+                                            <cfif viewdetails.id neq Session.userID>
+                                                <cfquery name="listBugs" datasource="bugTracking">
+                                                    select b.bugID bid, b.bugName, b.projectID from bugs b
+                                                    inner join bugUsers bu on b.bugID=bu.bugID 
+                                                    and bu.userID=#viewdetails.id#;
+                                                </cfquery>
+                                                <tr><td>
+                                                    <a href="userView.cfm?userID=#viewdetails.id#">#viewdetails.name#</a>
+                                                </td><td>
+                                                    <cfloop query="listBugs">
+                                                        <cfif viewdetails.pid eq listBugs.projectID>
+                                                            <a href="bugDetailsView.cfm?bid=#listBugs.bid#"  onclick="project_return()">#listBugs.bugName#</a> |
+                                                        </cfif>
+                                                    </cfloop>
+                                                </td></tr>   
+                                            </cfif>
+                                        </cfloop> 
+                                    </cfloop> 
+                                </cfoutput>
 					       </table> 
                         </div>
                     </div>
