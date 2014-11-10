@@ -21,7 +21,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                     <div class="muted pull-left">
                     <cfif Session.roleID eq 2>                      
                         <a href="bugDetails.cfm?pid=#sample.prid#" class="btn btn-default btn-primary" style="display:inline">
-                    <cfelseif Session.roleID eq 3>                      
+                    <cfelseif Session.roleID eq 3 or Session.roleID eq 4>                      
                         <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
                     </cfif>
                             <i class="icon-arrow-left"></i>&nbsp;Bug Details
