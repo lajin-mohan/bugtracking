@@ -4,6 +4,36 @@
             Author: CF Freshers 2014
 --->
 
+<script>
+    function checkDate() {
+        var EnteredDate = $(".txtdate").val();
+        var year = EnteredDate.substring(0, 4);
+        var month = EnteredDate.substring(5, 7);
+        var date = EnteredDate.substring(8, 10);
+        date++;
+        var myDate = new Date(year, month-1, date);
+        var EnteredDate2 = $(".txtdate2").val();
+        var year2 = EnteredDate2.substring(0, 4);
+        var month2 = EnteredDate2.substring(5, 7);
+        var date2 = EnteredDate2.substring(8, 10);
+        var myDate2 = new Date(year2, month2-1, date2);
+        /*var EnteredDate = $("#txtdate").val();
+        var year = EnteredDate.substring(0, 4);
+        var month = EnteredDate.substring(5, 7);
+        var date = EnteredDate.substring(8, 10)+1;
+        var myDate = new Date(year, month-1, date);*/
+        var today = new Date();
+        alert(myDate);
+        alert(today);
+        if (myDate2 >= myDate) {
+            return true;
+        }
+        else {
+            alert("Estimated end date should be greater than or equal to estimated start date");
+            return false;
+        }
+    }
+</script>     
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm"><!--- including header --->
 <div class="container-fluid">
@@ -12,6 +42,8 @@
         <cfset Session.highlight2="active">
         <cfset Session.highlight3="inactive">
         <cfset Session.highlight4="inactive">
+        <cfset Session.highlight5="inactive">
+        <cfset Session.highlight6="inactive">
         <cfinclude template="layouts/sidebar.cfm"><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
@@ -28,7 +60,7 @@
                     <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form action=" " method="post" class="form-horizontal">
+                            <form action=" " method="post" class="form-horizontal" onsubmit="return checkDate()">
                                 <fieldset>
                                      
                                     
@@ -52,7 +84,7 @@
                                     </div>
                                     
                                     <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu inner join users as u  on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+select pu.userID,u.userName as uname  from projectUsers as pu inner join users as u  on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
                                 </cfquery>
                                     
                                     
@@ -63,14 +95,12 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                           <span class="required">*</span>  
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="teamMemberID" required>
+					                        <select class="span6 m-wrap" name="teamMemberID">
                                             <cfset loopName0= #bugaddmember#>
                                                     <option value="">Select Member .....</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
-                                                <cfif loopname0.phide eq 0>
                                                     <option value="#loopName0.userID#">#loopName0.uname#</option>
-                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
@@ -93,7 +123,7 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                             <span class="required">*</span>
                                         </label>
                                         <div class="controls">
-                                            <input name="estimatedStartDate" type="date" class="span6 m-wrap" required/>
+                                            <input name="estimatedStartDate" type="date" class="txtdate span6 m-wrap" required/>
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -102,7 +132,7 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                             <span class="required">*</span>
                                         </label>
                                         <div class="controls">
-                                            <input name="estimatedEndDate" type="date" class="span6 m-wrap" required/>
+                                            <input name="estimatedEndDate" type="date" class="txtdate2 span6 m-wrap" required/>
                                         </div>
                                     </div>
                                     
@@ -122,7 +152,7 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                             <span class="required">*</span>
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="priorityID" required>
+					                        <select class="span6 m-wrap" name="priorityID">
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
                                                     <option value="">Select.....</option>
                                             <cfloop query="loopName2">
@@ -139,7 +169,7 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                             <span class="required">*</span>
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="severityID" required>
+					                        <select class="span6 m-wrap" name="severityID">
                                             <cfset loopName3= #addUserObject.getDesignation("severities")#>
                                                     <option value="">Select.....</option>
                                             <cfloop query="loopName3">
@@ -180,15 +210,9 @@ select pu.userID,u.userName as uname, pu.hide as phide from projectUsers as pu i
                                   <cfquery name="insertbuguser" datasource="bugTracking">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
-                                            <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
-                                      
-                                      
+                                      <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
                                 </cfquery>  
                                 <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
-                                    
-                                    
-                                    
-                                    
                             </cfif>
                         </div>
                     </div>

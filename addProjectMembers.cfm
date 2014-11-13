@@ -43,6 +43,8 @@
         <cfset Session.highlight2="active"/>
         <cfset Session.highlight3="inactive"/>
         <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
@@ -69,7 +71,7 @@
                         </div>
                     </div>
                     <div class="block-content collapse in">
-                        <div class="span12"><cfoutput>
+                        <div class="span12">
                             <form action=" " method="post">
                                 <table class="table table bordered">
                                     <tr>
@@ -81,10 +83,14 @@
                                         <td></td>
                                     </tr>
                                     <cfquery name="emp" datasource="bugTracking">
-                                        select u.userName, u.employeeID, u.userID, d.name
-                                        from users u inner join designations d
-                                        where d.designationID=u.designationID and 
-                                        u.hide=0 and u.noProjects=0
+                                        select u.userName, u.employeeID, u.userID, d.name, 
+                                        p.projectName , pu.hide
+                                        from users u inner join designations d 
+                                        inner join projectUsers pu inner join projects p
+                                        where u.userID=pu.userID and 
+                                        d.designationID=u.designationID and 
+                                        pu.projectID=p.projectID and u.hide=0 and 
+                                        pu.projectID!=#url.projectID# and u.noProjects=0
                                     </cfquery>
                                     <cfquery name="emp2" datasource="bugTracking">
                                         select u.userName, u.employeeID, u.userID, d.name
@@ -92,45 +98,36 @@
                                         where u.noProjects=1 and d.designationID=u.designationID 
                                         and u.hide=0;
                                     </cfquery>
-                                    <cfloop query="emp">
+                                    <cfoutput query="emp">
                                         <tr>
                                             <cfquery name="check" result="c" datasource="bugTracking">
                                                 select userID from projectUsers
                                                 where userID=#emp.userID# and
                                                 projectID=#url.projectID# and hide=0
                                             </cfquery>
-                                            <cfquery name="projectNameValues" datasource="bugTracking">
-                                                select p.projectName,p.projectID from projects p 
-                                                inner join projectUsers pu
-                                                on pu.userID=#emp.userID# and p.projectID=pu.projectID;
-                                            </cfquery>
-                                                            
                                             <cfif !c.recordcount>
                                                 <td>#emp.userName #</td>
                                                 <td>#emp.employeeID#</td>
                                                 <td>#emp.name#</td>
-                                            <td><cfloop query="projectNameValues">
-                                                <a href="projectProfile.cfm?projectID=#projectNameValues.projectID#">
-                                                #projectNameValues.projectName#</a> |
-                                            </cfloop></td>
+                                                <td>#emp.projectName#</td>
                                                 <td><input type="checkbox" name="add_new" value="#emp.userID#"/></td>
                                             </cfif>
                                         </tr>
-                                    </cfloop>
-                                    <cfloop query="emp2">
+                                    </cfoutput>
+                                    <cfoutput query="emp2">
                                         <tr>
                                             <td>#emp2.userName #</td>
                                             <td>#emp2.employeeID#</td>
                                             <td>#emp2.name#</td>
-                                            <td></td>
+                                            <td>No Projects</td>
                                             <td><input type="checkbox" name="add_new" value="#emp2.userID#"/></td>
                                         </tr>
-                                    </cfloop>
+                                    </cfoutput>
                                 </table>
                                 <div class="form-actions">
                                         <input type="submit" class="btn btn-primary" name="add"  value="ADD">
                                 </div>
-                            </form></cfoutput>
+                            </form>
                         </div>
                     </div>
                 </div>

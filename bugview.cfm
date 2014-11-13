@@ -14,20 +14,18 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
             <cfset Session.highlight2="active"/>
             <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
+            <cfset Session.highlight5="inactive"/>
+            <cfset Session.highlight6="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
                     <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
-                    <cfif Session.roleID eq 2>                      
+                      
                         <a href="bugDetails.cfm?pid=#sample.prid#" class="btn btn-default btn-primary" style="display:inline">
-                    <cfelseif Session.roleID eq 3 or Session.roleID eq 4>                      
-                        <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
-                    </cfif>
                             <i class="icon-arrow-left"></i>&nbsp;Bug Details
                         </a>
                     </div>
-                    <cfif Session.roleID eq 2 or Session.roleID eq 1>
                         <div class="muted pull-right">
                          <cfif isdefined('url.flag')>
                             <cfoutput><a href="editbug.cfm?bgid=#url.bid#&p=#sample.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
@@ -38,8 +36,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <i class="icon-plus-sign"></i>&nbsp;Edit Bug
                                 </a>
                         </cfif>
-                       </div>
-                    </cfif>
+                    </div>
                 </div>
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
@@ -147,20 +144,22 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <td><strong>File Name</strong></td>
                                     </tr>
                                  <cfquery name="attachmentView" datasource="bugTracking">
-                                         select r.name as subject,
+                                  select r.name as subject,
                                          r.description as des,
                                          a.fileName as fname
                                          from remarks as r
-                                         inner join attachments as a on
-                                         r.bugID=#url.bid# and r.remarkID=a.remarkID ;
+                                              inner join attachments as a
+                                         on
+                                         r.bugID=#url.bid# ;
+                                  
                                 </cfquery>
-                                <cfloop query="attachmentView">
+                               
                                     <tr>
                                         <td>#attachmentView.subject#</td>
                                         <td>#attachmentView.des#</td>
                                         <td><a href="http://localhost/Training/Bug Tracking/attachments/#attachmentView.fname#">#attachmentView.fname#</a></td>
                                     </tr>
-                               </cfloop>
+                              
                                         </table>
     
                                     </fieldset>

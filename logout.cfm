@@ -12,8 +12,12 @@
 <cfset StructDelete(Session,'highlight2')/>
 <cfset StructDelete(Session,'highlight3')/>
 <cfset StructDelete(Session,'highlight4')/>
+<cfset StructDelete(Session,'highlight5')/>
+<cfset StructDelete(Session,'highlight6')/>
 <cfset StructDelete(Session,'menu1')/>
 <cfset StructDelete(Session,'menu2')/>
 <cfset StructDelete(Session,'menu3')/>
 <cfset StructDelete(Session,'menu4')/>
+<cfset StructDelete(Session,'menu5')/>
+<cfset StructDelete(Session,'menu6')/>
 <cflocation url="index.cfm" addToken="false"/>

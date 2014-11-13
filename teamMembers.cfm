@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getProjects" datasource="bugTracking">
-    select projectID from projectUsers where userID=#Session.userID# and hide=0;
+    select projectID from projectUsers where userID=#Session.userID# and hide=0
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -12,7 +12,9 @@
     <div class="row-fluid">
         <cfset Session.highlight1="inactive"/>
         <cfset Session.highlight2="inactive"/>
-        <cfset Session.highlight3="active"/>
+        <cfset Session.highlight3="inactive"/>
+        <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight4="active"/>
         <cfset Session.highlight4="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">

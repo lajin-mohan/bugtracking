@@ -10,8 +10,10 @@
     <div class="row-fluid">
         <cfset Session.highlight1="inactive">
         <cfset Session.highlight2="inactive">
-        <cfset Session.highlight3="active">
+        <cfset Session.highlight3="inactive">
         <cfset Session.highlight4="inactive">
+        <cfset Session.highlight5="active">
+        <cfset Session.highlight6="inactive">
         <cfinclude template="layouts/sidebar.cfm">
         <div class="span9" id="content">
             <div class="row-fluid">

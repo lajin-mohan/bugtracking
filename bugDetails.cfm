@@ -10,6 +10,8 @@
         <cfset Session.highlight2="active"/>
         <cfset Session.highlight3="inactive"/>
         <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
@@ -31,7 +33,7 @@
                     <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
                       <cfoutput>
-                        <a href="projectDetailsView.cfm?pid=#url.pid#" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
+                        <a href="projectDetailsView.cfm?pid=#url.pid#&bug" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
                             <i class="icon-plus-sign"></i>&nbsp;Project Profile
                         </a>
                     </div>

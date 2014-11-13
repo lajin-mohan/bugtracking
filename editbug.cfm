@@ -6,7 +6,7 @@ select b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate
 select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
 </cfquery>
  <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+select pu.userID,u.userName as uname from projectUsers as pu inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
 </cfquery>
 <script>
     function checkDate() {
@@ -47,6 +47,8 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
             <cfset Session.highlight2="active"/>
             <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
+            <cfset Session.highlight5="inactive"/>
+            <cfset Session.highlight6="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
@@ -101,9 +103,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
                                                     <option value="0">#bugviewmember.uname#</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
-                                                <cfif (loopname0.uname neq bugviewmember.uname) and (phide eq 0)> 
                                                     <option value="#loopName0.userID#">#loopName0.uname#</option>
-                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>

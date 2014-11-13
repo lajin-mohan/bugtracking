@@ -36,4 +36,8 @@ alter table users drop column experience;
 
 alter table projects add column hide bit default 0;
 
+alter table projects change column projectManager userID tinyint unsigned;
 
+alter table projects add constraint fk foreign key (userID) references users(userID);
+
+alter table projectUsers add column hide bit default 0;
