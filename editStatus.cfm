@@ -126,5 +126,6 @@
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
     <cfoutput>#addUserObject.fileupload()#</cfoutput>
+    <cflocation url="ownBugs.cfm" addToken="false" />
 </cfif>
 <cfinclude template="layouts/footer.cfm">

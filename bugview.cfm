@@ -21,11 +21,15 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                 <div class="row-fluid">
                     <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
-                      
+                    <cfif Session.roleID eq 2>                      
                         <a href="bugDetails.cfm?pid=#sample.prid#" class="btn btn-default btn-primary" style="display:inline">
+                    <cfelseif Session.roleID eq 3 or Session.roleID eq 4>                      
+                        <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
+                    </cfif>
                             <i class="icon-arrow-left"></i>&nbsp;Bug Details
                         </a>
                     </div>
+                    <cfif Session.roleID eq 2 or Session.roleID eq 1>
                         <div class="muted pull-right">
                          <cfif isdefined('url.flag')>
                             <cfoutput><a href="editbug.cfm?bgid=#url.bid#&p=#sample.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
@@ -37,6 +41,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                 </a>
                         </cfif>
                     </div>
+                    </cfif>
                 </div>
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
@@ -144,22 +149,21 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <td><strong>File Name</strong></td>
                                     </tr>
                                  <cfquery name="attachmentView" datasource="bugTracking">
-                                  select r.name as subject,
+                                        select r.name as subject,
                                          r.description as des,
                                          a.fileName as fname
                                          from remarks as r
-                                              inner join attachments as a
-                                         on
-                                         r.bugID=#url.bid# ;
+                                              inner join attachments as a on
+                                         r.bugID=#url.bid# and r.remarkID=a.remarkID ;
                                   
                                 </cfquery>
-                               
+                                <cfloop query="attachmentView">
                                     <tr>
                                         <td>#attachmentView.subject#</td>
                                         <td>#attachmentView.des#</td>
                                         <td><a href="http://localhost/Training/Bug Tracking/attachments/#attachmentView.fname#">#attachmentView.fname#</a></td>
                                     </tr>
-                              
+                              </cfloop>
                                         </table>
     
                                     </fieldset>

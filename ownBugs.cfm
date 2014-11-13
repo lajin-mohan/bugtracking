@@ -48,7 +48,7 @@
                                     and bu.userID=#Session.userID# 
                                     order by b.bugName desc;
                                 </cfquery>
-                                <cfelseif Session.roleID>
+                                <cfelseif Session.roleID eq 4>
                                 <cfquery name="bug" datasource="bugTracking">
                                     select b.bugID, b.bugName, b.projectID, b.estimatedEndDate,
                                     p.name as n ,s.name as s from bugs as b 
@@ -57,6 +57,7 @@
                                     inner join projectUsers as pu 
                                     on b.priorityID=p.priorityID and  b.statusID=s.statusID
                                     and pu.userID=#Session.userID# and b.statusID=5 
+                                    and pu.projectID=b.projectID 
                                     order by b.bugName desc;
                                 </cfquery>
                                 </cfif>
