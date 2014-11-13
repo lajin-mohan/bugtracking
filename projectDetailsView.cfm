@@ -13,6 +13,8 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
         <cfset Session.highlight2="active"/>
         <cfset Session.highlight3="inactive"/>
         <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
@@ -22,7 +24,10 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                     </div>
                 </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header"></div>
+                    <div class="navbar navbar-inner block-header">
+                        
+                        <center> <h3>Project Details  </h3></center>
+                    </div>
                     <div class="block-content collapse in">
                         <div class="span12">
                           <form action=" " class="form-horizontal" method="post">
@@ -41,28 +46,28 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                                             
                                         
                                          <div class="control-group">
-                                            <label class="control-label">Estimated start Date</label>
+                                            <label class="control-label">Estimated start Date:</label>
                                             <div class="controls">
                                                 <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.esd,"yyyy-mm-dd")#"/>
                                             </div>
                                         </div>
                                             
                                             <div class="control-group">
-                                            <label class="control-label">Actual start  date</label>
+                                            <label class="control-label">Actual start Date:</label>
                                             <div class="controls">
                                                 <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.asd,"yyyy-mm-dd")#"/>              									
                                             </div>
                                         </div>
                                             
                                              <div class="control-group">
-                                            <label class="control-label">Estimated End Date</label>
+                                            <label class="control-label">Estimated End Date:</label>
                                             <div class="controls">
                                                 <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.eed,"yyyy-mm-dd")#"/>
                                             </div>
                                         </div>
                                             
                                             <div class="control-group">
-                                            <label class="control-label">Actual End  date</label>
+                                            <label class="control-label">Actual End Date:</label>
                                             <div class="controls">
                                                 <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.aed,"yyyy-mm-dd")#"/>              									
                                             </div>
@@ -70,7 +75,7 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                                              
                                         
                                          <div class="control-group">
-                                            <label class="control-label">Status</label>
+                                            <label class="control-label">Status:</label>
                                             <div class="controls">
                                                 <input type="text" name="bugdesc" data-required="1" class="span6 m-wrap"  disabled value="#projview.status#"/>
                                             </div>

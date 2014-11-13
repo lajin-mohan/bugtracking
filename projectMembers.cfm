@@ -4,15 +4,17 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getbugID" datasource="bugTracking">
-select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0;
+select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive"/>
         <cfset Session.highlight2="inactive"/>
-        <cfset Session.highlight3="active"/>
+        <cfset Session.highlight3="inactive"/>
         <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="active"/>
+        <cfset Session.highlight6="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">

@@ -11,7 +11,8 @@
         var year = EnteredDate.substring(0, 4);
         var month = EnteredDate.substring(5, 7);
         var date = EnteredDate.substring(8, 10);
-        var myDate = new Date(year, month-1, date+1);
+        date++;
+        var myDate = new Date(year, month-1, date);
         var EnteredDate2 = $(".txtdate2").val();
         var year2 = EnteredDate2.substring(0, 4);
         var month2 = EnteredDate2.substring(5, 7);
@@ -25,17 +26,11 @@
         var today = new Date();
         alert(myDate);
         alert(today);
-        if (myDate > today) {
-            if (myDate2 >= myDate) {
-                return true;
-            }
-            else {
-                alert("Estimated end date should be greater than or equal to estimated start date");
-                return false;
-            }
+        if (myDate2 >= myDate) {
+            return true;
         }
         else {
-            alert("Estimated start date is less than today's date ");
+            alert("Estimated end date should be greater than or equal to estimated start date");
             return false;
         }
     }
@@ -47,6 +42,8 @@
             <cfset Session.highlight2="active"/>
             <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
+            <cfset Session.highlight5="inactive"/>
+            <cfset Session.highlight6="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
@@ -181,10 +178,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary" name="submit">Update</button>
-                                            <a href="projectDetails.cfm"><button type="button" class="btn">Cancel</button></a>
-                                        </div>
                                         <div class="control-group">
                                             <label class="control-label"><span class="required"></span></label>
                                             <div class="controls">
@@ -231,7 +224,11 @@
                                                 </cfoutput>
                                             </table>
                                         </div>
-                                    </div> 
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary" name="submit">Add Details</button>
+                                        <a href="projectDetails.cfm"><button type="button" class="btn">Cancel</button></a>
+                                    </div>
                                 </fieldset>
                             </form>
                         </div>

@@ -19,7 +19,9 @@
 <div class="container-fluid">
         <div class="row-fluid">
             <cfset Session.highlight1="inactive"/>
+            <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
+            <cfset Session.highlight6="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
@@ -29,13 +31,13 @@
                             <cfoutput><a href="employeeProfile.cfm?userID=#url.userID#&projectID=#url.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
                                 <i class="icon-arrow-left"></i>&nbsp;Employee Profile
                                 <cfset Session.highlight2="active"/>
-                                <cfset Session.highlight3="inactive"/>
+                                <cfset Session.highlight5="inactive"/>
                             </a>
                             <cfelse>
                                 <a href="employeeDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-arrow-left"></i>&nbsp;Employee Details
                                     <cfset Session.highlight2="inactive"/>
-                                    <cfset Session.highlight3="active"/>
+                                    <cfset Session.highlight5="active"/>
                                 </a>
                         </cfif>
                     </div>
