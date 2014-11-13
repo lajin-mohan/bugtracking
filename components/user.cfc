@@ -14,7 +14,7 @@
             </cfquery>
         </cfif>
 
-        <cfset dat=now()/>
+         <cfset dat=now()/>
         <cfquery name="remarkTableInsert" datasource="bugTracking" result="remark">
             insert into remarks (
             name,
@@ -30,16 +30,27 @@
             <cfqueryparam value="#session.userID#" CFSQLType="CF_SQL_TINYINT">
             );
         </cfquery>
-        <cfif len(form.attachment)>
+                 
+        <cfif len(trim(form.attachment))>
             <cffile action = "upload" 
                     fileField = "form.attachment" 
-                    destination = "/var/www/html/Training/Bug Tracking/attachments/"
+                    destination = "D:\cf works\Bug Tracking\attachments\"
                     nameConflict = "MakeUnique"
                     result="uploadresult">
+                <cfset filen=#uploadresult.serverfile#/>
+                <cfset filepa=#uploadresult.serverdirectory#/>
+                <cfset filety=#uploadresult.serverfileext#/>
+               
+               <cfelse> 
+                
+               <cfset filen=""/>
+                <cfset filepa=""/>
+                <cfset filety=""/>
+        </cfif>
             <cfquery name="getRemarkID" datasource="bugTracking" result="remarkID">
                 select remarkID from remarks where createdOn=#dat#;
             </cfquery>
-            <cfquery name="attachmentInsert" datasource="bugTracking" result="attachment">
+            <cfquery name="attachmentInsert" datasource="bugTracking" result="attachmentRsult">
                 insert into attachments (
                 fileName,
                 remarkID,    
@@ -47,10 +58,10 @@
                 fileType,
                 uploadedOn
                 ) values (
-                <cfqueryparam value="#uploadresult.serverfile#" CFSQLType="CF_SQL_VARCHAR">,
+                <cfqueryparam value="#filen#" CFSQLType="CF_SQL_VARCHAR">,
                 <cfqueryparam value="#getRemarkID.remarkID#" CFSQLType="CF_SQL_VARCHAR">,
-                <cfqueryparam value="#uploadresult.serverdirectory#" CFSQLType="CF_SQL_VARCHAR">,
-                <cfqueryparam value="#uploadresult.serverfileext#" CFSQLType="CF_SQL_VARCHAR">,
+                <cfqueryparam value="#filepa#" CFSQLType="CF_SQL_VARCHAR">,
+                <cfqueryparam value="#filety#" CFSQLType="CF_SQL_VARCHAR">,
                 <cfqueryparam value="#dat#" CFSQLType="CF_SQL_TIMESTAMP">
                 );
             </cfquery>
@@ -59,7 +70,6 @@
             <cfelse>
                 <cfoutput> failed</cfoutput> 
             </cfif>
-        </cfif>  
     </cffunction>       
 
     <cffunction name="bug" returnType="any">
