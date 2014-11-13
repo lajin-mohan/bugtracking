@@ -24,7 +24,7 @@ create table logs (logID tinyint unsigned primary key auto_increment, activityID
 
 create table remarks (remarkID tinyint unsigned primary key auto_increment, name varchar(32), description varchar(512), createdOn datetime, bugID tinyint unsigned, userID tinyint unsigned, foreign key(bugID) references bugs(bugID), foreign key(userID) references users(userID));
 
-create table attachments (attachmentID tinyint unsigned primary key auto_increment, fileName varchar(32), remarkID tinyint unsigned, fileDescription varchar(512), filePath varchar(64), fileType varchar(64), uploadedOn datetime, foreign key(remarkID) references remarks(remarkID));
+create table attachments (attachmentID tinyint unsigned primary key auto_increment, fileName varchar(32), remarkID tinyint unsigned, filePath varchar(64), fileType varchar(64), uploadedOn datetime, foreign key(remarkID) references remarks(remarkID));
 
 create table bugUsers (bugID tinyint unsigned, userID tinyint unsigned, foreign key(userID) references users(userID), foreign key(bugID) references bugs(bugID));
 

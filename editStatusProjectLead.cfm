@@ -22,7 +22,7 @@ select bugName from bugs where  bugID=#url.bugID#;
                         <cfoutput>
                         <cfif Session.roleID eq 2>
                             <a href="bugProjectDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
-                        <cfelseif Session.roleID eq 3>
+                        <cfelseif Session.roleID eq 3 or Session.roleID eq 4>
                             <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
                         </cfif>
                                 <i class="icon-arrow-left"></i>&nbsp;Bug Details
@@ -88,7 +88,7 @@ select bugName from bugs where  bugID=#url.bugID#;
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
         <cfoutput>#addUserObject.fileupload()#</cfoutput>
-    <Cfelseif isDefined('form.cancel')>
+    <cfelseif isDefined('form.cancel')>
         <cflocation url="#CGI.HTTP_REFERER#" addToken="false" />
 </cfif>
 <cfinclude template="layouts/footer.cfm">

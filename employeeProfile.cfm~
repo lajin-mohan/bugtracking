@@ -1,0 +1,104 @@
+<cfquery name="sample" datasource="bugTracking">
+    select * from users where userID=#url.userID#;
+</cfquery>
+
+<cfinclude template="layouts/header.cfm" />
+
+<!-- validation -->
+<div class="row-fluid">
+    <!-- block -->
+    <div class="block">
+        <div class="navbar navbar-inner block-header">
+            <div class="muted pull-left">Update Profile</div>
+        </div>
+        <div class="block-content collapse in">
+            <div class="span12">
+            <!-- BEGIN FORM-->
+            <form action="userProfile.cfm" class="form-horizontal" method="post">
+            <fieldset>
+                <div class="alert alert-error hide">
+                    <button class="close" data-dismiss="alert"></button>
+                        You have some form errors. Please check below.
+                </div>
+                <div class="alert alert-success hide">
+                    <button class="close" data-dismiss="alert"></button>
+                        Employee has been successfully added to the database!
+                </div>
+<cfoutput>
+  			    <div class="control-group">
+                    <label class="control-label">User ID:</label>
+                    <div class="controls">
+                        <input type="text" name="uid" data-required="1" class="span6 m-wrap" required disabled value="#sample.userID#"/>
+                    </div>
+                </div>
+                            
+                <div class="control-group">
+                    <label class="control-label">User Name:</label>
+                    <div class="controls">
+                        <input type="text" name="uname" data-required="1" class="span6 m-wrap"  disabled value="#sample.userName#"/>
+                    </div>
+                </div>
+                            
+                <div class="control-group">
+                    <label class="control-label">Employee ID:</label>
+                    <div class="controls">
+                        <input name="empid" type="text" class="span6 m-wrap" disabled value="#sample.employeeID#"/>              									
+                    </div>
+                </div>
+                            
+                <div class="control-group">
+                    <label class="control-label">Email:</label>
+                    <div class="controls">
+                        <input name="email" type="text" class="span6 m-wrap" required disabled value="#sample.email#"/>
+                    </div>
+                </div>
+                            
+                <div class="control-group">
+  				    <label class="control-label">Contact Number ##1:</label>
+  					<div class="controls">
+                         <input name="co1" type="text" class="span6 m-wrap" value="#sample.contactNumber1#" disabled/>
+  					</div>
+  				</div>
+                            
+                <div class="control-group">
+  				    <label class="control-label">Contact Number ##2:</label>
+  					<div class="controls">
+                        <input name="co2" type="text" class="span6 m-wrap" value="#sample.contactNumber2#" disabled/>                                 
+  					</div>
+  			    </div>
+                            
+                <div class="control-group">
+  				    <label class="control-label">Role ID:</label>
+  					<div class="controls">
+  					    <input name="rid" type="text" class="span6 m-wrap" disabled value="#sample.roleID#"/>
+  					</div>
+  				</div>
+                            
+                <div class="control-group">
+  				    <label class="control-label">Designation ID:</label>
+  					<div class="controls">
+  					    <input name="desg" type="text" class="span6 m-wrap" disabled value="#sample.designationID#"/>
+  				    </div>
+  				</div>
+                            
+  				<div class="form-actions">
+  					<input type="submit" class="btn btn-primary" name="save" value="Save" />
+  					<input type="submit" class="btn" name="cancel" value="Cancel" />
+  				</div>
+			</fieldset>
+			</form>
+			<!-- END FORM-->
+</cfoutput>
+    		</div>
+    	</div>
+    </div>
+   	<!-- /block -->
+</div>
+<!-- /validation -->
+
+<cfif isDefined('form.save')>
+    <cfobject name="updateObject" component="components.user">
+    <cfoutput>#updateObject.updateProfile()#</cfoutput>
+</cfif> 
+
+<cfinclude template="layouts/footer.cfm" />

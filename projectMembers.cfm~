@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getbugID" datasource="bugTracking">
-select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0;
+select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0 and projectID!=1;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">

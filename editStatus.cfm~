@@ -124,7 +124,6 @@
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
     <cfoutput>#addUserObject.fileupload()#</cfoutput>
-    <cflocation url="ownBugs.cfm" addToken="false" />
 <cfelseif isDefined('form.cancel')>
         <cflocation url="#CGI.HTTP_REFERER#" addToken="false" />
 </cfif>

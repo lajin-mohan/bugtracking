@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getProjects" datasource="bugTracking">
-    select projectID from projectUsers where userID=#Session.userID# and hide=0;
+    select projectID from projectUsers where userID=#Session.userID# and hide=0 and projectID!=1;
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->

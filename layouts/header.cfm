@@ -60,7 +60,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <cfoutput><a tabindex="-1" href="employeeProfile.cfm?userID=#Session.userID#">Profile</a></cfoutput>
+                                        <cfoutput><a tabindex="-1" href="userView.cfm?userID=#Session.userID#">Profile</a></cfoutput>
                                     </li>
                                     <li class="divider"></li>
                                     <li>

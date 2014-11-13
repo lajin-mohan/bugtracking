@@ -138,4 +138,5 @@
         </div>
     </div>
 </div>
+<cfdump var ="#application#" />
 <cfinclude template="layouts/footer.cfm"/>

@@ -153,6 +153,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                          from remarks as r
                                          inner join attachments as a on
                                          r.bugID=#url.bid# and r.remarkID=a.remarkID ;
+                                  
                                 </cfquery>
                                 <cfloop query="attachmentView">
                                     <tr>
