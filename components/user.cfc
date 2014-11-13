@@ -117,9 +117,11 @@
                 where bugID=#tempbugID#;
             </cfquery>
             <cfif updatedbug.recordcount eq 1 and updatedbuguser.recordcount eq 1>
-                <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false">
+                <cfreturn true />
+                
             <cfelse>
                 <cfoutput>update failed</cfoutput> 
+                <cfreturn false />
             </cfif>
         </cfoutput>
     </cffunction>

@@ -9,6 +9,46 @@
     <cfset n="#ArrayLen(A)#"/>
     <cfloop from="1" to="#n#" index="i">
         <cfset pid="#A[i]#"/>
+        <cfset cuserID="#A[i]#"/>
+        <cfquery name="getList" datasource="bugTracking" result="list"> 
+            SELECT u.email as uemail, u.userName as uname,
+            p.projectName as pname FROM users u 
+            inner join projects p on u.userID=#cuserID# 
+            and p.projectID=#url.projectID#; 
+        </cfquery>
+        <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+            SELECT  u.userName as username, d.name as dname 
+            from users u inner join designations d on 
+            userID=#session.userID# and u.designationID=d.designationID; 
+        </cfquery>
+        <cfmail query="getList" from="my@domain.com" to="#getList.uemail#" subject="Add_project">
+            <cfmailpart type="html">
+            <html> 
+                <head> 
+                    <style type="text/css"> 
+                        body { 
+                        font-family:sans-serif;
+                        font-size:12px;
+                        color:black;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <p>Dear #getList.uname#,</p> <br><br>
+                    You are added to the Project #getList.pname# 
+                    <br> <br>
+                    <p>Email sent by </p>
+                
+                    <p>#getcurrent.username#</p> 
+                    <p>#getcurrent.dname#</p>
+                </body>
+            </html>
+        </cfmailpart>         
+    </cfmail>
+        
+        <cfif list.recordcount>  
+            <cfoutput><p>success</p></cfoutput>
+        </cfif>
         <cfquery name="empd0" datasource="bugTracking" result="check">
             select projectID from projectUsers pu inner join users u 
             where pu.userID=#pid# and pu.projectID=#url.projectID#

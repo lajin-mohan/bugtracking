@@ -215,7 +215,89 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
 </div>
 <cfif isDefined('form.save')>
     <cfobject name="updateObject" component="components.user">
-       
-    <cfoutput>#updateObject.bug("#sample.bugID#")#</cfoutput>
+    <cfoutput>
+            <cfset check=#updateObject.bug("#sample.bugID#")#>
+    </cfoutput>
+    <cfif check> 
+        <cfquery name="bugusercheck" datasource="bugTracking" result="checkbuguser">
+             select userID from bugUsers where bugID = #sample.bugID#;
+        </cfquery>
+        <cfif form.teamMemberID eq 0 >
+           <cfset teamMemberID = "#bugusercheck.userID#" />
+        <cfelse>
+             <cfset teamMemberID = "#form.teamMemberID#" />
+        </cfif>           
+        <cfquery name="getDetails" datasource="bugTracking" result=list> 
+            SELECT u.email as uemail, u.userName as uname,
+            p.projectName as pname from users as u 
+            inner join projects p on u.userId=#teamMemberID#
+            and p.projectID=#url.p#;
+        </cfquery>
+        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+           SELECT  u.userName as username, d.name as dname 
+           from users u inner join designations d
+           on userID=#session.userID# and u.designationID=d.designationID; 
+        </cfquery>
+      
+       <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+           <cfmailpart type="html">
+                <html> 
+                    <head> 
+                        <style type="text/css"> 
+                            body { 
+                            font-family:sans-serif;
+                            font-size:12px;
+                            color:black;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <p>Dear #getDetails.uname#,</p> <br><br>
+                        bug #form.bname#  in your  project #getDetails.pname# edited
+                        <br> <br>
+                        <p>Email sent by </p>               
+                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.dname#</p>              
+                    </body>
+                </html>
+            </cfmailpart>                     
+        </cfmail>                                   
+        <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+            SELECT u.email as uemail, u.userName as uname,
+            p.projectName as pname from users as u 
+            inner join projects p on p.projectID=#url.p#
+            and p.userID=u.userID ;
+        </cfquery>
+        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+            SELECT  u.userName as username, d.name as dname 
+            from users u inner join designations d
+            on userID=#session.userID# and u.designationID=d.designationID; 
+        </cfquery>
+      
+       <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+           <cfmailpart type="html">
+               <html> 
+                   <head> 
+                       <style type="text/css"> 
+                       body { 
+                       font-family:sans-serif;
+                       font-size:12px;
+                       color:black;
+                       }
+                       </style>
+                    </head>
+                    <body>
+                       <p>Dear #getProjectManager.uname#,</p> <br><br>
+                        A bug #form.bname#   edited in the project #getDetails.pname#
+                       <br> <br>
+                       <p>Email sent by </p>               
+                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.dname#</p>              
+                   </body>
+               </html>
+           </cfmailpart>                     
+       </cfmail>
+       <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false">                                
+    </cfif>
 </cfif>
 <cfinclude template="layouts/footer.cfm" />

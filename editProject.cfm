@@ -249,7 +249,50 @@
             userID=#Session.userID# where projectID=#url.projectID#
         </cfquery>
         <cfif ep.recordcount>
-            <cflocation url="projectProfile.cfm?projectID=#url.projectID#" addtoken="false">
+            <cfquery name="getDetails" datasource="bugTracking" result=list> 
+            SELECT u.email as uemail,
+            u.userName as uname,
+             p.projectName as pname 
+            from users as u 
+            inner join projectUsers as pu 
+            inner join projects p
+            on pu.projectID=#url.projectID#
+            and pu.userID=u.userID 
+         
+            and pu.hide=0
+            and p.projectID=#url.projectID#; 
+        </cfquery>
+        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+            SELECT  u.userName as username, d.name as dname 
+             from users u inner join designations d
+             on userID=#session.userID# and u.designationID=d.designationID; 
+        </cfquery>
+        <cfloop query="getDetails">
+            <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Edit_project" type="html">
+                <cfmailpart type="html">
+                    <html> 
+                        <head> 
+                            <style type="text/css"> 
+                                body { 
+                                font-family:sans-serif;
+                                font-size:12px;
+                                color:black;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Dear #getDetails.uname#,</p> <br><br>
+                            Your project #getDetails.pname# edited 
+                            <br> <br>
+                            <p>Email sent by </p>               
+                            <p>#getcurrent.username#</p> 
+                            <p>#getcurrent.dname#</p>            
+                        </body>
+                    </html>
+                </cfmailpart>                     
+            </cfmail>
+        </cfloop> 
+        <cflocation url="projectProfile.cfm?projectID=#url.projectID#" addtoken="false">
         </cfif>
     </cfoutput>
 </cfif>

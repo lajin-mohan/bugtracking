@@ -187,10 +187,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                 </fieldset>
                             </form>
                             <cfif structkeyexists(form,"submit")>
-                               
-                                
-                                    
-                                        <cfquery name="Bug" datasource="bugTracking">
+                                  <cfquery name="Bug" datasource="bugTracking" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
                                             priorityID , severityID ,projectID) values(
@@ -207,12 +204,90 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                      <cfquery name="getbugID" datasource="bugTracking">
                                     select bugID from bugs where bugName="#form.bugName#";
                                 </cfquery>
-                                  <cfquery name="insertbuguser" datasource="bugTracking">
+                                  <cfquery name="insertbuguser" datasource="bugTracking" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
                                       <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
-                                </cfquery>  
-                                <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
+                                </cfquery>
+                                <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
+                                    <cfquery name="getDetails" datasource="bugTracking" result=list>
+                                        SELECT u.email as uemail,
+                                        u.userName as uname,
+                                        p.projectName as pname 
+                                        from users as u 
+                                        inner join projects p
+                                        on u.userId=#form.teamMemberID#
+                                        and p.projectID=#url.p#;
+                                    </cfquery>
+                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+                                        SELECT  u.userName as username,
+                                        d.name as dname from users u
+                                        inner join designations d
+                                        on userID=#session.userID# and u.designationID=d.designationID; 
+                                    </cfquery>
+                                    <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+                                        <cfmailpart type="html">
+                                            <html> 
+                                                <head> 
+                                                    <style type="text/css"> 
+                                                        body { 
+                                                        font-family:sans-serif;
+                                                        font-size:12px;
+                                                        color:black;
+                                                        }
+                                                    </style>
+                                                </head>
+                                                <body>
+                                                    <p>Dear #getDetails.uname#,</p> <br><br>
+                                                        Added a new bug #form.bugName#    to your project #getDetails.pname#
+                                                      <br> <br>
+                                                    <p>Email sent by </p>               
+                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.dname#</p>              
+                                                </body>
+                                            </html>
+                                        </cfmailpart>                     
+                                    </cfmail>                                 
+                                    <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+                                        SELECT u.email as uemail,
+                                        u.userName as uname,
+                                        p.projectName as pname 
+                                        from users as u 
+                                        inner join projects p on    
+                                        p.projectID=#url.p# and
+                                        p.userID=u.userID ;
+                                    </cfquery>
+                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+                                        SELECT  u.userName as username, d.name as dname 
+                                        from users u inner join designations d on 
+                                        userID=#session.userID# and u.designationID=d.designationID; 
+                                    </cfquery>
+                                    <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+                                        <cfmailpart type="html">
+                                            <html> 
+                                                <head> 
+                                                    <style type="text/css"> 
+                                                        body {
+                                                        font-family:sans-serif;
+                                                        font-size:12px;
+                                                        color:black;
+                                                        }
+                                                    </style>
+                                                </head>
+                                                <body>
+                                                    <p>Dear #getProjectManager.uname#,</p> <br><br>
+                                                        A new bug #form.bugName#   added to the project #getDetails.pname#
+                                                        <br> <br>
+                                                    <p>Email sent by </p>               
+                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.dname#</p>              
+                                                </body>
+                                            </html>
+                                    </cfmailpart>                     
+                                 </cfmail>
+  
+                                 <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
+                                 </cfif>        
                             </cfif>
                         </div>
                     </div>
