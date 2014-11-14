@@ -30,14 +30,14 @@ component {
         }
         var qm=new query();
         qm.setDatasource("bugTracking");
-        qm.setSQL("select m.milestoneID, m.projectID, m.milestoneName, m.milestoneDate from milestones m inner join projects p where m.projectID=p.projectID and p.userID="&Session.userID&" and m.hide=0");
-        var dbresultsMilestones=qr.execute().getResult();
+        qm.setSQL("select m.milestoneID, m.projectID, m.milestoneName, m.milestoneDate from milestones m inner join projects p where m.projectID=p.projectID and p.userID="&Session.userID&" and hide=0");
+        var dbresultsMilestones=qm.execute().getResult();
         for(var k=1;k LTE dbresultsMilestones.recordCount;k++)
         {
             arrayAppend(results,{
-                "title"=dbresultsMilestones.name[j],
-                "start"=dbresultsMilestones.date[j],
-                "url"="milestones.cfm?milestoneID="&dbresultsRemainders.remainderID[j],
+                "title"=dbresultsMilestones.milestoneName[k],
+                "start"=dbresultsMilestones.milestoneDate[k],
+                "url"="milestones.cfm?milestoneID="&dbresultsMilestones.milestoneID[k],
                 "color"="green"
             });
         }
