@@ -59,4 +59,4 @@ alter table logs add constraint foreign key (remainderID) references remainders(
 
 create table milestones (milestoneID tinyint unsigned primary key auto_increment, projectID tinyint unsigned, milestoneName varchar(32), milestoneDescription varchar(512), milestoneCompleted int(3), milestoneStatus varchar(16), milestoneDate date, foreign key(projectID) references projects(projectID));
 
-alter table milestones add column hide bit default 0;
+alter table milestones add column milestoneHide bit default 0;
