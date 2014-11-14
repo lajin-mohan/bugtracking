@@ -32,7 +32,7 @@
                                 <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
                             </form>
                         </div>
-                        <div class="muted pull-right">
+ <div class="muted pull-right">
                         <a href="pmWholeEmployeeReport.cfm" class="btn btn-default btn-primary" style="display:inline">Report</a>
                         </div>
                     </div>

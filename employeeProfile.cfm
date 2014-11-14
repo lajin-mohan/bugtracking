@@ -57,7 +57,9 @@
                     </div>
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
-                            <div class="muted pull-left"></div>
+                           <div class="muted pull-right">
+                            <a href="pmSingleEmployeeDetails.cfm?uid=#url.userID#" class="btn btn-default btn-primary" style="display:inline">Report</a>
+                            </div>
                         </div>
                         <div class="block-content collapse in">
                             <div class="span12">

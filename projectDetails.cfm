@@ -31,6 +31,7 @@
                                 <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
                             </form>
                         </div>
+ <a href="pmProjectBasedReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">Report</a>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">

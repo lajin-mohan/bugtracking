@@ -20,6 +20,7 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
             <div class="row-fluid">
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                        <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">Report</a>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">

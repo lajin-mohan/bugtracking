@@ -150,7 +150,7 @@
                 <cfif Session.roleID eq '1'>
                     <cfset Session.menu1="projectManager.cfm">
                     <cfset Session.menu2="projectDetails.cfm">
-                    <cfset Session.menu3="timeSheet.cfm">
+                    <cfset Session.menu3="pmTimeSheet.cfm">
                     <cfset Session.menu4="calendar.cfm">
                     <cfset Session.menu5="employeeDetails.cfm">
                     <cfset Session.menu6="projectManagerHistory.cfm">
@@ -164,7 +164,7 @@
                 <cfelseif Session.roleID eq '2'>
                     <cfset Session.menu1="projectLead.cfm">
                     <cfset Session.menu2="bugProjectDetails.cfm">
-                    <cfset Session.menu3="timeSheet.cfm">
+                    <cfset Session.menu3="plTimeSheet.cfm">
                     <cfset Session.menu4="calendar.cfm">
                     <cfset Session.menu5="projectMembers.cfm">
                     <cfset Session.menu6="teamLeadHistory.cfm">
@@ -178,7 +178,7 @@
                 <cfelseif Session.roleID eq '3'>
                     <cfset Session.menu1="softwareDeveloper.cfm">
                     <cfset Session.menu2="ownBugs.cfm">
-                    <cfset Session.menu3="timeSheet.cfm">
+                    <cfset Session.menu3="userTimeSheet.cfm">
                     <cfset Session.menu4="calendar.cfm">
                     <cfset Session.menu5="teamMembers.cfm">
                     <cfset Session.menu6="softwareDeveloperHistory.cfm">
@@ -192,7 +192,7 @@
                 <cfelseif Session.roleID eq '4'>
                     <cfset Session.menu1="softwareTester.cfm">
                     <cfset Session.menu2="ownBugs.cfm">
-                    <cfset Session.menu3="timeSheet.cfm">
+                    <cfset Session.menu3="userTimeSheet.cfm">
                     <cfset Session.menu4="calendar.cfm">
                     <cfset Session.menu5="teamMembers.cfm">
                     <cfset Session.menu6="testerHistory.cfm">
