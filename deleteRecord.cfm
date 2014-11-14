@@ -174,4 +174,9 @@
             </cfmail>
         </cfloop>   
     <cflocation url="projectDetails.cfm" addToken="false"/>
+        <cfelseif isdefined('url.remainderID')>
+        <cfquery name="deleteRemainder" datasource="bugTracking">
+            update remainders set hide=1 where remainderID=#url.remainderID#;
+        </cfquery>
+        <cflocation url="calendar.cfm" addToken="false"/>
 </cfif>

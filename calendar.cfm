@@ -3,6 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
+
 <!DOCTYPE html>
 <html>
     
@@ -198,7 +199,48 @@
                                         },
                                         true // make the event "stick"
                                     );
-                                    
+                                    var dateString=String(start);
+                                    var year = dateString.substring(11, 15);
+                                    var monthName = dateString.substring(4, 7);
+                                    var day = dateString.substring(8, 10);
+                                    if(monthName="Jan"){
+                                        month=01;
+                                    }
+                                    if(monthName="Feb"){
+                                        month=02;
+                                    }
+                                    if(monthName="Mar"){
+                                        month=03;
+                                    }
+                                    if(monthName="Apr"){
+                                        month=04;
+                                    }
+                                    if(monthName="May"){
+                                        month=05;
+                                    }
+                                    if(monthName="Jun"){
+                                        month=06;
+                                    }
+                                    if(monthName="Jul"){
+                                        month=07;
+                                    }
+                                    if(monthName="Aug"){
+                                        month=08;
+                                    }
+                                    if(monthName="Sep"){
+                                        month=09;
+                                    }
+                                    if(monthName="Oct"){
+                                        month=10;
+                                    }
+                                    if(monthName="Nov"){
+                                        month=11;
+                                    }
+                                    if(monthName="Dec"){
+                                        month=12;
+                                    }
+                                    var date = new Date(year, month-2, day);
+                                    window.location.href = 'events.cfm?projectManager&name='+title+'&date='+date;
                                 }
                                 $('#calendar').fullCalendar('unselect');
                             },
@@ -214,13 +256,9 @@
                         <div class="row-fluid">
                             <div class="span9" id="content">
                                 <div class="row-fluid">
-                                    <!-- block -->
-                                    <div class="block">
-                                        <div class="navbar navbar-inner block-header"></div>
-                                        <div class="span10">
-                                            <div id='calendar'></div>
-                                        </div>
-                                    </div>
+                                    <div class="navbar navbar-inner block-header"></div>
+                                    <br/><br/>
+                                    <div id='calendar'></div>
                                 </div>
                             </div>
                         </div>
@@ -241,9 +279,9 @@
                             $("#calendar").fullCalendar({
                                 //Formating
                                 header: {
-                                    right: 'prev,next today',
-                                    left: 'title',
-                                    center: 'month,agendaWeek,agendaDay'
+                                    left: 'prev,next',
+                                    right: '',
+                                    center: 'title'
                                 },
                                 titleFormat: {
                                     month: 'MMMM yyyy',
@@ -258,94 +296,80 @@
                                 timeFormat: {
                                     '': 'H(:mm) TT \n '
                                 },
-                                //Click function to switch to daily agenda
-                                dayClick: function(date, view) {
-                                    $('#calendar')
-                                    .fullCalendar('changeView', 'agendaDay')
-                                    .fullCalendar('gotoDate', date);
+                                selectable: true,
+                                selectHelper: true,
+                                select: function(start, end, allDay) {
+                                    var title = prompt('Event Title:');
+                                    if (title) {
+                                        $('#calendar').fullCalendar('renderEvent',
+                                            {
+                                                title: title,
+                                                start: start,
+                                                end: end,
+                                                allDay: allDay
+                                            },
+                                            true // make the event "stick"
+                                        );
+                                        var dateString=String(start);
+                                        var year = dateString.substring(11, 15);
+                                        var monthName = dateString.substring(4, 7);
+                                        var day = dateString.substring(8, 10);
+                                        if(monthName="Jan"){
+                                            month=01;
+                                        }
+                                        if(monthName="Feb"){
+                                            month=02;
+                                        }
+                                        if(monthName="Mar"){
+                                            month=03;
+                                        }
+                                        if(monthName="Apr"){
+                                            month=04;
+                                        }
+                                        if(monthName="May"){
+                                            month=05;
+                                        }
+                                        if(monthName="Jun"){
+                                            month=06;
+                                        }
+                                        if(monthName="Jul"){
+                                            month=07;
+                                        }
+                                        if(monthName="Aug"){
+                                            month=08;
+                                        }
+                                        if(monthName="Sep"){
+                                            month=09;
+                                        }
+                                        if(monthName="Oct"){
+                                            month=10;
+                                        }
+                                        if(monthName="Nov"){
+                                            month=11;
+                                        }
+                                        if(monthName="Dec"){
+                                            month=12;
+                                        }
+                                        var date = new Date(year, month-2, day);
+                                        window.location.href = 'events.cfm?name='+title+'&date='+date;
+                                    }
+                                    $('#calendar').fullCalendar('unselect');
                                 },
                                 //Data Feed
-                                events:'components/calendarEvents.cfc?method=getEvents&returnformat=json&projectLead',
+                                events:'components/teamLeadEvents.cfc?method=getEvents&returnformat=json',
                                 editable: false,
                                 weekMode:'variable',
                                 ignoreTimezone:false        
                             });
                         });
-                        
                     </script>
                     <cfelseif Session.roleID eq 3>
                             <div class="row-fluid">
-                            <div class="span9" id="content">
-                                <div class="row-fluid">
-                                    <!-- block -->
-                                    <div class="block">
-                                        <div class="navbar navbar-inner block-header"></div>
-                                        <div class="span10">
-                                            <div id='calendar'></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
-                        <hr/>
-                        <footer>
-                            <p>&copy;Techversant Infotech 2014</p>
-                        </footer>
-                    </div>
-                    <script src="vendors/jquery-1.9.1.min.js"></script>
-                    <script src="vendors/jquery-ui-1.10.3.js"></script>
-                    <script src="bootstrap/js/bootstrap.min.js"></script>
-                    <script src="vendors/fullcalendar/fullcalendar.js"></script>
-                    <script src="vendors/fullcalendar/gcal.js"></script>
-                    <script src="assets/scripts.js"></script>
-                    <script>
-                        $(document).ready(function() {
-                            $("#calendar").fullCalendar({
-                                //Formating
-                                header: {
-                                    right: 'prev,next today',
-                                    left: 'title',
-                                    center: 'month,agendaWeek,agendaDay'
-                                },
-                                titleFormat: {
-                                    month: 'MMMM yyyy',
-                                    week: 'MMMM d[ yyyy] - {[ MMM] d, yyyy}',
-                                    day: 'dddd, MMMM dd, yyyy'
-                                },
-                                columnFormat: {
-                                    month: 'dddd',
-                                    week: 'dddd <br> MM/dd',
-                                    day: 'dddd, MMMM dd, yyyy'
-                                },
-                                timeFormat: {
-                                    '': 'H(:mm) TT \n '
-                                },
-                                //Click function to switch to daily agenda
-                                dayClick: function(date, view) {
-                                    $('#calendar')
-                                    .fullCalendar('changeView', 'agendaDay')
-                                    .fullCalendar('gotoDate', date);
-                                },
-                                //Data Feed
-                                events:'components/calendarEvents.cfc?method=getEvents&returnformat=json&softwareDeveloper',
-                                editable: false,
-                                weekMode:'variable',
-                                ignoreTimezone:false        
-                            });
-                        });
-                    </script>
-                    <cfelseif Session.roleID eq 4>
-                            <div class="row-fluid">
                                 <div class="span9" id="content">
                                     <div class="row-fluid">
-                                        <!-- block -->
-                                        <div class="block">
-                                            <div class="navbar navbar-inner block-header"></div>
-                                            <div class="span10">
-                                                <div id='calendar'></div>
-                                            </div>
-                                        </div>
+                                        <div class="navbar navbar-inner block-header"></div>
+                                        <br/><br/>
+                                        <div id='calendar'></div>
                                     </div>
                                 </div>
                             </div>
@@ -366,9 +390,9 @@
                                 $("#calendar").fullCalendar({
                                     //Formating
                                     header: {
-                                        right: 'prev,next today',
-                                        left: 'title',
-                                        center: 'month,agendaWeek,agendaDay'
+                                        left: 'prev,next',
+                                        right: '',
+                                        center: 'title'
                                     },
                                     titleFormat: {
                                         month: 'MMMM yyyy',
@@ -383,14 +407,178 @@
                                     timeFormat: {
                                         '': 'H(:mm) TT \n '
                                     },
-                                    //Click function to switch to daily agenda
-                                    dayClick: function(date, view) {
-                                        $('#calendar')
-                                        .fullCalendar('changeView', 'agendaDay')
-                                        .fullCalendar('gotoDate', date);
+                                    selectable: true,
+                                    selectHelper: true,
+                                    select: function(start, end, allDay) {
+                                        var title = prompt('Event Title:');
+                                        if (title) {
+                                            $('#calendar').fullCalendar('renderEvent',
+                                                {
+                                                    title: title,
+                                                    start: start,
+                                                    end: end,
+                                                    allDay: allDay
+                                                },
+                                                true // make the event "stick"
+                                            );
+                                            var dateString=String(start);
+                                            var year = dateString.substring(11, 15);
+                                            var monthName = dateString.substring(4, 7);
+                                            var day = dateString.substring(8, 10);
+                                            if(monthName="Jan"){
+                                                month=01;
+                                            }
+                                            if(monthName="Feb"){
+                                                month=02;
+                                            }
+                                            if(monthName="Mar"){
+                                                month=03;
+                                            }
+                                            if(monthName="Apr"){
+                                                month=04;
+                                            }
+                                            if(monthName="May"){
+                                                month=05;
+                                            }
+                                            if(monthName="Jun"){
+                                                month=06;
+                                            }
+                                            if(monthName="Jul"){
+                                                month=07;
+                                            }
+                                            if(monthName="Aug"){
+                                                month=08;
+                                            }
+                                            if(monthName="Sep"){
+                                                month=09;
+                                            }
+                                            if(monthName="Oct"){
+                                                month=10;
+                                            }
+                                            if(monthName="Nov"){
+                                                month=11;
+                                            }
+                                            if(monthName="Dec"){
+                                                month=12;
+                                            }
+                                            var date = new Date(year, month-2, day);
+                                            window.location.href = 'events.cfm?name='+title+'&date='+date;
+                                        }
+                                        $('#calendar').fullCalendar('unselect');
                                     },
                                     //Data Feed
-                                    events:'components/calendarEvents.cfc?method=getEvents&returnformat=json&tester',
+                                    events:'components/softwareDeveloperEvents.cfc?method=getEvents&returnformat=json',
+                                    editable: false,
+                                    weekMode:'variable',
+                                    ignoreTimezone:false        
+                                });
+                            });
+                        </script>
+                    <cfelseif Session.roleID eq 4>
+                            <div class="row-fluid">
+                                <div class="span9" id="content">
+                                    <div class="row-fluid">
+                                        <div class="navbar navbar-inner block-header"></div>
+                                        <br/><br/>
+                                        <div id='calendar'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                            <hr/>
+                            <footer>
+                                <p>&copy;Techversant Infotech 2014</p>
+                            </footer>
+                        </div>
+                        <script src="vendors/jquery-1.9.1.min.js"></script>
+                        <script src="vendors/jquery-ui-1.10.3.js"></script>
+                        <script src="bootstrap/js/bootstrap.min.js"></script>
+                        <script src="vendors/fullcalendar/fullcalendar.js"></script>
+                        <script src="vendors/fullcalendar/gcal.js"></script>
+                        <script src="assets/scripts.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $("#calendar").fullCalendar({
+                                    //Formating
+                                    header: {
+                                        left: 'prev,next',
+                                        right: '',
+                                        center: 'title'
+                                    },
+                                    titleFormat: {
+                                        month: 'MMMM yyyy',
+                                        week: 'MMMM d[ yyyy] - {[ MMM] d, yyyy}',
+                                        day: 'dddd, MMMM dd, yyyy'
+                                    },
+                                    columnFormat: {
+                                        month: 'dddd',
+                                        week: 'dddd <br> MM/dd',
+                                        day: 'dddd, MMMM dd, yyyy'
+                                    },
+                                    timeFormat: {
+                                        '': 'H(:mm) TT \n '
+                                    },
+                                    selectable: true,
+                                    selectHelper: true,
+                                    select: function(start, end, allDay) {
+                                        var title = prompt('Event Title:');
+                                        if (title) {
+                                            $('#calendar').fullCalendar('renderEvent',
+                                                {
+                                                    title: title,
+                                                    start: start,
+                                                    end: end,
+                                                    allDay: allDay
+                                                },
+                                                true // make the event "stick"
+                                            );
+                                            var dateString=String(start);
+                                            var year = dateString.substring(11, 15);
+                                            var monthName = dateString.substring(4, 7);
+                                            var day = dateString.substring(8, 10);
+                                            if(monthName="Jan"){
+                                                month=01;
+                                            }
+                                            if(monthName="Feb"){
+                                                month=02;
+                                            }
+                                            if(monthName="Mar"){
+                                                month=03;
+                                            }
+                                            if(monthName="Apr"){
+                                                month=04;
+                                            }
+                                            if(monthName="May"){
+                                                month=05;
+                                            }
+                                            if(monthName="Jun"){
+                                                month=06;
+                                            }
+                                            if(monthName="Jul"){
+                                                month=07;
+                                            }
+                                            if(monthName="Aug"){
+                                                month=08;
+                                            }
+                                            if(monthName="Sep"){
+                                                month=09;
+                                            }
+                                            if(monthName="Oct"){
+                                                month=10;
+                                            }
+                                            if(monthName="Nov"){
+                                                month=11;
+                                            }
+                                            if(monthName="Dec"){
+                                                month=12;
+                                            }
+                                            var date = new Date(year, month-2, day);
+                                            window.location.href = 'events.cfm?projectManager&name='+title+'&date='+date;
+                                        }
+                                        $('#calendar').fullCalendar('unselect');
+                                    },
+                                    //Data Feed
+                                    events:'components/testerEvents.cfc?method=getEvents&returnformat=json',
                                     editable: false,
                                     weekMode:'variable',
                                     ignoreTimezone:false        
