@@ -48,7 +48,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                             <div class="muted pull-left"></div>
                             <div class="muted pull-right">
                       
-                        <a href="editStatusProjectLead.cfm?bugID=#url.bid#" class="btn btn-default btn-primary" style="display:inline">
+                        <a href="editStatusProjectLead.cfm?bugID=#url.bid#&pid=#sample.projectID#" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-plus-sign"></i>&nbsp;Remarks
                         </a>
                     </div>

@@ -4,7 +4,9 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="bugname" datasource="bugTracking">
-select bugName from bugs where  bugID=#url.bugID#;
+    select b.bugName as bugName,bu.userID as userID 
+    from bugs b inner join bugUsers bu on  
+    b.bugID=#url.bugID# and b.bugID=bu.bugID;
 </cfquery>
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm">
@@ -38,7 +40,7 @@ select bugName from bugs where  bugID=#url.bugID#;
                     </div><!--- close of navbar navbar-inner block-header --->
                     <div class="block-content collapse in">
                         <div class="span12"><cfoutput>
-                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#" id="form_sample_1" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#&pid=#url.pid#" id="form_sample_1" class="form-horizontal" method="post" enctype="multipart/form-data">
                                 
                     			<fieldset>
                                     <legend>Update status of Bug</legend>
@@ -89,8 +91,82 @@ select bugName from bugs where  bugID=#url.bugID#;
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
-        <cfoutput>#addUserObject.fileupload()#</cfoutput>
-    <Cfelseif isDefined('form.cancel')>
-        <cflocation url="#CGI.HTTP_REFERER#" addToken="false" />
+        <cfoutput>
+            <cfset check = #addUserObject.fileupload()# />
+        </cfoutput>
+        <cfif check>
+            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+                SELECT u.email as uemail, u.userName as uname,
+                p.projectName as pname from users as u 
+                inner join projects p on u.userId=#bugname.userID#
+                and p.projectID=#url.pid#;
+            </cfquery>
+            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                SELECT  u.userName as username, d.name as dname 
+                from users u inner join designations d on 
+                userID=#session.userID# and u.designationID=d.designationID; 
+            </cfquery>      
+            <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="New remark" type="html">
+                <cfmailpart type="html">
+                    <html> 
+                        <head> 
+                            <style type="text/css"> 
+                                body { 
+                                font-family:sans-serif;
+                                font-size:12px;
+                                color:black;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Dear #getDetails.uname#,</p> <br><br>
+                            Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
+                            <br> <br>
+                            <p>Email sent by </p>               
+                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.dname#</p>              
+                        </body>
+                     </html>
+                </cfmailpart>                     
+            </cfmail>                                   
+            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
+                SELECT u.email as uemail, u.userName as uname,
+                p.projectName as pname from users as u 
+                inner join projects p on p.projectID=#url.pid#
+                and p.userID=u.userID ;
+            </cfquery>
+            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                SELECT  u.userName as username, d.name as dname 
+                from users u inner join designations d on 
+                userID=#session.userID# and u.designationID=d.designationID; 
+            </cfquery>
+            <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="New Remark_projectManager" type="html">
+                <cfmailpart type="html">
+                    <html> 
+                        <head> 
+                            <style type="text/css"> 
+                                body { 
+                                font-family:sans-serif;
+                                font-size:12px;
+                                color:black;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Dear #getProjectManager.uname#,</p> <br><br>
+                            A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
+                            <br> <br>
+                            <p>Email sent by </p>               
+                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.dname#</p>              
+                        </body>
+                    </html>
+                </cfmailpart>                     
+            </cfmail>
+        <cfelse>
+            <cfoutput>failed</cfoutput>        
+        </cfif>
+<cfelseif isDefined('form.cancel')>
+    <cflocation url="#CGI.HTTP_REFERER#" addToken="false" />
 </cfif>
 <cfinclude template="layouts/footer.cfm">

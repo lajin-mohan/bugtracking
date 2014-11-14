@@ -67,8 +67,10 @@
             </cfquery>
             <cfif remarkID.recordcount eq 1 and remark.recordcount eq 1>
                 <cfoutput>attachment inserted successfully</cfoutput>
+                <cfreturn true />
             <cfelse>
                 <cfoutput> failed</cfoutput> 
+                <cfreturn false />
             </cfif>
     </cffunction>       
 
