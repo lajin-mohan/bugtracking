@@ -125,7 +125,86 @@
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
-    <cfoutput>#addUserObject.fileupload()#</cfoutput>
+    <cfoutput>
+        <cfset check = #addUserObject.fileupload()# />
+    </cfoutput>
+    <cfif check>
+        <cfif Session.roleID eq 3 and form.status eq 5>
+            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+                SELECT u.email as uemail, u.userName as uname,
+                p.projectName as pname from users as u inner join projectUsers as pu
+                inner join projects p inner join bugs b on u.userId=pu.userID and pu.projectID=b.projectID 
+                and p.projectID=b.projectID and u.roleID=4;
+            </cfquery>
+        <cfelseif Session.roleID eq 4>
+            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+                SELECT u.email as uemail, u.userName as uname,
+                p.projectName as pname from users as u
+                inner join projects p on u.userId=4 and p.projectID=7;
+            </cfquery> 
+        </cfif> 
+            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                SELECT  u.userName as username, d.name as dname 
+                from users u inner join designations d on 
+                userID=#session.userID# and u.designationID=d.designationID; 
+            </cfquery>    
+            <cfmail query="getDetails" from="mynew@domain.com" to="#getDetails.uemail#" subject="Status Change" type="html">
+                <cfmailpart type="html">
+                    <html> 
+                        <head> 
+                            <style type="text/css"> 
+                                body { 
+                                font-family:sans-serif;
+                                font-size:12px;
+                                color:black;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Dear #getDetails.uname#,</p> <br><br>
+                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            has been changed. View the bug description for additional details.
+                            <br> <br>
+                            <p>Email sent by </p>               
+                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.dname#</p>              
+                        </body>
+                     </html>
+                </cfmailpart>                     
+            </cfmail>                                   
+            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
+                SELECT u.email as uemail, u.userName as uname,
+                p.projectName as pname from users as u 
+                inner join projects p inner join projectUsers pu on p.projectID=7
+                and pu.userID=u.userID and pu.isLead=1 and pu.projectID=p.projectID;
+            </cfquery>
+            <cfmail query="getProjectManager" from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Status Change_projectManager" type="html">
+                <cfmailpart type="html">
+                    <html> 
+                        <head> 
+                            <style type="text/css"> 
+                                body { 
+                                font-family:sans-serif;
+                                font-size:12px;
+                                color:black;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Dear #getProjectManager.uname#,</p> <br><br>
+                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            has been changed. View the bug description for additional details.
+                            <br> <br>
+                            <p>Email sent by </p>               
+                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.dname#</p>              
+                        </body>
+                    </html>
+                </cfmailpart>                     
+            </cfmail>
+        <cfelse>
+            <cfoutput>failed</cfoutput>
+    </cfif>
     <cflocation url="ownBugs.cfm" addToken="false" />
 </cfif>
 <cfinclude template="layouts/footer.cfm">
