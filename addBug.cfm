@@ -198,7 +198,8 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                             <cfqueryparam value="3" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#form.priorityID#" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#form.severityID#" cfsqltype="cf_sql_tinyint"/>,
-                                            <cfqueryparam value="#LSParseNumber(url.p)#" cfsqltype="cf_sql_tinyint"/>);
+                                            <cfqueryparam value="#LSParseNumber(url.p)#" cfsqltype="cf_sql_tinyint"/>,
+                                            <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>);
                                         </cfquery>
                                 
                                      <cfquery name="getbugID" datasource="bugTracking">
