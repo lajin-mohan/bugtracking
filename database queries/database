@@ -41,7 +41,6 @@ alter table projects change column projectManager userID tinyint unsigned;
 alter table projects add constraint fk foreign key (userID) references users(userID);
 
 alter table projectUsers add column hide bit default 0;
-
 create table remainders(remainderID tinyint unsigned primary key auto_increment, name varchar(32), description varchar(512), userID tinyint unsigned, hide bit default 0);
 
 alter table remainders add constraint fk2 foreign key (userID) references users(userID);
