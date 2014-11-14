@@ -131,6 +131,11 @@
             </cfmailpart>                     
         </cfmail>    
         <cflocation url="bugDetails.cfm?pid=#url.projectID#" addToken="false"/>
+        <cfelseif isdefined('url.milestones')>
+        <cfquery name="deleteProject" datasource="bugTracking">
+            update milestones set milestoneHide=1 where milestoneID=#url.milestoneID#;
+        </cfquery>
+        <cflocation url="editProject.cfm?projectID=#url.projectID#" addToken="false"/>
     <cfelseif isdefined('url.projectID')>
        <cfquery name="deleteProject" datasource="bugTracking">
            update projects set statusID=6 where projectID=#url.projectID#;
@@ -174,7 +179,8 @@
             </cfmail>
         </cfloop>   
     <cflocation url="projectDetails.cfm" addToken="false"/>
-        <cfelseif isdefined('url.remainderID')>
+        
+    <cfelseif isdefined('url.remainderID')>
         <cfquery name="deleteRemainder" datasource="bugTracking">
             update remainders set hide=1 where remainderID=#url.remainderID#;
         </cfquery>
