@@ -21,21 +21,23 @@
                         <div class="control-group muted pull-right">
 				                    <form action="" method="post">
 				                        <div class="controls">
-                                     <select name="bug"> 
-                                             <cfinvoke component="components.timeSheet" method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
-                                          
-                                             
-                                             <cfloop query="getdetails">
-                                             <cfoutput><option value="#bugID#">#bugName#</option></cfoutput>
+                                    <select name="project"> 
+                                            <cfquery name="selectProject" datasource="bugTracking">
+                                                select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
+                                             </cfquery>
+                                             <option>Projects</option>
+                                             <cfloop query="selectProject">
+                                             <cfoutput><option value="#projectID#">#projectName#</option></cfoutput>
                                              </cfloop>
                                              </select>
-                                            <input type="submit" value="Generate Report" name="report" />
+                                        
+                                            <input type="submit" value="Generate Report" name="report" class="btn btn-default btn-primary" style="display:inline" />
                                         </div>
                                    </form>
                                     </div>
                     </div>
-                    <cfif isDefined("form.report") and isDefined("form.bug")>
-                        <cfoutput><cflocation url="timeSheetReport.cfm?bugID=#form.bug#"></cfoutput>
+                    <cfif isDefined("form.report") and isDefined("form.project")>
+                        <cfoutput><cflocation url="plPersonalReport.cfm?projectID=#form.project#"></cfoutput>
                     </cfif>
                     <div class="block-content collapse in">
                         <div class="span12">
@@ -59,18 +61,17 @@
                             </form>
                            <cfif isDefined("form.fromDate") and isDefined("form.toDate")>
                                
-                                <cfinvoke component="components.timeSheet" method="selectBugOnDate" returnVariable="getdetails" fromDate="#form.fromDate#" toDate="#form.toDate#"></cfinvoke> 
+                                <cfinvoke component="components.timeSheet" method="plDetailsOnDate" returnVariable="getdetails" fromDate="#form.fromDate#" toDate="#form.toDate#"></cfinvoke> 
                               
                                <cfelse>
-                                <cfinvoke component="components.timeSheet" method="selectBugDetails" returnVariable="getdetails"></cfinvoke> 
+                                <cfinvoke component="components.timeSheet" method="plDetails" returnVariable="getdetails"></cfinvoke> 
                             </cfif>   
                             <table class="table table-bordered">
                                 
                                 <th><strong>Date</strong></th>
-                                <th><strong>Project Name</strong></th>
-                                <th><strong>Bug</strong></th>
-                                <th><strong>Description</strong></th>
-                                <th><strong>Developer</strong></th>
+                                <th><strong>Project</strong></th>
+                                  <th><strong>Bug</strong></th>
+                                 <th><strong>Description</strong></th>
                                 <th><strong>Time Spent</strong></th>
                                 <th><strong>Productive Hours</strong></th>
                                 <th><strong>Status</strong></th>
@@ -81,15 +82,13 @@
                                         <tr> 
                                             <td>#DateFormat(dateTime,'dd/mm/yyyy')#</td>
                                             <td>#projectName#</td>
-                                            <td>#bugName#</td>
+                                               <td>#bugName#</td>
                                             <td>#description#</td>
-                                            <td>#userName#</td>
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
-                                            <td>#name#</td>  
-                                            <td><a href="editUserTimeSheet.cfm?bugID=#getdetails.bugID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?timesheetbugID=#getdetails.bugID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td>
-                                        </tr>
+                                            <td>#name#</td>    
+                                        <td><a href="editPlTimeSheet.cfm?bugID=#getdetails.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
+                                            <td><a href="deleteRecord.cfm?timesheetbID=#getdetails.bugID#&timesheetprojectID=#getdetails.projectID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>

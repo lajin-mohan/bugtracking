@@ -179,20 +179,4 @@
             update remainders set hide=1 where remainderID=#url.remainderID#;
         </cfquery>
         <cflocation url="calendar.cfm" addToken="false"/>
-<cfelseif isDefined('url.timesheetbugID')>
-        <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where bugID="#url.timesheetbugID#" and userID="#session.userID#"
-        </cfquery>
-        <cflocation url="timeSheetHistory.cfm" addToken="false"/>
-    <cfelseif isDefined('url.timesheetbID') and isDefined('url.timesheetprojectID')>
-        <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where bugID="#url.timesheetbugID#" and userID="#session.userID#" and projectID="#url.timesheetprojectID#"
-        </cfquery>
-        <cflocation url="plTimeSheetHistory.cfm" addToken="false"/>
-    <cfelseif isDefined('url.timesheetpID')>
-        <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where userID="#session.userID#" and projectID="#url.timesheetpID#"
-        </cfquery>
-        <cflocation url="pmTimeSheetHistory.cfm" addToken="false"/>
-</cfif>
 </cfif>

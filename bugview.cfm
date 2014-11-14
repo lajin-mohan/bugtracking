@@ -57,7 +57,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                             <div class="span12">
                                 <form action=" " class="form-horizontal" method="post">
                                     <fieldset>
-                                        <legend>Bug Details</legend>
+                                        <legend>Bug Details<cfoutput><a href="plBugViewReport.cfm?bugID=#url.bid#" class="btn btn-default btn-primary muted pull-right" style="display:inline">Report</a></cfoutput></legend>
                                         <div class="alert alert-error hide">
                                             <button class="close" data-dismiss="alert"></button>
                                                 You have some form errors. Please check below.
