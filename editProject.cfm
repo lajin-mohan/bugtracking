@@ -277,7 +277,7 @@
                             <tr>
                                 <td>#milestones.milestoneName#</td>
 
-                                <td>#milestones.milestoneDate#</td>
+                                <td>#dateformat(milestones.milestoneDate)#</td>
 
                                 <td>
                                     <cfif isdefined( 'flag')>
@@ -299,7 +299,7 @@
                                     </cfif>
                                 </td>
                                 <td>
-<a href="deleteRecord.cfm?milestoneID=#milestones.milestoneID#&projectID=#url.projectID#&milestones" class="btn  "><i class="icon-remove"></i></a>
+<a href="deleteRecord.cfm?milestoneID=#milestones.milestoneID#&projectID=#url.projectID#&milestones" class="btn   btn-danger btn-mini"><i class="icon-remove "></i></a>
                                 </td>
 
 

@@ -98,10 +98,11 @@
                                         </label>
                                         <div class="controls">
                                             <select name="formMilestoneStatus"  class=" span6 m-wrap" required>
-                                            <optgroup label="Milestone Status" >
+                                           
+                                        <option value="select" >-- Select --</option>
                                         <option value="Progress" >Progress</option>
                                         <option value="Completed">Completed</option>
-                                                </optgroup>
+                                               
                                      </select>
                                         </div>
                                     </div>
