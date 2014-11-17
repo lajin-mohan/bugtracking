@@ -1,9 +1,11 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-
+   <cfquery name="user" datasource="bugTracking"> 
+       select users.userName from users where users.userID="#session.userID#" 
+       </cfquery>
       <cfquery name="selectData" datasource="bugTracking">
-          select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,projects.projectName,status.name,users.userName,projects.projectID,timeSheet.productiveHours,projects.estimatedStartDate,projects.actualStartDate from timeSheet inner join projects on timeSheet.projectID=projects.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and projects.projectID="#url.projectID#" and users.roleID=1 order by timeSheet.dateTime desc 
+          select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,projects.projectName,status.name,users.userName,projects.projectID,timeSheet.productiveHours,projects.estimatedStartDate,projects.actualStartDate from timeSheet inner join projects on timeSheet.projectID=projects.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and projects.projectID="#url.projectID#" and users.roleID=1 and timeSheet.hide=0 order by timeSheet.dateTime desc 
        </cfquery>
                 <html>
                     <head><link href="report.css" rel="stylesheet"></head>
@@ -11,11 +13,11 @@
                         <div class="divHeading"><h2>Time Sheet Report</h2></div>
                         <div>
                              <cfquery name="totalHours" datasource="bugTracking">
-                            select sum(productiveHours) as totalProductive,sum(workingHour) as totalTimeSpent from timeSheet where projectID="#url.projectID#" and userID="#session.userID#"
+                            select sum(productiveHours) as totalProductive,sum(workingHour) as totalTimeSpent from timeSheet where projectID="#url.projectID#" and userID="#session.userID#" and timeSheet.hide=0
                             </cfquery><br />
                             <table>
                                  <tr> <td class="tdAlign"><b> <label>Name</b></label></td> 
-                                    <td class="tdAlign">                                                                                       <b><cfoutput>:#selectData.userName#</cfoutput></b></td>                                  </tr>
+                                    <td class="tdAlign">                                                                                       <b><cfoutput>:#user.userName#</cfoutput></b></td>                                  </tr>
                                 <tr> <td class="tdAlign"><b> <label>Total Productive Hours</b>                                    </label></td> 
                                     <td class="tdAlign">                                                                                       <b><cfoutput>:#totalHours.totalProductive#</cfoutput>                                  </b></td></tr> 
                                 <tr><td class="tdAlign"> <b><label>Total times spend</label></b></td><td class="tdAlign"><b><cfoutput>:#totalHours.totalTimeSpent#</cfoutput></b></td></tr>

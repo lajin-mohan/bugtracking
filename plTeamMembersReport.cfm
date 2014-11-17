@@ -4,11 +4,9 @@
        <cfquery name="getbugID" datasource="bugTracking">
         select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0
        </cfquery>
-       <cfquery name="selectData" datasource="bugTracking">
-                select u.userName name,u.userID id,p.projectName, p.projectID pid,designations.name
-                from users u inner join projectUsers pu inner join projects p inner join designations
-                on u.userID=pu.userID and pu.projectID=p.projectID and designations.designationID=u.designationID 
-       </cfquery>
+       
+     
+      
                 <html>
                     <head><link href="report.css" rel="stylesheet"></head>
                     <body>
@@ -26,21 +24,29 @@
                                 
                                 
                                    </tr>
-                                
-                                <cfloop query="selectData">
-                                    <cfoutput>
+                         <cfloop query="getbugID">
+                            <cfquery name="selectData" datasource="bugTracking">
+                               select u.userName name,u.userID id,p.projectName, 
+                               p.projectID pid,designations.name
+                               from users u inner join projectUsers pu 
+                               inner join projects p inner join designations
+                               on u.userID=pu.userID and pu.projectID=p.projectID and
+                               pu.projectID="#getbugID.projectID#" and
+                               designations.designationID=u.designationID 
+                           </cfquery>
+                           <cfloop query="selectData">
+                               <cfoutput>
                                 <tr> 
-                            <td class="tdClass">#name#</td>
-                            <td class="tdClass">#name#</td>
-                            <td class="tdClass">#projectName#</td>
-                         
-                                                                                                        </tr>
-                                    </cfoutput>
-                                 </cfloop>
-                            </table>
-                       
-                        </div>
-                    </body>
+                                    <td class="tdClass">#name#</td>
+                                    <td class="tdClass">#name#</td>
+                                    <td class="tdClass">#projectName#</td>
+                                </tr>
+                               </cfoutput>
+                           </cfloop>
+                       </cfloop> 
+                    </table>
+                </div>
+            </body>
        </html>
    </cfoutput>
 </cfdocument>

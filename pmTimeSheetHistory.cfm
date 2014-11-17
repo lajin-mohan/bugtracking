@@ -43,7 +43,7 @@
                     </cfif>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form method="post" action="timeSheetHistory.cfm" class="form-horizontal">
+                            <form method="post" action="pmTimeSheetHistory.cfm" class="form-horizontal">
                                 <fieldset>
                                     <legend>Time Sheet History</legend>
                                   
@@ -61,7 +61,7 @@
                                     </div>
                                 </fieldset>
                             </form>
-                           <cfif isDefined("form.fromDate") and isDefined("form.toDate")>
+                           <cfif isDefined("form.fromDate") and isDefined("form.toDate") and isDefined("form.submit")>
                                
                                 <cfinvoke component="components.timeSheet" method="pmDetailsOnDate" returnVariable="getdetails" fromDate="#form.fromDate#" toDate="#form.toDate#"></cfinvoke> 
                               
@@ -70,12 +70,12 @@
                             </cfif>   
                             <table class="table table-bordered">
                                 
-                                <th><strong>Date</strong></th>
+                                <tr><th><strong>Date</strong></th>
                                 <th><strong>Project</strong></th>
                                  <th><strong>Description</strong></th>
                                 <th><strong>Time Spent</strong></th>
                                 <th><strong>Productive Hours</strong></th>
-                                <th><strong>Status</strong></th>
+                                    <th><strong>Status</strong></th></tr>
                                 
                             <cfif #getdetails.RecordCount# GT 0>
                                 <cfloop query="getdetails">
@@ -88,7 +88,7 @@
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>  
                                         <td><a href="editPmTimeSheet.cfm?pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?timesheetpID=#getdetails.projectID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
+                                            <td><a href="deleteRecord.cfm?timesheetpID=#getdetails.projectID#&pmTimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>
