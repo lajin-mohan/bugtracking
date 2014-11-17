@@ -38,7 +38,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                         <cfoutput query="viewproject">
                                             <tr>
                                                 <td><a href="projectDetailsView.cfm?pid=#viewproject.projectID#">#viewproject.pname#</a></td>
-                                                <td>#dateformat(viewproject.eed,"yyyy-mm-dd")#</td>
+                                                <td>#dateformat(viewproject.eed)#</td>
                                                 <td>#viewproject.status#</td>
                                             </tr>   
                                        </cfoutput>
@@ -52,7 +52,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>Team Members</legend>
+                            <legend>Assigned Bugs</legend>
                              <table class="table table-striped">
                                 <tr>
 					                <td><strong>Name</strong></td>
@@ -70,7 +70,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                         where p.projectID=#getbugID.projectID# and u.userID=pu.userID 
                                         and u.designationID=d.designationID and pu.isLead=0 and
                                         b.projectID=pu.projectID and b.bugID=bu.bugID 
-                                        and bu.userID=pu.userID and p.projectID=b.projectID
+                                        and bu.userID=pu.userID and p.projectID=b.projectID and b.statusID!=6;
                                     </cfquery>
                                     <cfoutput query="viewdetails">
                                         <tr>

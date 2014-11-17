@@ -39,8 +39,8 @@
                                     <cfif #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# GT now()>
                                         <tr>
                                             <td><a href="projectProfile.cfm?projectID=#project.projectID#"  onclick="project_return()">#project.projectName#</a></td>
-                                            <td>#LSDateformat(project.estimatedStartDate,"yyyy-mm-dd")#</td>
-                                            <td>#LSDateformat(project.estimatedEndDate,"yyyy-mm-dd")#</td>
+                                            <td>#dateformat(project.estimatedStartDate)#</td>
+                                            <td>#dateformat(project.estimatedEndDate)#</td>
                                             <td>#project.name#</td>
                                         </tr>   
                                     </cfif>

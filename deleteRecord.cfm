@@ -200,5 +200,5 @@
            update timeSheet set hide=1 where userID="#session.userID#" and projectID="#url.timesheetpID#" and timeSheetID="#url.pmTimeSheetID#"
         </cfquery>
         <cflocation url="pmTimeSheetHistory.cfm" addToken="false"/>
-
+    </cfif>
 </cfif>

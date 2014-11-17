@@ -179,18 +179,18 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                             </cfloop>
 					                        </select>
 				                        </div>
-			                        </div>
+			                        </div> <cfoutput>
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary" name="submit">Add Bug</button>
-                                        <button type="button" class="btn">Cancel</button>
-                                    </div>
+                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn" name="cancel">Cancel</button></a>
+                                    </div></cfoutput>
                                 </fieldset>
                             </form>
                             <cfif structkeyexists(form,"submit")>
                                   <cfquery name="Bug" datasource="bugTracking" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
-                                            priorityID , severityID ,projectID) values(
+                                            priorityID , severityID ,projectID,ownerID) values(
                                             <cfqueryparam value="#form.bugName#" cfsqltype="cf_sql_varchar"/>,
                                             <cfqueryparam value="#form.bugDescription#" cfsqltype="cf_sql_varchar"/>,
                                             <cfqueryparam value="#form.estimatedStartDate#" cfsqltype="cf_sql_date"/>,

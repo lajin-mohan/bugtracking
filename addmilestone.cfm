@@ -3,21 +3,6 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $(".hide-element").hide();
-  $("#mnew").click(function(){
-    $(".hide-element").show();
-      $("#mnew").hide();
-  });
-    $("#mcancel").click(function(){
-    $(".hide-element").hide();
-      $("#mnew").show();
-  });
-});
-</script>
-
 <cfif isDefined("form.add") and len(trim(form.formMilestoneName))>
     <cfquery name="mins" datasource="bugtracking">
         insert into milestones 
@@ -63,58 +48,71 @@ $(document).ready(function(){
                             <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
                             </form>
                         </div>
-                    </div>
-                    
-                     <cfquery name="milestones" datasource="bugtracking">
-                                        select * from milestones
-                                        where
-                                        projectID=#url.projectID# 
-                         order by milestoneStatus;
-                                    </cfquery>
+                    </div>                    
                     <div class="block-content collapse in">
                         <div class="span12">
-                                <table class="table table bordered">
-                                    
-                                      <div class="control-group">
-                                        <label class="control-label"><span class="required"></span></label>
-                                        <div class="controls">
-                                            <table class="table table bordered">
-                                                <tr>
-                                                    <th><strong>Name</strong></th>
-                                                
-                                                    <th><strong>Date</strong></th> 
-                                                    <th><strong>Status</strong></th>
-                                                </tr>
-                                            
-                                            <cfoutput query='milestones'>
-                                                <tr>
-                                                    <td>#milestones.milestoneName#</td>    
-                                                    <td>#milestones.milestoneDate#</td>
-                                                    <td>#milestones.milestoneStatus#</td>
-                                                </tr>
-                                            </cfoutput>
-                                        </table>
+                            
+                             <form action=" " method="post">
+                                <fieldset>
+                                    <legend>Add Milestone</legend>
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        You have some form errors. Please check below.
                                     </div>
-                                </div> 
-                                    
-                                </table>
-                                 <form action=" " method="post">
-                                 <div class="form-actions">
-                                     <button id="mnew" type="button" class="btn btn-info">NEW</button></br>
-                                        <input type="text" class="form-control  hide-element" name="formMilestoneName" placeholder=" Milestone Name" required></br>
-                                        <input type="date" class="form-control   hide-element" name="formMilestoneDate" placeholder=" Date" required></br>
-                                        <textarea class=" hide-element" name="formMilestoneDescription" placeholder="Milestone Description" required></textarea></br>
-                                        <select name="formMilestoneStatus"  class=" hide-element" required>
-                                            <optgroup label="Milestone Status" >
+                                    <div class="alert alert-success hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        Project has been successfully added to the database!
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">
+                                            Milestone Name
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="controls">
+                                            <input type="text" class="form-control  span6 m-wrap" name="formMilestoneName" placeholder=" Milestone Name" required>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="control-group">
+                                        <label class="control-label">
+                                            Milestone Date
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="controls">
+                                             <input type="date" class="form-control   span6 m-wrap" name="formMilestoneDate" placeholder=" Date" required>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">
+                                            Milestone Description
+                                            <span class="required"></span>
+                                        </label>
+                                        <div class="controls">
+                                            <textarea class=" span6 m-wrap" name="formMilestoneDescription" placeholder="Milestone Description" required></textarea>	
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">
+                                            Milestone Status
+                                            <span class="required"></span>
+                                        </label>
+                                        <div class="controls">
+                                            <select name="formMilestoneStatus"  class=" span6 m-wrap" required>
+                                           
+                                        <option value="select" >-- Select --</option>
                                         <option value="Progress" >Progress</option>
                                         <option value="Completed">Completed</option>
-                                                </optgroup>
+                                               
                                      </select>
-                                          
-                                        </br><input type="submit" class="btn btn-primary  hide-element" id="add" name="add"  value="ADD">
-                             <button type="reset" class="btn  hide-element" id="mcancel">Cancel</button>
-                                </div>
-                                     </form>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="form-actions">
+                                        <input type="submit" class="btn btn-primary  hide-element" id="add" name="add"  value="ADD">
+                             <button type="reset" class="btn " id="mcancel">Cancel</button>
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>

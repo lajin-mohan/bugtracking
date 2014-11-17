@@ -48,28 +48,28 @@ select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate 
                                          <div class="control-group">
                                             <label class="control-label">Estimated start Date:</label>
                                             <div class="controls">
-                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.esd,"yyyy-mm-dd")#"/>
+                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.esd)#"/>
                                             </div>
                                         </div>
                                             
                                             <div class="control-group">
                                             <label class="control-label">Actual start Date:</label>
                                             <div class="controls">
-                                                <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.asd,"yyyy-mm-dd")#"/>              									
+                                                <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.asd)#"/>              									
                                             </div>
                                         </div>
                                             
                                              <div class="control-group">
                                             <label class="control-label">Estimated End Date:</label>
                                             <div class="controls">
-                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.eed,"yyyy-mm-dd")#"/>
+                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#dateformat(projview.eed)#"/>
                                             </div>
                                         </div>
                                             
                                             <div class="control-group">
                                             <label class="control-label">Actual End Date:</label>
                                             <div class="controls">
-                                                <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.aed,"yyyy-mm-dd")#"/>              									
+                                                <input name="asd" type="text" class="span6 m-wrap" disabled value="#dateformat(projview.aed)#"/>              									
                                             </div>
                                         </div>
                                              
