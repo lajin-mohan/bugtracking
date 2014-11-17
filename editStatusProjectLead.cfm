@@ -25,7 +25,7 @@
                     <div class="muted pull-left">
                         <cfoutput>
                         <cfif Session.roleID eq 2>
-                            <a href="bugProjectDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
+                            <a href="bugview.cfm?bid=#url.bugID#" class="btn btn-default btn-primary" style="display:inline">
                         <cfelseif Session.roleID eq 3 or Session.roleID eq 4>
                             <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
                         </cfif>
@@ -78,7 +78,7 @@
 			                        </div><!--- close of control-group --->			                        
 			                        <div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" name="submit" value="Update">
-				                        <input type="submit" class="btn" name="cancel" value="Cancel">
+                                        <a href="bugview.cfm?bid=#url.bugID#"> <input type="submit" class="btn" name="cancel" value="Cancel"></a>
 			                        </div><!--- close of form-actions --->
 		                        </fieldset><!--- close of fieldset --->
                                     </cfoutput>

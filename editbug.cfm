@@ -134,7 +134,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
                                              <div class="control-group">
                                             <label class="control-label">Actual Start Date:</label>
                                             <div class="controls">
-                                                <input name="asd" type="date" class="txtdate span6 m-wrap"  value="#lsdateformat(sample.actualStartDate,'mm/dd/yyyy')#"/>              									
+                                                <input name="asd" type="date" class="txtdate span6 m-wrap"  value="#dateformat(sample.actualStartDate)#"/>              									
                                             </div>
                                         </div>
                                           <div class="control-group">
@@ -193,7 +193,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
 			                        </div>
                                              <div class="form-actions">
                                             <input  type="submit" class="btn btn-primary" name="save" value="Save" />
-                                            <button type="button" class="btn">Cancel</button>
+                                                 <a href="bugview.cfm?bid=#url.bgid#"><button type="button" class="btn">Cancel</button></a>
                                         </div>
                                           <div class="control-group" style="visibility:hidden">
                                             <label class="control-label">Estimated End Date:</label>

@@ -50,11 +50,11 @@
                             <table class="table table-striped">
                                 <tr>
 					               
-                                    <td>Bug Name</td>
-                                    <td>End Date</td>
-                                    <td>Priority</td>
+                                    <td><strong>Bug Name</strong></td>
+                                    <td><strong>End Date</strong></td>
+                                    <td><strong>Priority</strong></td>
                                    
-                                    <td>Status</td>
+                                    <td><strong>Status</strong></td>
                                     <td></td>
                                 </tr>
                                 <cfquery name="bug" datasource="bugTracking">
@@ -63,7 +63,7 @@ select b.bugID, b.bugName,b.projectID,b.estimatedEndDate,p.name as n ,s.name as 
                                 <cfoutput query="bug">
                                     <tr>
                                         <td> <a href="bugview.cfm?bid=#bug.bugID#" onclick="project_return()">#bug.bugName#</a></td>
-                                        <td>#dateformat(bug.estimatedEndDate,"yyyy-mm-dd")#</td>
+                                        <td>#dateformat(bug.estimatedEndDate)#</td>
                                         <td>#bug.n#</td>
                                         <td>#bug.s#</td>
                                         <td>

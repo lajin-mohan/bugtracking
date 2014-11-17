@@ -17,10 +17,11 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
         <cfset Session.highlight6="inactive"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
+            <div class="block">
             <div class="row-fluid">
-                <div class="block">
+              
                     <div class="navbar navbar-inner block-header">
-                         <a href="plMyprojectReport.cfm" class="btn btn-default btn-primary" style="display:inline">Report</a></div>
+                         <a href="plMyprojectReport.cfm" class="btn btn-default btn-primary muted pull-right" style="display:inline">Report</a></div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
@@ -39,7 +40,7 @@ select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from pr
                                     <cfoutput query="viewproject">
                                     <tr>
                                         <td><a href="bugDetails.cfm?pid=#getbugID.projectID#"                                                                                    onclick="project_return()">#viewproject.pname# </a></td>
-                                            <td>#dateformat(viewproject.eed,"yyyy-mm-dd")#</td>
+                                            <td>#dateformat(viewproject.eed)#</td>
                                                 <td>#viewproject.status#</td>
                                         
                                         
@@ -50,7 +51,8 @@ select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from pr
 					       </table> 
                         </div>
                     </div>
-                </div>   
+         
+                </div>
             </div>
         </div>
     </div>
