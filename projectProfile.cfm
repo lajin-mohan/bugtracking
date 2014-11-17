@@ -279,8 +279,7 @@
                                         <cfset etotal="#etotal+1#">
                                             <tr>
                                                 <td>#etotal#</td>
-                                                <td><a href="employeeProfile.cfm?
-                                                            userID=#pUsers.userID#&projectID=#url.projectID#">
+                                                <td><a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#">
                                                             #pUsers.userName#</a>
                                                 </td>
                                                 <td>#pUsers.employeeID#</td>
