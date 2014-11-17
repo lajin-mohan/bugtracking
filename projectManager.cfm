@@ -26,12 +26,11 @@
                                 <tr>
                                     <td><strong>Project Name</strong></td>
                                     <td><strong>Estimated Start Date</strong></td>
-                                    <td><strong>Actual Start Date</strong></td>
                                     <td><strong>Estimated End Date</strong></td>
                                     <td><strong>Project Status</strong></td>
                                 </tr>
                                 <cfquery name="project" datasource="bugTracking">
-                                    select p.projectName, p.projectDescription, 
+                                    select p.projectName, p.projectDescription,p.projectID,  
                                     p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, 
                                     s.name from projects p inner join status s 
                                     on p.statusID=s.statusID order by p.estimatedEndDate desc;
@@ -39,9 +38,8 @@
                                 <cfoutput query="project">
                                     <cfif #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# GT now()>
                                         <tr>
-                                            <td>#project.projectName#</td>
+                                            <td><a href="projectProfile.cfm?projectID=#project.projectID#"  onclick="project_return()">#project.projectName#</a></td>
                                             <td>#LSDateformat(project.estimatedStartDate,"yyyy-mm-dd")#</td>
-                                            <td>#LSDateformat(project.actualStartDate,"yyyy-mm-dd")#</td>
                                             <td>#LSDateformat(project.estimatedEndDate,"yyyy-mm-dd")#</td>
                                             <td>#project.name#</td>
                                         </tr>   
