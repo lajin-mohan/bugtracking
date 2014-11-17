@@ -4,7 +4,7 @@ component {
     {
         var qp=new query();
         qp.setDatasource("bugTracking");
-        qp.setSQL("select projectName, estimatedEndDate, projectID from projects where userID="&Session.userID);
+        qp.setSQL("select projectName, estimatedEndDate, projectID from projects where statusID!=6 and userID="&Session.userID);
         var dbresultsProjects=qp.execute().getResult();
         var results=[];
         for(var i=1;i LTE dbresultsProjects.recordCount;i++)

@@ -5,23 +5,9 @@
     --->
 <cfinclude template="layouts/header.cfm" />
 <cfobject name="addUserObject" component="components.user">
-    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <style>
-        .ui-widget-header {
-            background: #298A08;
-            border: 1px solid #DDDDDD;
-            color: #333333;
-            font-weight: bold;
-        }
-        .progress-label {
-            position: absolute;
-            left: 60%;
-            font-weight: bold;
-            color: #610B5E;
-        }
-    </style>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script>
         $(function () {
             var progressbar = $("#progressbar-5");
@@ -33,7 +19,7 @@
                         progressbar.progressbar("value") + "%");
                 },
                 complete: function () {
-                    progressLabel.text(limit);
+                    progressLabel.text(limit+"%");
                 }
             });
 
@@ -47,6 +33,20 @@
             setTimeout(progress, 0);
         });
     </script>
+    <style>
+        .ui-widget-header {
+            background: #0088CC;
+            border: 1px solid #DDDDDD;
+            color: #333333;
+            font-weight: bold;
+        }
+        .progress-label {
+            position: absolute;
+            left: 60%;
+            font-weight: bold;
+            color: #303030;
+        }
+    </style>
     <cfoutput>
         <div class="container-fluid">
             <div class="row-fluid">
@@ -74,9 +74,9 @@
                                     <cfelse>
                                         <a href="projectDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
                                             <i class="icon-arrow-left"></i>&nbsp;Project Details
+                                        </a>
                                             <cfset Session.highlight2="active" />
                                             <cfset Session.highlight6="inactive" />
-                                        </a>
                                 </cfif>
                             </div>
                          <div class="muted pull-right">
@@ -209,7 +209,7 @@
                                                             #milestones.milestoneName#</a>
                                         </td>
 
-                                        <td>#milestones.milestoneDate#</td>
+                                         <td>#dateformat(milestones.milestoneDate)#</td>
 
                                         <td>
                                             <cfif isdefined( 'flag')>

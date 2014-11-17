@@ -54,9 +54,9 @@
                                 <cfoutput query="project">
                                     <tr>
                                         <td><a href="projectProfile.cfm?projectID=#project.projectID#"  onclick="project_return()">#project.projectName#</a></td>
-                                        <td>#dateformat(project.estimatedStartDate,"yyyy-mm-dd")#</td>
-                                        <td>#LSDateformat(project.actualStartDate,"yyyy-mm-dd")#</td>
-                                        <td>#dateformat(project.estimatedEndDate,"yyyy-mm-dd")#</td>
+                                        <td>#dateformat(project.estimatedStartDate)#</td>
+                                        <td>#Dateformat(project.actualStartDate)#</td>
+                                        <td>#dateformat(project.estimatedEndDate)#</td>
                                         <td>#project.name#</td>
                                         <td>
                                             <a href="editProject.cfm?projectID=#project.projectID#" class="btn  btn-mini btn-primary">

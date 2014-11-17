@@ -129,7 +129,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="controls">
-                                                    <input id="txtdate" name="estimatedStartDate" type="date" value="#dateformat(project.estimatedStartDate," yyyy-mm-dd ")#" class="txtdate span6 m-wrap" required/>
+                                                    <input id="txtdate" name="estimatedStartDate" type="date" value="#dateformat(project.estimatedStartDate)#" class="txtdate span6 m-wrap" required/>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -138,7 +138,7 @@
                                                     <span class="required">*</span>
                                                 </label>
                                                 <div class="controls">
-                                                    <input name="estimatedEndDate" type="date" value="#dateformat(project.estimatedEndDate," yyyy-mm-dd ")#" class="txtdate2 span6 m-wrap" required/>
+                                                    <input name="estimatedEndDate" type="date" value="#dateformat(project.estimatedEndDate)#" class="txtdate2 span6 m-wrap" required/>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -234,7 +234,7 @@
             </td>
             <td>
                 <cfif isdefined( 'flag')>
-                    <a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember&flag" class="btn  "><i class="icon-remove"></i></a>
+                    <a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember&flag" class="btn   btn-danger btn-mini"><i class="icon-remove"></i></a>
                     <cfelse>
                         &nbsp;&nbsp;&nbsp;<a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember" class="btn   "><i class="icon-remove"></i></a>
                 </cfif>
@@ -277,7 +277,7 @@
                             <tr>
                                 <td>#milestones.milestoneName#</td>
 
-                                <td>#milestones.milestoneDate#</td>
+                                <td>#dateformat(milestones.milestoneDate)#</td>
 
                                 <td>
                                     <cfif isdefined( 'flag')>
@@ -299,7 +299,7 @@
                                     </cfif>
                                 </td>
                                 <td>
-<a href="deleteRecord.cfm?milestoneID=#milestones.milestoneID#&projectID=#url.projectID#&milestones" class="btn  "><i class="icon-remove"></i></a>
+<a href="deleteRecord.cfm?milestoneID=#milestones.milestoneID#&projectID=#url.projectID#&milestones" class="btn   btn-danger btn-mini"><i class="icon-remove "></i></a>
                                 </td>
 
 

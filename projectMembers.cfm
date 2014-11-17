@@ -57,7 +57,7 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                                                 <cfquery name="listBugs" datasource="bugTracking">
                                                     select b.bugID bid, b.bugName, b.projectID from bugs b
                                                     inner join bugUsers bu on b.bugID=bu.bugID 
-                                                    and bu.userID=#viewdetails.id#;
+                                                    and bu.userID=#viewdetails.id# and b.statusID!=6;
                                                 </cfquery>
                                                 <tr><td>
                                                     <a href="userView.cfm?userID=#viewdetails.id#">#viewdetails.name#</a>
@@ -65,7 +65,9 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                                                     <cfloop query="listBugs">
                                                         <cfif viewdetails.pid eq listBugs.projectID>
                                                             <a href="bugDetailsView.cfm?bid=#listBugs.bid#"  onclick="project_return()">#listBugs.bugName#</a> |
-                                                        </cfif>
+                                                        
+                                                      
+                                                            </cfif>
                                                     </cfloop>
                                                 </td></tr>   
                                             </cfif>
