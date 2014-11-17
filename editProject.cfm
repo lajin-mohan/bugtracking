@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfdump var=#form#>
+
     <cfinclude template="layouts/header.cfm" />
     <!--- including header --->
     <script>
