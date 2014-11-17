@@ -61,13 +61,13 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Subject</label>
 				                        <div class="controls">
-					                        <input type="text" name="subject" data-required="1" class="span6 m-wrap" />
+					                        <input type="text" name="subject" data-required="1" class="span6 m-wrap" required />
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->			
                                     <div class="control-group">
 				                        <label class="control-label">Leave a remark</label>
 				                        <div class="controls">
-					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap"></textarea>
+					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap" required></textarea>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->		
                                     <div class="control-group">
