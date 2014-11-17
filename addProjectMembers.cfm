@@ -126,13 +126,13 @@
                                         select u.userName, u.employeeID, u.userID, d.name
                                         from users u inner join designations d
                                         where d.designationID=u.designationID and 
-                                        u.hide=0 and u.noProjects=0
+                                        u.hide=0 and u.noProjects=0 and u.userID!=#session.userID#
                                     </cfquery>
                                     <cfquery name="emp2" datasource="bugTracking">
                                         select u.userName, u.employeeID, u.userID, d.name
                                         from users u inner join designations d 
                                         where u.noProjects=1 and d.designationID=u.designationID 
-                                        and u.hide=0;
+                                        and u.hide=0 and u.userID!=#session.userID#;
                                     </cfquery>
                                     <cfloop query="emp">
                                         <tr>
