@@ -31,26 +31,32 @@
     </cffunction> 
     <cffunction name="pmDetails" access="public" output="false" returnType="query">
          <cfquery name="getdetails" datasource="bugTracking">
-                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,projects.projectID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID and timeSheet.userID="#session.userID#"
+                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,projects.projectID,timeSheet.timeSheetID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID and timeSheet.userID="#Session.userID#" and timeSheet.hide=0 and projectUsers.projectID=projects.projectID
        </cfquery>
         <cfreturn getdetails>
     </cffunction>
            <cffunction name="pmDetailsOnDate" access="public" output="false" returnType="query">
+               <cfargument name="fromDate" required="true" type="string">
+      <cfargument name="toDate" required="true" type="string">
          <cfquery name="getdetails" datasource="bugTracking">
-                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,projects.projectID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID and timeSheet.userID="#session.userID#" and timeSheet.dateTime between "#fromDate#" and "#toDate#"
+                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,projects.projectID,timeSheet.timeSheetID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID and timeSheet.userID="#session.userID#" and timeSheet.dateTime between "#fromDate#" and "#toDate#" and timeSheet.hide=0 and projectUsers.projectID=projects.projectID
        </cfquery>
     <cfreturn getdetails>
     </cffunction>
 <cffunction name="plDetails" access="public" output="false" returnType="query">
          <cfquery name="getdetails" datasource="bugTracking">
-                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,bugs.bugName,bugs.bugID,projects.projectID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID inner join bugs on timeSheet.bugID=bugs.bugID inner join bugUsers on bugUsers.bugID=bugs.bugID and timeSheet.userID="#session.userID#"
+                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,bugs.bugName,bugs.bugID,projects.projectID,timeSheet.timeSheetID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID inner join projects on projects.projectID=timeSheet.projectID inner join bugs on timeSheet.bugID=bugs.bugID and timeSheet.userID="#session.userID#" and timeSheet.hide=0 
        </cfquery>
         <cfreturn getdetails>
     </cffunction>
-           <cffunction name="plDetailsOnDate" access="public" output="false" returnType="query">
+    
+<cffunction name="plDetailsOnDate" access="public" output="false" returnType="query">
+    <cfargument name="fromDate" required="true" type="string">
+    <cfargument name="toDate" required="true" type="string">
          <cfquery name="getdetails" datasource="bugTracking">
-                                   select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,bugs.bugName,bugs.bugID,projects.projectID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join projectUsers on timeSheet.userID=projectUsers.userID inner join projects on projects.projectID=timeSheet.projectID inner join bugs on timeSheet.bugID=bugs.bugID inner join bugUsers on bugUsers.bugID=bugs.bugID and timeSheet.userID="#session.userID#" and timeSheet.dateTime between "#fromDate#" and "#toDate#"
+                               select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,bugs.bugName,bugs.bugID,projects.projectID,timeSheet.timeSheetID from timeSheet inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID inner join projects on projects.projectID=timeSheet.projectID inner join bugs on timeSheet.bugID=bugs.bugID and timeSheet.userID=#session.userID# and  timeSheet.hide=0 and timeSheet.dateTime between "#DateFormat(fromDate,'yyyy/mm/dd')#" and "#DateFormat(toDate,'yyyy/mm/dd')#"
        </cfquery>
+        
     <cfreturn getdetails>
     </cffunction>
 <cffunction name="updateUserTimeSheet">

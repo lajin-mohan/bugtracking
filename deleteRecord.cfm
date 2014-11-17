@@ -187,18 +187,18 @@
         <cflocation url="calendar.cfm" addToken="false"/>
 <cfelseif isDefined('url.timesheetbugID')>
         <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where bugID="#url.timesheetbugID#" and userID="#session.userID#"
+            update timeSheet set hide=1 where bugID="#url.timesheetbugID#" and userID="#session.userID#"
         </cfquery>
         <cflocation url="timeSheetHistory.cfm" addToken="false"/>
-    <cfelseif isDefined('url.timesheetbID') and isDefined('url.timesheetprojectID')>
+    <cfelseif isDefined('url.pltimesheetbID') and isDefined('url.pltimesheetprojectID')>
         <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where bugID="#url.timesheetbugID#" and userID="#session.userID#" and projectID="#url.timesheetprojectID#"
+           update timeSheet set hide=1 where bugID="#url.pltimesheetbID#" and userID="#session.userID#" and projectID="#url.pltimesheetprojectID#" and timeSheetID="#url.pltimeSheetID#"
         </cfquery>
         <cflocation url="plTimeSheetHistory.cfm" addToken="false"/>
     <cfelseif isDefined('url.timesheetpID')>
         <cfquery name="deleteTimeSheet" datasource="bugTracking">
-            delete from timeSheet where userID="#session.userID#" and projectID="#url.timesheetpID#"
+           update timeSheet set hide=1 where userID="#session.userID#" and projectID="#url.timesheetpID#" and timeSheetID="#url.pmTimeSheetID#"
         </cfquery>
         <cflocation url="pmTimeSheetHistory.cfm" addToken="false"/>
-</cfif>
+
 </cfif>

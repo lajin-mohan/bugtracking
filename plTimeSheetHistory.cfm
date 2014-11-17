@@ -19,7 +19,7 @@
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
                         <div class="control-group muted pull-right">
-				                    <form action="" method="post">
+				                    <form action="plTimeSheetHistory.cfm" method="post">
 				                        <div class="controls">
                                     <select name="project"> 
                                             <cfquery name="selectProject" datasource="bugTracking">
@@ -41,7 +41,7 @@
                     </cfif>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form method="post" action="timeSheetHistory.cfm" class="form-horizontal">
+                            <form method="post" action="plTimeSheetHistory.cfm" class="form-horizontal">
                                 <fieldset>
                                     <legend>Time Sheet History</legend>
                                   
@@ -59,7 +59,7 @@
                                     </div>
                                 </fieldset>
                             </form>
-                           <cfif isDefined("form.fromDate") and isDefined("form.toDate")>
+                           <cfif isDefined("form.submit")>
                                
                                 <cfinvoke component="components.timeSheet" method="plDetailsOnDate" returnVariable="getdetails" fromDate="#form.fromDate#" toDate="#form.toDate#"></cfinvoke> 
                               
@@ -88,7 +88,7 @@
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>    
                                         <td><a href="editPlTimeSheet.cfm?bugID=#getdetails.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?timesheetbID=#getdetails.bugID#&timesheetprojectID=#getdetails.projectID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
+                                            <td><a href="deleteRecord.cfm?pltimesheetbID=#getdetails.bugID#&pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>
