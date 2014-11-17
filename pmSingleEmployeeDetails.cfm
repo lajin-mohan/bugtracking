@@ -6,8 +6,7 @@
            bugs.actualStartDate,status.name s from users 
            inner join bugUsers on users.userID=bugUsers.userID 
            inner join bugs on bugs.bugID=bugUsers.bugID 
-           inner join projectUsers on projectUsers.projectID=bugs.projectID 
-           inner join projects on projects.projectID=projectUsers.projectID
+           inner join projects on projects.projectID=bugs.projectID
            inner join designations on designations.designationID=users.designationID inner join                status on status.statusID=bugs.statusID and users.userID="#url.uid#" 
            order by bugs.actualStartDate desc
        </cfquery>
