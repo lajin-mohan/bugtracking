@@ -60,9 +60,10 @@
                     <div class="row-fluid">
                         <div class="navbar navbar-inner block-header">
 
-                            <div class="muted pull-right">
-                                <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" class="btn btn-default btn-primary" style="display:inline">Report</a>
-                            </div></div>
+                           <div class="muted pull-right">
+                              
+                            </div>
+                      
                    <div class="muted pull-left">
                                 <cfif isdefined( 'url.flag')>
                                     <a href="projectManagerHistory.cfm" class="btn btn-default btn-primary" style="display:inline">
@@ -78,12 +79,13 @@
                                         </a>
                                 </cfif>
                             </div>
-                            <div class="muted pull-right">
+                         <div class="muted pull-right">
+                         <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" class="btn btn-default btn-primary" style="display:inline">Report</a>   &nbsp;  &nbsp; 
                                 <a href="editProject.cfm?projectID=#url.projectID#&flag" class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-plus-sign"></i>&nbsp;Edit Project
                                 </a>
                             </div>
-
+                            </div>
                         </div>
                         <cfquery name="project" datasource="bugtracking">
                             select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, u.userName from projects p inner join status s inner join priorities pr inner join users u where p.projectID=#url.projectID# and p.statusID=s.statusID and p.userID=u.userID and p.priorityID=pr.priorityID
