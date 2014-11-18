@@ -20,18 +20,15 @@
                     <div class="muted pull-right">
                         <a href="addProject.cfm" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-plus-sign"></i>&nbsp;Project
-                        </a>
+                        </a> &nbsp; 
+                        <a href="pmProjectBasedReport.cfm" class="btn btn-default btn-primary" style="display:inline">Report</a>
                     </div>
+                    
+                       
+                   
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">
-                            <form class="form-search" action=" " method="post">
-                                <input type="text" class="input-medium search-query" name="search" placeholder="Search Project"/>
-                                <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
-                            </form>
-                        </div>
- <a href="pmProjectBasedReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">Report</a>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">

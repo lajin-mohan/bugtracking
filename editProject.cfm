@@ -189,10 +189,6 @@
             <button type="button" class="btn">Cancel</button>
         </a>
     </div>
-
-
-
-
     </fieldset>
     </form>
                                             <div class="control-group">
@@ -236,7 +232,7 @@
                 <cfif isdefined( 'flag')>
                     <a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember&flag" class="btn   btn-danger btn-mini"><i class="icon-remove"></i></a>
                     <cfelse>
-                        &nbsp;&nbsp;&nbsp;<a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember" class="btn   "><i class="icon-remove"></i></a>
+                        &nbsp;&nbsp;&nbsp;<a href="deleteRecord.cfm?userID=#pUsers.userID#&projectID=#url.projectID#&removeProjectMember" class="btn  btn-danger btn-mini"><i class="icon-remove"></i></a>
                 </cfif>
             </td>
         </tr>

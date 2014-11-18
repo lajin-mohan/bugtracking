@@ -16,12 +16,11 @@ select u.userName as uname,u.employeeID as ueid,u.email as uemail,u.contactNumbe
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
-                
                 <div class="block">
                     <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                                                     <form action=" " class="form-horizontal" method="post">
+                            <form action=" " class="form-horizontal" method="post">
                                     <fieldset>
                                         <legend>Project Member Profile</legend>
                                         <cfoutput>

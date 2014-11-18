@@ -102,6 +102,7 @@
                             <div class="span12">
                                 <fieldset>
                                     <legend>Project Profile</legend>
+                                    <form action=" " class="form-horizontal" method="post">
                                     <div class="control-group">
                                         <label class="control-label">Name:</label>
                                         <div class="controls">
@@ -163,6 +164,7 @@
                                             <input type="text" class="span6 m-wrap" value="#project.userName#" disabled/>
                                         </div>
                                     </div>
+                                    </form>
     </cfoutput>
     <cfquery name="pUsers" datasource="bugtracking">
         select u.userID, u.userName, u.employeeID, d.name, pu.hide from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.projectID=#url.projectID#

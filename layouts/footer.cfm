@@ -4,8 +4,26 @@
             Author: CF Freshers 2014
 --->
 
-        <hr>
+        
+<style>
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px; /* bottom = footer height */
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+}
+
+</style>
         <footer>
+            <hr>
             <center><p>&copy;Techversant Infotech 2014</p></center>
         </footer><!--- close of footer --->
     </body>
