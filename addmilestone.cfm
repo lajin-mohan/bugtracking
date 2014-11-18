@@ -3,17 +3,21 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfif isDefined("form.add") and len(trim(form.formMilestoneName))>
-    <cfquery name="mins" datasource="bugtracking">
-        insert into milestones 
-        (projectID,milestoneName,milestoneDescription,milestoneDate,milestoneStatus)
-        values(
-        <cfqueryparam cfsqltype="cf_sql_tinyint" value="#url.projectID#">,
-        <cfqueryparam value='#form.formMilestoneName#' cfsqltype="cf_sql_varchar">,
+<cfif isDefined("form.add")>
+    <cfif len(trim(form.formMilestoneName)) and (form.formMilestoneStatus neq "select")>
+        <cfquery name="mins" datasource="bugtracking">
+            insert into milestones 
+            (projectID,milestoneName,milestoneDescription,milestoneDate,milestoneStatus)
+            values(
+            <cfqueryparam cfsqltype="cf_sql_tinyint" value="#url.projectID#">,
+            <cfqueryparam value='#form.formMilestoneName#' cfsqltype="cf_sql_varchar">,
             <cfqueryparam value='#form.formMilestoneDescription#' cfsqltype="cf_sql_varchar">,
-                <cfqueryparam value='#form.formMilestoneDate#' cfsqltype="cf_sql_date">,
-                    <cfqueryparam value='#form.formMilestoneStatus#' cfsqltype="cf_sql_varchar"> )
-    </cfquery>
+            <cfqueryparam value='#form.formMilestoneDate#' cfsqltype="cf_sql_date">,
+            <cfqueryparam value='#form.formMilestoneStatus#' cfsqltype="cf_sql_varchar"> )
+        </cfquery>
+    <cfelse>
+        <p>Fields cannot be left blank</p>
+    </cfif>
 </cfif>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -85,7 +89,7 @@
                                     <div class="control-group">
                                         <label class="control-label">
                                             Milestone Description
-                                            <span class="required"></span>
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="controls">
                                             <textarea class=" span6 m-wrap" name="formMilestoneDescription" placeholder="Milestone Description" required></textarea>	
@@ -94,7 +98,7 @@
                                     <div class="control-group">
                                         <label class="control-label">
                                             Milestone Status
-                                            <span class="required"></span>
+                                            <span class="required">*</span>
                                         </label>
                                         <div class="controls">
                                             <select name="formMilestoneStatus"  class=" span6 m-wrap" required>

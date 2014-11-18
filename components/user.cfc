@@ -34,7 +34,7 @@
         <cfif len(trim(form.attachment))>
             <cffile action = "upload" 
                     fileField = "form.attachment" 
-                    destination = "D:\cf works\Bug Tracking\attachments\"
+                    destination = "#expandPath('images/')#"
                     nameConflict = "MakeUnique"
                     result="uploadresult">
                 <cfset filen=#uploadresult.serverfile#/>
@@ -207,10 +207,10 @@
                     <cflocation url="index.cfm" addtoken="false">
                 </cfif>
             <cfelse>
-                <p>Incorrect Password</p>
+                <p>Incorrect Login or Password</p>
             </cfif>
         <cfelse>
-            <p>Incorrect Login Information</p>
+            <p>Incorrect Login or Password</p>
         </cfif>
     </cffunction>
     <cffunction name="selectProject" access="public" output="false" returnType="query">

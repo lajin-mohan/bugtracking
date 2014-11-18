@@ -376,7 +376,7 @@
                             <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
                             <hr/>
                             <footer>
-                                <p>&copy;Techversant Infotech 2014</p>
+                                <center><p>&copy;Techversant Infotech 2014</p></center>
                             </footer>
                         </div>
                         <script src="vendors/jquery-1.9.1.min.js"></script>

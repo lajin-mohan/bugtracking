@@ -27,6 +27,9 @@
                     <div class="muted pull-right">
                         <a href="editRemainder.cfm?remainderID=#url.remainderID#" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-plus-sign"></i>&nbsp;Edit Remainder
+                        </a>&nbsp;
+                        <a href="deleteRecord.cfm?remainderID=#url.remainderID#" class="btn btn-default btn-primary" style="display:inline"> 
+                            <i class="icon-remove"></i>&nbsp;Delete Remainder
                         </a>
                     </div>
                 </div>
@@ -34,13 +37,7 @@
                         select * from remainders where remainderID=#url.remainderID#
                     </cfquery>
                     <div class="block">
-                        <div class="navbar navbar-inner block-header">
-                            <div class="muted pull-right">
-                                <a href="deleteRecord.cfm?remainderID=#url.remainderID#" class="btn btn-default btn-primary" style="display:inline">
-                                    <i class="icon-remove"></i>&nbsp;Delete Remainder
-                                </a>
-                            </div>
-                        </div>
+                        <div class="navbar navbar-inner block-header"></div>
                         <div class="block-content collapse in">
                             <div class="span12">
                                 <fieldset>
