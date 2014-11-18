@@ -9,6 +9,7 @@
      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script>
+        $(document).ready(function(){
         $(function () {
             var progressbar = $("#progressbar-5");
             progressLabel = $(".progress-label");
@@ -31,6 +32,7 @@
                 }
             }
             setTimeout(progress, 0);
+        });
         });
     </script>
     <style>
