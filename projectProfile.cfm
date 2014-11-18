@@ -5,34 +5,31 @@
     --->
 <cfinclude template="layouts/header.cfm" />
 <cfobject name="addUserObject" component="components.user">
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script>
-        $(document).ready(function(){
-        $(function () {
-            var progressbar = $("#progressbar-5");
-            progressLabel = $(".progress-label");
-            $("#progressbar-5").progressbar({
-                value: false,
-                change: function () {
-                    progressLabel.text(
-                        progressbar.progressbar("value") + "%");
-                },
-                complete: function () {
-                    progressLabel.text(limit+"%");
-                }
-            });
+        $(document).ready(function () {
+            $(function () {
+                var progressbar = $("#progressbar-5");
+                progressLabel = $(".progress-label");
+                $("#progressbar-5").progressbar({
+                    value: false,
+                    change: function () {
+                        progressLabel.text(
+                            progressbar.progressbar("value") + "%");
+                    },
+                    complete: function () {
+                        progressLabel.text(limit + "%");
+                    }
+                });
 
-            function progress() {
-                var val = progressbar.progressbar("value") || 0;
-                progressbar.progressbar("value", val + 1);
-                if (val < limit - 1) {
-                    setTimeout(progress, 30);
+                function progress() {
+                    var val = progressbar.progressbar("value") || 0;
+                    progressbar.progressbar("value", val + 1);
+                    if (val < limit - 1) {
+                        setTimeout(progress, 30);
+                    }
                 }
-            }
-            setTimeout(progress, 0);
-        });
+                setTimeout(progress, 0);
+            });
         });
     </script>
     <style>
@@ -62,11 +59,11 @@
                     <div class="row-fluid">
                         <div class="navbar navbar-inner block-header">
 
-                           <div class="muted pull-right">
-                              
+                            <div class="muted pull-right">
+
                             </div>
-                      
-                   <div class="muted pull-left">
+
+                            <div class="muted pull-left">
                                 <cfif isdefined( 'url.flag')>
                                     <a href="projectManagerHistory.cfm" class="btn btn-default btn-primary" style="display:inline">
                                         <i class="icon-arrow-left"></i>&nbsp;Project History
@@ -77,95 +74,95 @@
                                         <a href="projectDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
                                             <i class="icon-arrow-left"></i>&nbsp;Project Details
                                         </a>
-                                            <cfset Session.highlight2="active" />
-                                            <cfset Session.highlight6="inactive" />
+                                        <cfset Session.highlight2="active" />
+                                        <cfset Session.highlight6="inactive" />
                                 </cfif>
                             </div>
-                         <div class="muted pull-right">
-                         <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" class="btn btn-default btn-primary" style="display:inline">Report</a>   &nbsp;  &nbsp; 
+                            <div class="muted pull-right">
+                                <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" class="btn btn-default btn-primary" style="display:inline">Report</a> &nbsp; &nbsp;
                                 <a href="editProject.cfm?projectID=#url.projectID#&flag" class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-plus-sign"></i>&nbsp;Edit Project
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                    <cfquery name="project" datasource="bugtracking">
+                        select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, u.userName from projects p inner join status s inner join priorities pr inner join users u where p.projectID=#url.projectID# and p.statusID=s.statusID and p.userID=u.userID and p.priorityID=pr.priorityID
+                    </cfquery>
+                    <div class="block">
+
+
+                        <div id="progressbar-5">
+                            <div class="progress-label">
+                                Loading...
                             </div>
                         </div>
-                        <cfquery name="project" datasource="bugtracking">
-                            select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, u.userName from projects p inner join status s inner join priorities pr inner join users u where p.projectID=#url.projectID# and p.statusID=s.statusID and p.userID=u.userID and p.priorityID=pr.priorityID
-                        </cfquery>
-                        <div class="block">
 
-
-                            <div id="progressbar-5">
-                                <div class="progress-label">
-                                    Loading...
-                                </div>
-                            </div>
-
-                            <div class="block-content collapse in">
-                                <div class="span12">
-                                    <fieldset>
-                                        <legend>Project Profile</legend>
-                                        <div class="control-group">
-                                            <label class="control-label">Name:</label>
-                                            <div class="controls">
-                                                <input type="text" data-required="1" class="span6 m-wrap" disabled value="#project.projectName#" />
-                                            </div>
+                        <div class="block-content collapse in">
+                            <div class="span12">
+                                <fieldset>
+                                    <legend>Project Profile</legend>
+                                    <div class="control-group">
+                                        <label class="control-label">Name:</label>
+                                        <div class="controls">
+                                            <input type="text" data-required="1" class="span6 m-wrap" disabled value="#project.projectName#" />
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Description:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" disabled value="#project.projectDescription#" />
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Description:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" disabled value="#project.projectDescription#" />
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Estimated Start Date:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" required disabled value="#LSDateformat(project.estimatedStartDate," yyyy-mm-dd ")#"/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Estimated Start Date:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" required disabled value="#LSDateformat(project.estimatedStartDate," yyyy-mm-dd ")#"/>
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Actual Start Date:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualStartDate," yyyy-mm-dd ")#" disabled/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Actual Start Date:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualStartDate," yyyy-mm-dd ")#" disabled/>
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Estimated End Date:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#LSDateformat(project.estimatedEndDate," yyyy-mm-dd ")#" disabled/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Estimated End Date:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.estimatedEndDate," yyyy-mm-dd ")#" disabled/>
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Actual End Date:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualEndDate," yyyy-mm-dd ")#" disabled/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Actual End Date:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualEndDate," yyyy-mm-dd ")#" disabled/>
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Status:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#project.statusName#" disabled/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Status:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#project.statusName#" disabled/>
                                         </div>
-                                        <br/>
-                                        <div class="control-group">
-                                            <label class="control-label">Priority:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#project.priorityName#" disabled/>
-                                            </div>
+                                    </div>
+                                    <br/>
+                                    <div class="control-group">
+                                        <label class="control-label">Priority:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#project.priorityName#" disabled/>
                                         </div>
-                                        <div class="control-group">
-                                            <label class="control-label">Project Manager:</label>
-                                            <div class="controls">
-                                                <input type="text" class="span6 m-wrap" value="#project.userName#" disabled/>
-                                            </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Project Manager:</label>
+                                        <div class="controls">
+                                            <input type="text" class="span6 m-wrap" value="#project.userName#" disabled/>
                                         </div>
+                                    </div>
     </cfoutput>
     <cfquery name="pUsers" datasource="bugtracking">
         select u.userID, u.userName, u.employeeID, d.name, pu.hide from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.projectID=#url.projectID#
@@ -211,7 +208,7 @@
                                                             #milestones.milestoneName#</a>
                                         </td>
 
-                                         <td>#dateformat(milestones.milestoneDate)#</td>
+                                        <td>#dateformat(milestones.milestoneDate)#</td>
 
                                         <td>
                                             <cfif isdefined( 'flag')>
@@ -243,12 +240,6 @@
                 </table>
             </div>
         </div>
-
-    </div>
-</div>
-<cfinclude template="layouts/footer.cfm" />
-
-
         <cfset mpercent="#(mcount*100)/mtotal#">
             <script>
                 < cfoutput >
@@ -308,6 +299,4 @@
             </div>
             </div>
             </div>
-            </div>
             <cfinclude template="layouts/footer.cfm" />
-
