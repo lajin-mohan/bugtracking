@@ -34,16 +34,17 @@
 				                        Employee has been successfully added to the database!
 			                        </div><!--- close of alert alert-error hide --->
                                      <div class="control-group">
+                                         <label class="control-label">Project<span class="required">*</span></label>
 				                         <div class="controls">
                                          <select name="project"> 
                                             <cfquery name="selectProject" datasource="bugTracking">
                                                 select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
                                              </cfquery>
-                                             <option>Projects</option>
+                                             <option value="0">Projects</option>
                                              <cfloop query="selectProject">
                                              <cfoutput><option value="#projectID#">#projectName#</option></cfoutput>
                                              </cfloop>
-                                             </select>
+                                             </select><span style="display:none;color:red" class="sp">Required</span>
                               <div class="muted pull-right">         
                                   <a href="pmTimeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View Time Sheet</a></div></div>
 			                        </div><!--- close of control-group --->
@@ -56,7 +57,7 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Hours Worked<span class="required">*</span></label>
 				                        <div class="controls">
-					                        <input name="hours" type="text" class="span6 m-wrap" required>
+					                        <input name="hours" type="number" class="span6 m-wrap" required>
                                            
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->
@@ -64,7 +65,7 @@
 				                        <label class="control-label">Productive Hours<span class="required">*</span></label>
 				                        <div class="controls">
 					                       
-                                            <input name="productiveHours" type="text" class="span6 m-wrap" required>
+                                            <input name="productiveHours" type="number" class="span6 m-wrap" required>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->  
                                     <div class="control-group">
@@ -80,12 +81,12 @@
 				                        <div class="controls">
 					                       
                                          <select name="status"> 
-                                                                                                                                                <option>Status</option>
+                                                                                                                                                <option value="0">Status</option>
                                              <option value="4">Ongoing</option>
                                              <option value="3">Pending</option>
                                              <option value="5">Testing</option>
                                              <option value="7">Completed</option>
-                                         </select>
+                                         </select><span style="display:none;color:red" class="sp">Required</span>
                                            </div>
                           
 			                        </div><!--- close of control-group --->
@@ -104,11 +105,19 @@
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
+    <cfif #form.project# neq 0 and #form.status# neq 0>
     <cfquery name="addTimeSheet" datasource="bugTracking">
             insert into timeSheet (description,workingHour,dateTime,userID,productiveHours,statusID,projectID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#')
         </cfquery>
             <cflocation url="pmTimeSheetHistory.cfm">
-  
+  <cfelse>
+      <script>
+      $(document).ready(function(){
+       $(".sp").css('display','inline');
+       });
+      </script>
+   
+    </cfif>
 </cfif>
 
 <cfinclude template="layouts/footer.cfm">
