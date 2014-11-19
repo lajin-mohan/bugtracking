@@ -1,12 +1,19 @@
-
 <cfquery name="sample" datasource="bugTracking">
-select b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate,b.estimatedEndDate,b.actualEndDate,s.name as sname,p.name as pname,se.name as sename,b.projectID as prid,proj.projectName as prname  from bugs as b inner join priorities as p  inner join status as s inner join severities as se inner join projects as proj on b.priorityID=p.priorityID and b.projectID=proj.projectID and b.statusID=s.statusID and b.severityID=se.severityID and b.bugID=#url.bgid# order by b.bugName asc;
+    select b.bugID, b.bugName, b.bugDescription, b.estimatedstartDate, b.actualStartDate, 
+    b.estimatedEndDate, b.actualEndDate, b.statusID as sid, b.severityID as seid, 
+    b.priorityID as pid, s.name as sname, p.name as pname, se.name as sename, b.projectID as prid, 
+    proj.projectName as prname  from bugs as b inner join priorities as p inner join status as s 
+    inner join severities as se inner join projects as proj on b.priorityID=p.priorityID and 
+    b.projectID=proj.projectID and b.statusID=s.statusID and b.severityID=se.severityID and 
+    b.bugID=#url.bgid# order by b.bugName asc;
 </cfquery>
 <cfquery name="bugviewmember" datasource="bugTracking">
-select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
+    select u.userID as uID, u.userName as uname  from bugUsers as bu 
+    inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
 </cfquery>
- <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+<cfquery name="bugaddmember" datasource="bugTracking">
+    select pu.userID, u.userName as uname, pu.hide as phide from projectUsers as pu 
+    inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
 </cfquery>
 <script>
     function checkDate() {
@@ -27,8 +34,8 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
         var date = EnteredDate.substring(8, 10)+1;
         var myDate = new Date(year, month-1, date);*/
         var today = new Date();
-        alert(myDate);
-        alert(today);
+        //alert(myDate);
+        //alert(today);
         if (myDate >= today) {
             alert("Estimated end date should be greater than or equal to actual start date");
             return false;
@@ -150,10 +157,12 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="priorityID">
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
-                                                    <option value="0">#sample.pname#</option>
+                                                    <option value="sample.pid">#sample.pname#</option>
                                             <cfloop query="loopName2">
                                                 <cfoutput>
+                                                <cfif loopName2.priorityID neq sample.pid>
                                                     <option value="#loopName2.priorityID#">#loopName2.name#</option>
+                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
@@ -166,10 +175,12 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="severityID">
                                             <cfset loopName3= #addUserObject.getDesignation("severities")#>
-                                                    <option value="0">#sample.sename#</option>
+                                                    <option value="sample.seid">#sample.sename#</option>
                                             <cfloop query="loopName3">
                                                 <cfoutput>
+                                                <cfif loopName3.severityID neq sample.seid>
                                                     <option value="#loopName3.severityID#">#loopName3.name#</option>
+                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
@@ -182,10 +193,12 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="statusID">
                                             <cfset loopName4= #addUserObject.getDesignation("status")#>
-                                                    <option value="0">#sample.sname#</option>
+                                                    <option value="sample.sid">#sample.sname#</option>
                                             <cfloop query="loopName4">
                                                 <cfoutput>
+                                                <cfif loopName4.statusID neq sample.sid>
                                                     <option value="#loopName4.statusID#">#loopName4.name#</option>
+                                                </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
@@ -239,7 +252,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
            on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-       <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+       <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -274,7 +287,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
             on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-       <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+       <cfmail from="#Session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
            <cfmailpart type="html">
                <html> 
                    <head> 
@@ -288,7 +301,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
                     </head>
                     <body>
                        <p>Dear #getProjectManager.uname#,</p> <br><br>
-                        A bug #form.bname#   edited in the project #getDetails.pname#
+                        A bug - "#form.bname#" has been edited in the project "#getDetails.pname#"
                        <br> <br>
                        <p>Email sent by </p>               
                         <p>#getcurrent.username#</p>              

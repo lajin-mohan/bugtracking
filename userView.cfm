@@ -17,7 +17,17 @@ select u.userName as uname,u.employeeID as ueid,u.email as uemail,u.contactNumbe
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="block">
-                    <div class="navbar navbar-inner block-header"></div>
+                    <div class="navbar navbar-inner block-header">
+                        <div class="muted pull-right">
+                        <cfif memberview.uemail eq Session.email>
+                            <cfoutput>
+                                <a href="editEmployee.cfm?userID=#Session.userID#" class="btn btn-default btn-primary" style="display:inline">
+                                    <i class="icon-pencil"></i>&nbsp;Edit Profile
+                                </a>
+                            </cfoutput>
+                        </cfif>
+                        </div>
+                    </div>
                     <div class="block-content collapse in">
                         <div class="span12">
                             <form action=" " class="form-horizontal" method="post">

@@ -23,7 +23,13 @@
                         <div class="span12">
                     		<form action="plTimeSheet.cfm" id="form_sample_1" class="form-horizontal" method="post">
                     			<fieldset>
-                    			    <legend>Time Sheet</legend>
+                    			    <legend>Time Sheet
+                                        <div class="muted pull-right">         
+                                            <a href="plTimeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">
+                                                <i class="icon-eye-open"></i>&nbsp;View
+                                            </a>
+			                            </div>
+                                    </legend>
 			                        <div class="alert alert-error hide">
 				                        <button class="close" data-dismiss="alert"></button>
 				                        You have some form errors. Please check below.
@@ -39,7 +45,7 @@
                                          <select name="project"> 
                                             <cfquery name="selectProject" datasource="bugTracking">
                                                 select projects.projectName,projects.projectID from                                                 projects inner join projectUsers 
-                                                on projectUsers.projectID=projects.projectID and                                                   projectUsers.userID="#session.userID#" 
+                                                on projectUsers.projectID=projects.projectID and                                                   projectUsers.userID="#session.userID#" and projectUsers.hide=0;
                                              </cfquery>
                                              <option value="0">Select</option>
                                              <cfloop query="selectProject">
@@ -47,11 +53,9 @@
                                                  <option value="#projectID#">#projectName#</option>                                              </cfoutput>
                                              </cfloop>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
-                                  <div class="muted pull-right">         
-                                  <a href="plTimeSheetHistory.cfm" 
-                                     class="btn btn-default btn-primary" style="display:inline">
-                                      View Time Sheet</a></div></div>
-			                        </div><!--- close of control-group --->
+                                   </div>
+                                </div>
+                                  <!--- close of control-group --->
                                       <div class="control-group">
                                          <label class="control-label">Bug<span class="required">*                                            </span></label>
 				                         <div class="controls">
