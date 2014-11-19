@@ -147,22 +147,26 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <td><strong>Description</strong></td>
                                     <td><strong>File Name</strong></td>
                                     </tr>
-                                 <cfquery name="attachmentView" datasource="bugTracking">
-                                        select r.name as subject,
-                                         r.description as des,
-                                         a.fileName as fname
-                                         from remarks as r
-                                              inner join attachments as a on
-                                         r.bugID=#url.bid# and r.remarkID=a.remarkID ;
-                                  
+                                 <cfquery name="attachmentView" datasource="bugTracking" result="aCheck">
+                                    select r.name as subject, r.description as des, a.fileName as fname
+                                    from remarks as r inner join attachments as a on r.bugID=#url.bid# 
+                                    and r.remarkID=a.remarkID;                                  
                                 </cfquery>
-                                <cfloop query="attachmentView">
-                                    <tr>
-                                        <td>#attachmentView.subject#</td>
-                                        <td>#attachmentView.des#</td>
-                                        <td><a href="#expandPath('images/#attachmentView.fname#')#">#attachmentView.fname#</a></td>
-                                    </tr>
-                              </cfloop>
+                                <cfif aCheck.recordcount>
+                                    <cfloop query="attachmentView">
+                                        <tr>
+                                            <td>#attachmentView.subject#</td>
+                                            <td>#attachmentView.des#</td>
+                                            <td><a href="#expandPath('images/#attachmentView.fname#')#">#attachmentView.fname#</a></td>
+                                        </tr>
+                                    </cfloop>
+                                <cfelse>
+                                        <tr>
+                                            <td></td><td>
+                                                No attachments or comments available
+                                            </td><td></td>
+                                        </tr>
+                                </cfif>
                                         </table>
     
                                     </fieldset>

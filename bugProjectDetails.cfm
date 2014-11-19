@@ -20,12 +20,16 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
             <div class="block">
             <div class="row-fluid">
               
-                    <div class="navbar navbar-inner block-header">
-                         <a href="plMyprojectReport.cfm" class="btn btn-default btn-primary muted pull-right" style="display:inline">Report</a></div>
-                    </div>
+                    <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>My Projects</legend>
+                            <legend>My Projects
+                                <div class="muted pull-right">
+                                    <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">
+                                        <i class="icon-list-alt"></i>&nbsp;Generate Report
+                                    </a>
+                                </div>
+                            </legend>
                            <table class="table table-striped">
                                 <tr>
 					               <td><h5>Project Name</h5></td>
