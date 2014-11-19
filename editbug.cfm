@@ -239,7 +239,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
            on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-       <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+       <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -274,7 +274,7 @@ select pu.userID,u.userName as uname,pu.hide as phide from projectUsers as pu in
             on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-       <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+       <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
            <cfmailpart type="html">
                <html> 
                    <head> 

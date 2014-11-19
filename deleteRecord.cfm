@@ -19,7 +19,7 @@
         from users u inner join designations d
         on userID=#session.userID# and u.designationID=d.designationID; 
     </cfquery>  
-    <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Edit_project" type="html">
+    <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Edit_project" type="html">
     <cfmailpart type="html">
        <html> 
            <head> 
@@ -73,7 +73,7 @@
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>      
-       <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Delete_bug" type="html">
+       <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Delete_bug" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -107,7 +107,7 @@
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>
-       <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Delete_bug_projectManager" type="html">
+       <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Delete_bug_projectManager" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -154,7 +154,7 @@
             on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>
        <cfloop query="getDetails">
-            <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Delete_project" type="html">
+            <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Delete_project" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 

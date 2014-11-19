@@ -226,7 +226,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+                                    <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -240,7 +240,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                                 </head>
                                                 <body>
                                                     <p>Dear #getDetails.uname#,</p> <br><br>
-                                                        Added a new bug #form.bugName#    to your project #getDetails.pname#
+                                                        Added a new bug - #form.bugName#    to your project #getDetails.pname#
                                                       <br> <br>
                                                     <p>Email sent by </p>               
                                                     <p>#getcurrent.username#</p>              
@@ -263,7 +263,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+                                    <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -277,7 +277,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                                 </head>
                                                 <body>
                                                     <p>Dear #getProjectManager.uname#,</p> <br><br>
-                                                        A new bug #form.bugName#   added to the project #getDetails.pname#
+                                                        A new bug - #form.bugName#   added to the project #getDetails.pname#
                                                         <br> <br>
                                                     <p>Email sent by </p>               
                                                     <p>#getcurrent.username#</p>              

@@ -21,7 +21,7 @@
             from users u inner join designations d on 
             userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
-        <cfmail query="getList" from="my@domain.com" to="#getList.uemail#" subject="Add_project">
+        <cfmail query="getList" from="#session.email#" to="#getList.uemail#" subject="Add_project">
             <cfmailpart type="html">
             <html> 
                 <head> 
