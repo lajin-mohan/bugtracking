@@ -30,7 +30,7 @@ component {
         }
         var qm=new query();
         qm.setDatasource("bugTracking");
-        qm.setSQL("select m.milestoneID, m.projectID, m.milestoneName, m.milestoneDate from milestones m inner join projects p where m.projectID=p.projectID and p.userID="&Session.userID&" and hide=0");
+        qm.setSQL("select m.milestoneID, m.projectID, m.milestoneName, m.milestoneDate from milestones m inner join projects p where m.projectID=p.projectID and p.userID="&Session.userID&" and milestoneHide=0");
         var dbresultsMilestones=qm.execute().getResult();
         for(var k=1;k LTE dbresultsMilestones.recordCount;k++)
         {

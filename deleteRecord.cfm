@@ -179,13 +179,12 @@
             </cfmail>
         </cfloop>   
     <cflocation url="projectDetails.cfm" addToken="false"/>
-        
     <cfelseif isdefined('url.remainderID')>
         <cfquery name="deleteRemainder" datasource="bugTracking">
             update remainders set hide=1 where remainderID=#url.remainderID#;
         </cfquery>
         <cflocation url="calendar.cfm" addToken="false"/>
-<cfelseif isDefined('url.timesheetbugID')>
+    <cfelseif isDefined('url.timesheetbugID')>
         <cfquery name="deleteTimeSheet" datasource="bugTracking">
             update timeSheet set hide=1 where bugID="#url.timesheetbugID#" and userID="#session.userID#"
         </cfquery>
@@ -200,5 +199,4 @@
            update timeSheet set hide=1 where userID="#session.userID#" and projectID="#url.timesheetpID#" and timeSheetID="#url.pmTimeSheetID#"
         </cfquery>
         <cflocation url="pmTimeSheetHistory.cfm" addToken="false"/>
-    </cfif>
 </cfif>

@@ -60,3 +60,8 @@ alter table logs add constraint foreign key (remainderID) references remainders(
 create table milestones (milestoneID tinyint unsigned primary key auto_increment, projectID tinyint unsigned, milestoneName varchar(32), milestoneDescription varchar(512), milestoneCompleted int(3), milestoneStatus varchar(16), milestoneDate date, foreign key(projectID) references projects(projectID));
 
 alter table milestones add column milestoneHide bit default 0;
+
+create table timeSheet(timeSheetID tinyint(3) unsigned primary key auto_increment,bugID tinyint(3) unsigned,foreign key(bugID) references bugs(bugID),userID tinyint(3) unsigned,foreign key(userID) references users(userID),description varchar(512),workingHour decimal(10,2),dateTime datetime,productiveHours decimal(10,2),statusID tinyint(3) unsigned,foreign key(statusID) references status(statusID),projectID tinyint unsigned,foreign key(projectID) references projects(projectID));
+
+alter table timeSheet add column hide bit default 0;
+
