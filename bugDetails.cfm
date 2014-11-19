@@ -17,10 +17,12 @@
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
                       <cfoutput>
-                     <div class="muted pull-left"> <cfoutput>
+                     <div class="muted pull-left">
                         <a href="bugProjectDetails.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-arrow-left"></i>&nbsp;My Projects
-                            </cfoutput>
+                        </a> &nbsp;
+                        <a href="projectDetailsView.cfm?pid=#url.pid#&bug" class="btn btn-default btn-primary" style="display:inline">
+                            <i class="icon-plus-sign"></i>&nbsp;Project Profile
                         </a>
                     </div>
                     <div class="muted pull-right">
@@ -30,23 +32,12 @@
                     </div>
                 </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-left">
-                      <cfoutput>
-                        <a href="projectDetailsView.cfm?pid=#url.pid#&bug" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
-                            <i class="icon-plus-sign"></i>&nbsp;Project Profile
-                        </a>
-                    </div>
-                        <div class="muted pull-right">
-                            <form class="form-search" action=" " method="post">
-                                <input type="text" class="input-medium search-query" name="search" placeholder="Search Bug"/>
-                                <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
-                            </form>
-                        </div>
-                    </div>
+                    <div class="navbar navbar-inner block-header"></div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>Bug Details<cfoutput><a href="plProjectBugReport.cfm?p=#url.pid#" class="btn btn-default btn-primary muted pull-right" style="display:inline">Report</a></cfoutput></legend>
+                            <legend>Bug Details<cfoutput><a href="plProjectBugReport.cfm?p=#url.pid#" class="btn btn-default btn-primary muted pull-right" style="display:inline">
+                                <i class="icon-list-alt"></i>&nbsp;Generate Report
+                             </a></cfoutput></legend>
                             <table class="table table-striped">
                                 <tr>
 					               

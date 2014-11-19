@@ -19,27 +19,31 @@
 <div class="container-fluid">
         <div class="row-fluid">
             <cfset Session.highlight1="inactive"/>
+            <cfset Session.highlight2="inactive"/>
             <cfset Session.highlight3="inactive"/>
             <cfset Session.highlight4="inactive"/>
+            <cfset Session.highlight5="inactive"/>
             <cfset Session.highlight6="inactive"/>
             <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
             <div class="span9" id="content">
                 <div class="row-fluid">
                     <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
+                    <cfif Session.userID eq 1>
                         <cfif isdefined('flag') or isdefined('projectID')>
                             <cfoutput><a href="employeeProfile.cfm?userID=#url.userID#&projectID=#url.projectID#" class="btn btn-default btn-primary" style="display:inline"></cfoutput>
                                 <i class="icon-arrow-left"></i>&nbsp;Employee Profile
                                 <cfset Session.highlight2="active"/>
-                                <cfset Session.highlight5="inactive"/>
+                                <cfset Session.highlight5="inactive"/> 
                             </a>
                             <cfelse>
                                 <a href="employeeDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-arrow-left"></i>&nbsp;Employee Details
                                     <cfset Session.highlight2="inactive"/>
-                                    <cfset Session.highlight5="active"/>
+                                    <cfset Session.highlight5="active"/> 
                                 </a>
                         </cfif>
+                    </cfif>
                     </div>
                 </div>
                 <div class="block">
@@ -82,11 +86,25 @@
                                                  <input type="button" id="but" value="Change" />
                                             </div>
                                         </div>
-                                        <div id="edit_pwd">            
+                                        <div id="edit_pwd">
+                                        <cfif Session.userID neq 1>            
                                             <div class="control-group">
-                                                <label class="control-label">Password:<span class="required">*</span></label>
+                                                <label class="control-label">Old Password:<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input name="oldPassword" type="password" class="span3 m-wrap" />
+                                                </div>
+                                            </div>            
+                                        </cfif>
+                                            <div class="control-group">
+                                                <label class="control-label">New Password:<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input name="newPassword" type="password" class="span3 m-wrap" />
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">Re-enter Password:<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input name="cPassword" type="password" class="span3 m-wrap" />
                                                 </div>
                                             </div>
                                         </div>
@@ -103,6 +121,7 @@
                                                 <input name="co2" type="text" class="span6 m-wrap"  value="#sample.contactNumber2#"/>
                                             </div>
                                         </div>
+                                    <cfif Session.userID eq 1>
                                         <div class="control-group">
                                             <label class="control-label">User Role:<span class="required">*</span></label>
                                             <div class="controls">
@@ -135,9 +154,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </cfif>
                                         <div class="form-actions">
                                             <input  type="submit" class="btn btn-primary" name="save" value="Save" />
-                                            <a href="employeeDetails.cfm"><button type="button" class="btn">Cancel</button></a>
+                                        <cfif Session.userID eq 1>
+                                            <a href="employeeDetails.cfm">
+                                        <cfelse>
+                                            <a href="userView.cfm?userID=#Session.userID#">
+                                                <button type="button" class="btn">Cancel</button>
+                                            </a>
+                                        </cfif>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -152,7 +178,9 @@
     </div>
 </div>
 <cfif isDefined('form.save')>
-    <cfobject name="updateObject" component="components.user">
-    <cfoutput>#updateObject.updateProfile(userID)#</cfoutput>
+    <cfif form.newPassword eq form.cPassword>
+        <cfobject name="updateObject" component="components.user">
+        <cfoutput>#updateObject.updateProfile(userID)#</cfoutput>
+    </cfif>
 </cfif>
 <cfinclude template="layouts/footer.cfm" />

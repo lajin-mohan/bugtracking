@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary" name="submit">Edir Details</button>
+                                            <button type="submit" class="btn btn-primary" name="submit">Edit Details</button>
                                             <a href="remainders.cfm?remainderID=#url.remainderID#"><button type="button" class="btn">Cancel</button></a>
                                         </div>
                                     </fieldset>
