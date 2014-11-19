@@ -24,7 +24,7 @@
                         <div class="span12">
                             <table class="table table bordered">
                                 <tr>
-                                    <td><strong>Bug ID</strong></td>
+                                  
                                     <td><strong>Bug Name</strong></td>
                                     <td><strong>End Date</strong></td>
                                     <td><strong>Priority</strong></td>
@@ -43,7 +43,7 @@
                                 <cfoutput query="bug">
                                     <cfif #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# GT now()>  
                                         <tr>
-                                            <td>#bug.bugID#</td>
+                                      
                                             <td>#bug.bugName#</td>
                                             <td>#LSDateformat(bug.estimatedEndDate,"yyyy-mm-dd")#</td>
                                             <td>#bug.pname#</td>

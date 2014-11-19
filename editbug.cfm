@@ -252,7 +252,11 @@
            on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
+<<<<<<< HEAD
+       <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
+=======
        <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
+>>>>>>> upstream/master
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -287,7 +291,11 @@
             on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
+<<<<<<< HEAD
+       <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+=======
        <cfmail from="#Session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+>>>>>>> upstream/master
            <cfmailpart type="html">
                <html> 
                    <head> 

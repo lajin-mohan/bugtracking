@@ -148,7 +148,7 @@
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>    
-            <cfmail query="getDetails" from="mynew@domain.com" to="#getDetails.uemail#" subject="Status Change" type="html">
+            <cfmail query="getDetails" from="#session.email#" to="#getDetails.uemail#" subject="Status Change" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -178,7 +178,7 @@
                 inner join projects p inner join projectUsers pu on p.projectID=7
                 and pu.userID=u.userID and pu.isLead=1 and pu.projectID=p.projectID;
             </cfquery>
-            <cfmail query="getProjectManager" from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Status Change_projectManager" type="html">
+            <cfmail query="getProjectManager" from="#session.email#" to="#getProjectManager.uemail#" subject="Status Change_projectManager" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
