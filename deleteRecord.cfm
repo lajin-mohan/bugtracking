@@ -20,53 +20,55 @@
         on userID=#session.userID# and u.designationID=d.designationID; 
     </cfquery>  
     <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Edit_project" type="html">
-    <cfmailpart type="html">
-       <html> 
-           <head> 
-               <style type="text/css"> 
-               body { 
-               font-family:sans-serif;
-               font-size:12px;
-               color:black;
-               }
-               </style>
-            </head>
-            <body>
-               <p>Dear #getDetails.uname#,</p> <br><br>
-                You are removed from the project "#getDetails.pname#"
-               <br> <br>
-               <p>Email sent by </p>               
-                <p>#getcurrent.username#</p>              
-                <p>#getcurrent.dname#</p>              
-           </body>
-       </html>
-   </cfmailpart>                     
-        </cfmail>
-        <cfif !de2.recordcount>
-            <cfquery name="deleteEmployee3" datasource="bugTracking">
-                update users set noProjects=1 where userID=#url.userID#
-            </cfquery>
-        </cfif>
-        <cfif isdefined('flag')>
-            <cflocation url="editProject.cfm?projectID=#url.projectID#&flag" addToken="false"/>
+        <cfmailpart type="html">
+            <html> 
+                <head> 
+                    <style type="text/css"> 
+                        body { 
+                            font-family:sans-serif;
+                            font-size:12px;
+                            color:black;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <p>Dear #getDetails.uname#,</p> <br><br>
+                    You are removed from the project "#getDetails.pname#"
+                    <br> <br>
+                    <p>Email sent by </p>               
+                    <p>#getcurrent.username#</p>              
+                    <p>#getcurrent.dname#</p>              
+                </body>
+            </html>
+        </cfmailpart>                     
+    </cfmail>
+    <cfif !de2.recordcount>
+        <cfquery name="deleteEmployee3" datasource="bugTracking">
+            update users set noProjects=1 where userID=#url.userID#
+        </cfquery>
+    </cfif>
+    <cfif isdefined('flag')>
+        <cflocation url="editProject.cfm?projectID=#url.projectID#&flag" addToken="false"/>
         <cfelse>
             <cflocation url="editProject.cfm?projectID=#url.projectID#" addToken="false"/>
-        </cfif>
+    </cfif>
     <cfelseif isdefined('url.userID')>
         <cfquery name="deleteEmployee" datasource="bugTracking">
-            update users set hide=1 where userID=#url.userID#;
+            update users set hide=1 where userID=#url.userID#
+        </cfquery>
+        <cfquery name="deleteEmployee" datasource="bugTracking">
+            update projectUsers set hide=1 where userID=#url.userID#
         </cfquery>
         <cflocation url="employeeDetails.cfm" addToken="false"/>
     <cfelseif isdefined('url.bugID')>
         <cfquery name="deleteBug" datasource="bugTracking">
-            update bugs set statusID=6 where bugID=#url.bugID#;
+            update bugs set statusID=6 where bugID=#url.bugID#
         </cfquery>
-        
        <cfquery name="getDetails" datasource="bugTracking" result="list"> 
             SELECT u.email as uemail, u.userName as uname,
             p.projectName as pname, b.bugName as bname from users as u 
             inner join projects p inner join bugs b inner join bugUsers bu on u.userID=bu.userID
-            and p.projectID=#url.projectID# and b.projectID=#url.projectID#;
+            and p.projectID=#url.projectID# and b.projectID=#url.projectID#
        </cfquery>
        <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
            SELECT  u.userName as username, d.name as dname 
@@ -103,9 +105,9 @@
             and b.projectID=#url.projectID# and p.userID=u.userID ;
        </cfquery>
        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-           SELECT  u.userName as username, d.name as dname 
-           from users u inner join designations d
-           on userID=#session.userID# and u.designationID=d.designationID; 
+            SELECT  u.userName as username, d.name as dname 
+            from users u inner join designations d
+            on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>
        <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Delete_bug_projectManager" type="html">
            <cfmailpart type="html">
@@ -132,14 +134,17 @@
         </cfmail>    
         <cflocation url="bugDetails.cfm?pid=#url.projectID#" addToken="false"/>
         <cfelseif isdefined('url.milestones')>
-        <cfquery name="deleteProject" datasource="bugTracking">
+        <cfquery name="delelteMilestone" datasource="bugTracking">
             update milestones set milestoneHide=1 where milestoneID=#url.milestoneID#;
         </cfquery>
         <cflocation url="editProject.cfm?projectID=#url.projectID#" addToken="false"/>
     <cfelseif isdefined('url.projectID')>
-       <cfquery name="deleteProject" datasource="bugTracking">
+        <cfquery name="deleteProject" datasource="bugTracking">
            update projects set statusID=6 where projectID=#url.projectID#;
-       </cfquery> 
+        </cfquery>
+        <cfquery name="delelteMilestone" datasource="bugTracking">
+            update milestones set milestoneHide=1 where projectID=#url.projectID#;
+        </cfquery>
        <cfquery name="getDetails" datasource="bugTracking" result="list"> 
            SELECT u.email as uemail, u.userName as uname,
            p.projectName as pname from users as u 
