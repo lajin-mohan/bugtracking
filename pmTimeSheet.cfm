@@ -38,7 +38,7 @@
 				                         <div class="controls">
                                          <select name="project"> 
                                             <cfquery name="selectProject" datasource="bugTracking">
-                                                select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
+                                                select projects.projectName,projects.projectID from projects where statusID!=1
                                              </cfquery>
                                              <option value="0">Projects</option>
                                              <cfloop query="selectProject">

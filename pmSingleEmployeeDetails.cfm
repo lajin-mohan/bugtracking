@@ -5,20 +5,13 @@
            select users.userName,designations.name d from users 
            inner join designations on designations.designationID=users.designationID and                      users.userID="#url.uid#" 
        </cfquery>
-       <cfquery name="selectData" datasource="bugTracking">
-           select users.userName,designations.name d,bugs.bugName,projects.projectName,
-           bugs.actualStartDate,status.name s from users 
-           inner join bugUsers on users.userID=bugUsers.userID 
-           inner join bugs on bugs.bugID=bugUsers.bugID 
-           inner join projects on projects.projectID=bugs.projectID
-           inner join designations on designations.designationID=users.designationID inner join                status on status.statusID=bugs.statusID and users.userID="#url.uid#" 
-           order by bugs.actualStartDate desc
-       </cfquery>
-        <cfquery name="projectlist" datasource="bugTracking">
+       <cfquery name="projectlist" datasource="bugTracking">
            select projects.projectName,
-           projects.actualStartDate,status.name s from status,projects,projectUsers where                projects.projectID=projectUsers.projectID and status.statusID=projects.statusID and
+           projects.actualStartDate,status.name s,projects.projectID from                                      status,projects,projectUsers where projects.projectID=projectUsers.projectID and                    status.statusID=projects.statusID and
            projectUsers.userID="#url.uid#" 
        </cfquery>
+     
+      
        <html>
            <head><link href="report.css" rel="stylesheet"></head>
            <body>
@@ -34,11 +27,21 @@
                    </table>
                        <br /><br />
                        <hr>
-                    <cfif selectData.RecordCount neq 0 >
+                   <cfloop query="projectlist">
+                       <table><tr><td class="tdAlign"><b><label>Project:</label></b></td>
+                       <td class="tdAlign"><b><label>#projectlist.projectName#</label></b></td>                            </tr></table>
+                       <cfquery name="selectData" datasource="bugTracking">
+                       select users.userName,designations.name d,bugs.bugName,projects.projectName,
+                       bugs.estimatedStartDate,status.name s,projects.projectID from users 
+                       inner join bugUsers on users.userID=bugUsers.userID 
+                       inner join bugs on bugs.bugID=bugUsers.bugID 
+                       inner join projects on projects.projectID=bugs.projectID
+                       inner join designations on designations.designationID=users.designationID                          inner join status on status.statusID=bugs.statusID and                                              users.userID="#url.uid#" and bugs.projectID=#projectlist.projectID#
+                       order by bugs.actualStartDate desc
+                       </cfquery>
+                          <cfif selectData.RecordCount neq 0 and (#projectlist.projectID# eq #selectData.projectID#)>
                            <table class="report" align="center">
                                <tr class="trBackground">
-                                 
-                                   <th class="tdClass">Project Name</th>
                                    <th class="tdClass">Bug Name</th>
                                    <th class="tdClass">Start Date</th>
                                    <th class="tdClass">Status</th>
@@ -47,47 +50,21 @@
                                <cfloop query="selectData">
                                     <cfoutput>
                                         <tr> 
-                                            
-                                            <td class="tdClass">#projectName#</td>
                                             <td class="tdClass">#bugName#</td>
                                             <td class="tdClass">
-                                                #DateFormat(actualStartDate,'dd/mm/yyyy')#
+                                                #DateFormat(estimatedStartDate,'dd/mm/yyyy')#
                                             </td>
                                             <td class="tdClass">#s#</td>                                                                   </tr>
                                     </cfoutput>
                                 </cfloop>
                           
                             </table>
-                        <cfelseif projectlist.RecordCount neq 0>
-                            <table class="report" align="center">
-                               <tr class="trBackground">
-                                   
-                                   <th class="tdClass">Project Name</th>
-                                 
-                                   <th class="tdClass">Start Date</th>
-                                   <th class="tdClass">Status</th>
-                               </tr>
-                              
-                               <cfloop query="projectlist">
-                                    <cfoutput>
-                                        <tr> 
-                                            
-                                            <td class="tdClass">#projectName#</td>
-                                          
-                                            <td class="tdClass">
-                                                #DateFormat(actualStartDate,'dd/mm/yyyy')#
-                                            </td>
-                                            <td class="tdClass">#s#</td>                                                                   </tr>
-                                    </cfoutput>
-                                </cfloop>
-                          
-                            </table>
-                            <cfoutput>Bugs not assigned</cfoutput>
                             <cfelse>
-                        <cfoutput>No projects for this employee</cfoutput>
-                                </cfif>
+                            &nbsp;<cfoutput>Bugs not assigned</cfoutput>
+                      </cfif><hr>
+                    </cfloop>
                 </div>
             </body>
        </html>
-   </cfoutput>
+    </cfoutput>
 </cfdocument>
