@@ -46,7 +46,7 @@
                                              </cfloop>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
                               <div class="muted pull-right">         
-                                  <a href="http://localhost/bugTracking/timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View Time Sheet</a></div></div>
+                                  <a href="timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View Time Sheet</a></div></div>
 			                        </div><!--- close of control-group --->
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Description<span class="required">*</span></label>

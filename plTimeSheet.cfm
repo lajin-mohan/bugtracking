@@ -23,7 +23,7 @@
                     </div><!--- close of navbar navbar-inner block-header --->
                     <div class="block-content collapse in">
                         <div class="span12">
-                    		<form action="plTimeSheet.cfm" id="form_sample_1" class="form-horizontal" method="post">
+                    		<form action="plTimeSheet.cfm" class="form-horizontal" method="post">
                     			<fieldset>
                     			    <legend>Time Sheet
                                         <div class="muted pull-right">         
@@ -59,7 +59,7 @@
                                 </div>
                                   <!--- close of control-group --->
                                       <div class="control-group">
-                                         <label class="control-label">Bug<span class="required">*                                            </span></label>
+                                         <label class="control-label">Bug</label>
 				                         <div class="controls">
                                          <select name="bug"> 
                                              <cfinvoke component="components.timeSheet"                                                           method="selectUserBugs" 
@@ -129,21 +129,27 @@
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
-<cfif #form.project# neq 0 and #form.status# neq 0 and #form.bug# neq 0>
-   
+
+<cfif #form.project# neq 0 and #form.status# neq 0>
+   <cfif #form.bug# neq 0>
     <cfquery name="addTimeSheet" datasource="bugTracking">
             insert into timeSheet (description,workingHour,dateTime,userID,productiveHours,statusID,projectID,bugID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#','#form.bug#')
         </cfquery>
 <cflocation url="plTimeSheetHistory.cfm">
-    
+   <cfelse>
+       <cfquery name="addTimeSheet" datasource="bugTracking">
+            insert into timeSheet                           (description,workingHour,dateTime,userID,productiveHours,statusID,projectID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#')
+       </cfquery>
+<cflocation url="plTimeSheetHistory.cfm">  
+    </cfif>
  <cfelse>
       <script>
       $(document).ready(function(){
        $(".sp").css('display','inline');
        });
       </script>
+       
    
     </cfif>
-</cfif>
-
+    </cfif>
 <cfinclude template="layouts/footer.cfm">

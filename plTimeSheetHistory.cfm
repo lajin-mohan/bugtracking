@@ -67,7 +67,8 @@
                               
                                <cfelse>
                                 <cfinvoke component="components.timeSheet" method="plDetails" returnVariable="getdetails"></cfinvoke> 
-                            </cfif>   
+                            </cfif> 
+                             
                             <table class="table table-bordered">
                                 
                                 <th><strong>Date</strong></th>
@@ -80,17 +81,24 @@
                                 
                             <cfif #getdetails.RecordCount# GT 0>
                                 <cfloop query="getdetails">
+                                     <cfquery name="bug" datasource="bugTracking">
+                                   select bugs.bugName,bugs.bugID,timeSheet.timeSheetID from bugs,timeSheet where timeSheet.bugID=bugs.bugID and timeSheet.projectID="#getdetails.projectID#" and timeSheet.userID="#session.userID#" and timeSheet.timeSheetID="#getdetails.timeSheetID#"
+                               </cfquery>
                                     <cfoutput>
                                         <tr> 
                                             <td>#DateFormat(dateTime,'dd/mm/yyyy')#</td>
                                             <td>#projectName#</td>
-                                               <td>#bugName#</td>
+                                            <cfif #bug.RecordCount# GT 0 and #bug.timeSheetID# eq #getdetails.timeSheetID#>
+                                            <td>#bug.bugName#</td>
+                                                <cfelse>
+                                                 <td>------</td>   
+                                            </cfif>
                                             <td>#description#</td>
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>    
-                                        <td><a href="editPlTimeSheet.cfm?bugID=#getdetails.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?pltimesheetbID=#getdetails.bugID#&pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
+                                        <td><a href="editPlTimeSheet.cfm?bugID=#bug.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
+                                            <td><a href="deleteRecord.cfm?pltimesheetbID=#bug.bugID#&pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>
@@ -104,4 +112,5 @@
         </div>
     </div>
 </div>
+               
 <cfinclude template="layouts/footer.cfm">

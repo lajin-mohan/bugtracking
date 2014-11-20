@@ -64,4 +64,3 @@ alter table milestones add column milestoneHide bit default 0;
 create table timeSheet(timeSheetID tinyint(3) unsigned primary key auto_increment,bugID tinyint(3) unsigned,foreign key(bugID) references bugs(bugID),userID tinyint(3) unsigned,foreign key(userID) references users(userID),description varchar(512),workingHour decimal(10,2),dateTime datetime,productiveHours decimal(10,2),statusID tinyint(3) unsigned,foreign key(statusID) references status(statusID),projectID tinyint unsigned,foreign key(projectID) references projects(projectID));
 
 alter table timeSheet add column hide bit default 0;
-

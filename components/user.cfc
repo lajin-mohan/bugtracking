@@ -161,7 +161,7 @@
                     <cfset Session.highlight5="inactive">
                     <cfset Session.highlight6="inactive">
                     <cflocation url="projectManager.cfm" addtoken="false">
-                <cfelseif Session.roleID eq '2'>
+              <cfelseif Session.roleID eq '2'>
                     <cfset Session.menu1="projectLead.cfm">
                     <cfset Session.menu2="bugProjectDetails.cfm">
                     <cfset Session.menu3="plTimeSheet.cfm">
