@@ -23,8 +23,8 @@
         var date = EnteredDate.substring(8, 10)+1;
         var myDate = new Date(year, month-1, date);*/
         var today = new Date();
-        alert(myDate);
-        alert(today);
+        //alert(myDate);
+        //alert(today);
         if (myDate2 >= myDate) {
             return true;
         }
@@ -84,11 +84,10 @@
                                     </div>
                                     
                                     <cfquery name="bugaddmember" datasource="bugTracking">
-select pu.userID,u.userName as uname  from projectUsers as pu inner join users as u  on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
-                                </cfquery>
-                                    
-                                    
-                                    
+                                        select pu.userID,u.userName as uname from projectUsers as pu 
+                                        inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
+                                    </cfquery>
+                                                                     
                                      <div class="control-group">
 				                        <label class="control-label">
                                             Team Member
@@ -187,6 +186,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                 </fieldset>
                             </form>
                             <cfif structkeyexists(form,"submit")>
+                                <cfif len(trim(#form.bugName#)) and trim(#form.teamMemberID#)>
                                   <cfquery name="Bug" datasource="bugTracking" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
@@ -226,7 +226,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Add_bug" type="html">
+                                    <cfmail from="#Session.userID#" to="#getDetails.uemail#" subject="Add_bug" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -240,7 +240,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                                 </head>
                                                 <body>
                                                     <p>Dear #getDetails.uname#,</p> <br><br>
-                                                        Added a new bug #form.bugName#    to your project #getDetails.pname#
+                                                        Added a new bug - "#form.bugName#" to your project "                                                        #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
                                                     <p>#getcurrent.username#</p>              
@@ -263,7 +263,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+                                    <cfmail from="#Session.userID#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -277,7 +277,8 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
                                                 </head>
                                                 <body>
                                                     <p>Dear #getProjectManager.uname#,</p> <br><br>
-                                                        A new bug #form.bugName#   added to the project #getDetails.pname#
+                                                        A new bug - "#form.bugName#" has been added to 
+                                                        the project "#getDetails.pname#"
                                                         <br> <br>
                                                     <p>Email sent by </p>               
                                                     <p>#getcurrent.username#</p>              
@@ -289,6 +290,7 @@ select pu.userID,u.userName as uname  from projectUsers as pu inner join users a
   
                                  <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
                                  </cfif>        
+                                </cfif>
                             </cfif>
                         </div>
                     </div>

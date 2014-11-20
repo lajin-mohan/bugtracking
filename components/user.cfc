@@ -347,6 +347,10 @@
             designationID = <cfqueryparam value="#designationID#" CFSQLType="CF_SQL_TINYINT"> 
             where userID="#tempUserID#";
         </cfquery>
+        <cfif Session.userID eq 1>
             <cflocation url="employeeDetails.cfm" addtoken="false"/>
+        <cfelse>
+            <cflocation url="userView.cfm?userID=#tempUserID#" addToken="false" />
+        </cfif>
     </cffunction>
 </cfcomponent>

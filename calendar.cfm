@@ -34,7 +34,7 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i><cfoutput>#Session.userName#</cfoutput><i class="caret"></i>
+                                    <i class="icon-user"></i><cfoutput>&nbsp;#Session.userName#</cfoutput><i class="caret"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -152,11 +152,11 @@
                         </div>
                     </div>
                     <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
-                    <hr/>
-                    <footer>
-                        <p>&copy;Techversant Infotech 2014</p>
-                    </footer>
                 </div>
+                <hr/>
+                <footer>
+                    <center><p>&copy;Techversant Infotech 2014</p></center>
+                </footer>
                 <script src="vendors/jquery-1.9.1.min.js"></script>
                 <script src="vendors/jquery-ui-1.10.3.js"></script>
                 <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -263,11 +263,11 @@
                             </div>
                         </div>
                         <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
-                        <hr/>
-                        <footer>
-                            <p>&copy;Techversant Infotech 2014</p>
-                        </footer>
                     </div>
+                    <hr/>
+                    <footer>
+                        <center><p>&copy;Techversant Infotech 2014</p></center>
+                    </footer>
                     <script src="vendors/jquery-1.9.1.min.js"></script>
                     <script src="vendors/jquery-ui-1.10.3.js"></script>
                     <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -374,11 +374,11 @@
                                 </div>
                             </div>
                             <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
-                            <hr/>
-                            <footer>
-                                <center><p>&copy;Techversant Infotech 2014</p></center>
-                            </footer>
                         </div>
+                        <hr/>
+                        <footer>
+                            <center><p>&copy;Techversant Infotech 2014</p></center>
+                        </footer>
                         <script src="vendors/jquery-1.9.1.min.js"></script>
                         <script src="vendors/jquery-ui-1.10.3.js"></script>
                         <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -485,11 +485,11 @@
                                 </div>
                             </div>
                             <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
-                            <hr/>
-                            <footer>
-                                <p>&copy;Techversant Infotech 2014</p>
-                            </footer>
                         </div>
+                        <hr/>
+                        <footer>
+                            <center><p>&copy;Techversant Infotech 2014</p></center>
+                        </footer>
                         <script src="vendors/jquery-1.9.1.min.js"></script>
                         <script src="vendors/jquery-ui-1.10.3.js"></script>
                         <script src="bootstrap/js/bootstrap.min.js"></script>

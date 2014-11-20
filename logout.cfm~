@@ -1,2 +1,0 @@
-<cfset StructClear(Session)>
-<cflocation url="index.cfm" addToken="true">

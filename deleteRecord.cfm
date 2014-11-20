@@ -19,7 +19,7 @@
         from users u inner join designations d
         on userID=#session.userID# and u.designationID=d.designationID; 
     </cfquery>  
-    <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Edit_project" type="html">
+    <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Edit_project" type="html">
     <cfmailpart type="html">
        <html> 
            <head> 
@@ -73,7 +73,7 @@
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>      
-       <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Delete_bug" type="html">
+       <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Delete_bug" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -107,7 +107,7 @@
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>
-       <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="Delete_bug_projectManager" type="html">
+       <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Delete_bug_projectManager" type="html">
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -154,7 +154,7 @@
             on userID=#session.userID# and u.designationID=d.designationID; 
        </cfquery>
        <cfloop query="getDetails">
-            <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="Delete_project" type="html">
+            <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Delete_project" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -179,13 +179,12 @@
             </cfmail>
         </cfloop>   
     <cflocation url="projectDetails.cfm" addToken="false"/>
-        
     <cfelseif isdefined('url.remainderID')>
         <cfquery name="deleteRemainder" datasource="bugTracking">
             update remainders set hide=1 where remainderID=#url.remainderID#;
         </cfquery>
         <cflocation url="calendar.cfm" addToken="false"/>
-<cfelseif isDefined('url.timesheetbugID')>
+    <cfelseif isDefined('url.timesheetbugID')>
         <cfquery name="deleteTimeSheet" datasource="bugTracking">
             update timeSheet set hide=1 where bugID="#url.timesheetbugID#" and userID="#session.userID#"
         </cfquery>
@@ -200,5 +199,4 @@
            update timeSheet set hide=1 where userID="#session.userID#" and projectID="#url.timesheetpID#" and timeSheetID="#url.pmTimeSheetID#"
         </cfquery>
         <cflocation url="pmTimeSheetHistory.cfm" addToken="false"/>
-    </cfif>
 </cfif>
