@@ -4,9 +4,9 @@
             Author: CF Freshers 2014
 --->
 
-    <cfinclude template="layouts/header.cfm" />
+<cfinclude template="layouts/header.cfm" />
     <!--- including header --->
-    <script>
+    <cfscript>
         function checkDate() {
             var EnteredDate = $(".txtdate").val();
             var year = EnteredDate.substring(0, 4);
@@ -19,14 +19,7 @@
             var month2 = EnteredDate2.substring(5, 7);
             var date2 = EnteredDate2.substring(8, 10);
             var myDate2 = new Date(year2, month2 - 1, date2);
-            /*var EnteredDate = $("#txtdate").val();
-        var year = EnteredDate.substring(0, 4);
-        var month = EnteredDate.substring(5, 7);
-        var date = EnteredDate.substring(8, 10)+1;
-        var myDate = new Date(year, month-1, date);*/
             var today = new Date();
-            alert(myDate);
-            alert(today);
             if (myDate2 >= myDate) {
                 return true;
             } else {
@@ -34,15 +27,11 @@
                 return false;
             }
         }
-    </script>
-    <cfoutput>
-        <script>
-            function fun_delete(element) {
-                var e = element;
-            }
-        </script>
-
-    </cfoutput>
+    
+        function fun_delete(element) {
+            var e = element;
+        }
+    </cfscript>
     <cfoutput>
         <div class="container-fluid">
             <div class="row-fluid">

@@ -5,7 +5,9 @@
 --->
 
 <cfquery name="getProjects" datasource="#Application.dataSourceName#">
-    select projectID from projectUsers where userID=#Session.userID# and hide=0
+    select projectID from projectUsers 
+    where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+    and hide=0
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->

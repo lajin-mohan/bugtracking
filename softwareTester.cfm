@@ -30,18 +30,20 @@
                                     <td><strong>Marked for Review On</strong></td>
                                 </tr>
                                 <cfquery name="project" datasource="#Application.dataSourceName#">
-                                    select projects.projectID,projects.projectName,users.userName,logs.loggedTime 
-                                    from projects inner join bugs on bugs.projectID=projects.projectID 
-                                    inner join logs on logs.bugID=bugs.bugID 
-                                    inner join users on logs.userID=users.userID and logs.activityID=10 
-                                    and users.roleID=2;
+                                    select projects.projectID, projects.projectName, users.userName, 
+                                    logs.loggedTime from projects inner join bugs on 
+                                    bugs.projectID=projects.projectID inner join logs on 
+                                    logs.bugID=bugs.bugID inner join users on logs.userID=users.userID 
+                                    and logs.activityID=10 and users.roleID=2;
                                 </cfquery> 
                                 <cfoutput query="project">
-                                    <cfif #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# GT now()>
+                                    <cfif #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) 
+                                            and #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# GT now()>
                                         <tr>
                                             <td>#project.projectID#</td>
                                             <td>#project.projectName#</td>
-                                            <td>#project.userName#</td>
+                                            <td>#project.firstName#</td>
+                                            <td>#project.lastName#</td>
                                             <td>#LSDateformat(project.loggedTime,"yyyy-mm-dd")#</td>
                                         </tr>   
                                     </cfif>
