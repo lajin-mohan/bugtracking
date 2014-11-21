@@ -20,25 +20,20 @@
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
-                <div class="navbar navbar-inner block-header"></div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-right">
-                            <form class="form-search" action=" " method="post">
-                                <input type="text" class="input-medium search-query" name="search" placeholder=""/>
-                                <input class="btn btn-mini btn-primary" type="submit" name="search_btn" value="GO"/>
-                            </form>
+                        <div class="muted pull-left">
+                            <h3>Team Members</h3>
                         </div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>Team Members</legend>
                             <table class="table table-striped">
                                 <cfoutput>
                                 <cfloop query="getProjects">
-                                    <cfquery name="getTeamMembers" datasource='#dsn#'>
-                                        select u.firstName fname,u.lastName lname,u.userID id,p.projectName from users u 
-                                        inner join projectUsers pu inner join projects p 
+                                    <cfquery name="getTeamMembers" datasource='#Application.dataSourceName#'>
+                                        select u.firstName fname,u.lastName lname,u.userID id,p.projectName 
+                                        from users u inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
                                         p.projectID=#getProjects.projectID#;
                                     </cfquery>
@@ -60,7 +55,8 @@
                                             <tr>
                                                 <td>#getTeamMembers.fname# #getTeamMembers.lname#</td>
                                                 <td>
-                                                    <a href="userView.cfm?userID=#getTeamMembers.id#" class="btn  btn-mini btn-primary">
+                                                    <a href="userView.cfm?userID=#getTeamMembers.id#" 
+                                                        class="btn  btn-mini btn-primary">
                                                     <i class="icon-edit"></i>View Profile</a>
                                                 </td>
                                             </tr> 
