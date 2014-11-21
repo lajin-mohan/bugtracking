@@ -1,7 +1,7 @@
-<cfquery name="sample" datasource="bugTracking">
+<cfquery name="sample" datasource="#Application.dataSourceName#">
 select b.projectID,b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate,b.estimatedEndDate,b.actualEndDate,s.name as sname,p.name as pname,se.name as sename,b.projectID as prid, proj.projectName as prname from bugs as b inner join priorities as p inner join status as s  inner join projects as proj inner join severities as se  on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=proj.projectID and b.severityID=se.severityID and b.bugID=#url.bid#  order by b.bugName desc;
 </cfquery>
-<cfquery name="bugviewmember" datasource="bugTracking">
+<cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
 select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bid# and bu.userID=u.userID;
 </cfquery>
 
@@ -147,7 +147,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <td><strong>Description</strong></td>
                                     <td><strong>File Name</strong></td>
                                     </tr>
-                                 <cfquery name="attachmentView" datasource="bugTracking" result="aCheck">
+                                 <cfquery name="attachmentView" datasource="#Application.dataSourceName#" result="aCheck">
                                     select r.name as subject, r.description as des, a.fileName as fname
                                     from remarks as r inner join attachments as a on r.bugID=#url.bid# 
                                     and r.remarkID=a.remarkID;                                  

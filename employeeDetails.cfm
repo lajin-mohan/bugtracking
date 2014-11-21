@@ -46,7 +46,7 @@
                                     <td></td>
                                 </tr>
                                 <cfoutput>
-                                    <cfquery name="user" datasource="bugTracking">
+                                    <cfquery name="user" datasource="#Application.dataSourceName#">
                                         select u.userName, u.employeeID, u.userID, d.name
                                         from users u inner join designations d
                                         where u.designationID=d.designationID and u.hide=0

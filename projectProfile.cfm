@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <cfquery name="project" datasource="bugtracking">
+                    <cfquery name="project" datasource="#Application.dataSourceName#">
                         select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, u.userName from projects p inner join status s inner join priorities pr inner join users u where p.projectID=#url.projectID# and p.statusID=s.statusID and p.userID=u.userID and p.priorityID=pr.priorityID
                     </cfquery>
                     <div class="block">
@@ -166,17 +166,17 @@
                                     </div>
                                     </form>
     </cfoutput>
-    <cfquery name="pUsers" datasource="bugtracking">
+    <cfquery name="pUsers" datasource="#Application.dataSourceName#">
         select u.userID, u.userName, u.employeeID, d.name, pu.hide from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.projectID=#url.projectID#
     </cfquery>
-    <cfquery name="m1" datasource="bugtracking">
+    <cfquery name="m1" datasource="#Application.dataSourceName#">
         select milestoneStatus from milestones where projectID=#url.projectID# and milestoneStatus="completed" and milestoneHide=0;
     </cfquery>
     <cfset mcount=0>
         <cfoutput query="m1">
             <cfset mcount="#mcount+1#">
         </cfoutput>
-        <cfquery name="milestones" datasource="bugtracking">
+        <cfquery name="milestones" datasource="#Application.dataSourceName#">
             select * from milestones where projectID=#url.projectID# and milestoneHide=0 order by milestoneStatus;
         </cfquery>
 

@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getProjects" datasource="bugTracking">
+<cfquery name="getProjects" datasource="#Application.dataSourceName#">
     select projectID from projectUsers where userID=#Session.userID# and hide=0
 </cfquery>
 

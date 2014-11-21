@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 
-<cfquery name="getData" datasource="bugTracking">
+<cfquery name="getData" datasource="#Application.dataSourceName#">
     select bugName from bugs where bugID=#url.bugID#;
 </cfquery>
 
@@ -130,20 +130,20 @@
     </cfoutput>
     <cfif check>
         <cfif Session.roleID eq 3 and form.status eq 5>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+            <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
                 SELECT u.email as uemail, u.userName as uname,
                 p.projectName as pname from users as u inner join projectUsers as pu
                 inner join projects p inner join bugs b on u.userId=pu.userID and pu.projectID=b.projectID 
                 and p.projectID=b.projectID and u.roleID=4;
             </cfquery>
         <cfelseif Session.roleID eq 4>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+            <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
                 SELECT u.email as uemail, u.userName as uname,
                 p.projectName as pname from users as u
                 inner join projects p on u.userId=4 and p.projectID=7;
             </cfquery> 
         </cfif> 
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+            <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
                 SELECT  u.userName as username, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
@@ -172,7 +172,7 @@
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
-            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
+            <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result="manager"> 
                 SELECT u.email as uemail, u.userName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p inner join projectUsers pu on p.projectID=7

@@ -1,7 +1,7 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-       <cfquery name="selectData" datasource="bugTracking">
+       <cfquery name="selectData" datasource="#Application.dataSourceName#">
            select  projects.projectName,projects.estimatedStartDate,
            projects.actualStartDate,users.userName,status.name,
            projects.projectDescription from projects 
@@ -13,7 +13,7 @@
            <body>
                <div class="divHeading"><h2>Project Report</h2></div>
                <div>
-                   <cfquery name="totalHours" datasource="bugTracking">
+                   <cfquery name="totalHours" datasource="#Application.dataSourceName#">
                        select sum(productiveHours) as totalProductive,
                        sum(workingHour) as totalTimeSpent from timeSheet 
                        where projectID="#url.pid#"

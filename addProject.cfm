@@ -4,17 +4,17 @@
             Author: CF Freshers 2014
 --->
 
-<cfobject name="addUserObject" component="components.user">
-<cfinclude template="layouts/header.cfm"><!--- including header --->
+<cfobject name="addUserObject" component="components.user"/>
+<cfinclude template="layouts/header.cfm"/><!--including header-->
 <div class="container-fluid">
     <div class="row-fluid">
-        <cfset Session.highlight1="inactive">
-        <cfset Session.highlight2="active">
-        <cfset Session.highlight3="inactive">
-        <cfset Session.highlight4="inactive">
-        <cfset Session.highlight5="inactive">
-        <cfset Session.highlight6="inactive">
-        <cfinclude template="layouts/sidebar.cfm"><!--- including sidebar --->
+        <cfset Session.highlight1="inactive"/>
+        <cfset Session.highlight2="active"/>
+        <cfset Session.highlight3="inactive"/>
+        <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="inactive"/>
+        <cfinclude template="layouts/sidebar.cfm"/><!--including sidebar-->
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
@@ -27,12 +27,15 @@
                         </div>
                     </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header"></div>
+                    <div class="navbar navbar-inner block-header">
+                        <div class="muted pull-left">
+                            <center><h3>Add New Project</h3></center>
+                        </div>
+                    </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form action="addProject.cfm" method="post" class="form-horizontal">
+                            <form action="addProject.cfm" method="post" class="form-horizontal"><!--form to add project-->
                                 <fieldset>
-                                    <legend>Add Project</legend>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
                                         You have some form errors. Please check below.
@@ -108,15 +111,16 @@
                                         <button type="button" class="btn">Cancel</button>
                                     </div>
                                 </fieldset>
-                            </form>
+                            </form><!--close of form-->
                             <cfif structkeyexists(form,"submit")>
-                                <cfquery result="checkEmail" datasource="bugTracking">
-                                    select projectName from projects where projectName="#form.projectName#"
+                                <cfquery result="checkEmail" datasource="#Application.dataSourceName#">
+                                    select projectName from projects where projectName=
+                                    <cfqueryparam value="#form.projectName#" cfsqltype="cf_sql_varchar"/>
                                 </cfquery>
-                                <cfif checkEmail.recordcount>
+                                <cfif checkEmail.recordcount><!--checking if project with same name exists-->
                                     <p>Project already exists on database</p>
                                     <cfelse>
-                                        <cfquery name="project" datasource="bugTracking">
+                                        <cfquery name="project" datasource="#Application.dataSourceName#">
                                             insert into projects(projectName, estimatedStartDate, 
                                             estimatedEndDate, projectDescription, statusID, 
                                             priorityID , userID) values(
@@ -134,8 +138,8 @@
                         </div>
                     </div>
                 </div>
-            </div><!--- close of row-fluid --->
-        </div><!--- close of span9 --->
-    </div><!--- close of row-fluid --->
-</div><!--- close of container-fluid --->
+            </div>
+        </div>
+    </div>
+</div>
 <cfinclude template="layouts/footer.cfm"><!--- including footer --->

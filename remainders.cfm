@@ -33,7 +33,7 @@
                         </a>
                     </div>
                 </div>
-                    <cfquery name="remainder" datasource="bugtracking">
+                    <cfquery name="remainder" datasource="#Application.dataSourceName#">
                         select * from remainders where remainderID=#url.remainderID#
                     </cfquery>
                     <div class="block">

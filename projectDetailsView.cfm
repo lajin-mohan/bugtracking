@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="projview" datasource="bugTracking">
+<cfquery name="projview" datasource="#Application.dataSourceName#">
 select p.projectName as pname,p.projectDescription as pdes,p.estimatedStartDate as esd,p.actualStartDate as asd,p.estimatedEndDate as eed,p.actualEndDate as aed,s.name as status,prior.name as priority from projects as p inner join status as s inner join priorities as prior on p.projectID=#url.pid# and s.statusID=p.statusID and prior.priorityID=p.priorityID
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->

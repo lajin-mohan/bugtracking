@@ -4,13 +4,13 @@
             Author: CF Freshers 2014
 --->
 <cfobject name="obj" component="components.user">
-<cfquery name="selectDetails" datasource="bugTracking">
+<cfquery name="selectDetails" datasource="#Application.dataSourceName#">
      select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours,timeSheet.statusID from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and timeSheet.bugID="#url.bugID#"
 </cfquery>
-<cfquery name="getbugs" datasource="bugTracking">
+<cfquery name="getbugs" datasource="#Application.dataSourceName#">
      select bugs.bugName,bugs.bugID from bugs inner join bugUsers on bugs.bugID=bugUsers.bugID and bugUsers.userID="#session.userID#" 
 </cfquery>
-<cfquery name="getStatus" datasource="bugTracking">
+<cfquery name="getStatus" datasource="#Application.dataSourceName#">
     select * from status where statusID=4 or statusID=3 or statusID=5 or statusID=7
 </cfquery>
     

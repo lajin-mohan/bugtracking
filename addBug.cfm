@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     
-                                    <cfquery name="bugaddmember" datasource="bugTracking">
+                                    <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
                                         select pu.userID,u.userName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
                                     </cfquery>
@@ -187,7 +187,7 @@
                             </form>
                             <cfif structkeyexists(form,"submit")>
                                 <cfif len(trim(#form.bugName#)) and trim(#form.teamMemberID#)>
-                                  <cfquery name="Bug" datasource="bugTracking" result="insertbug">
+                                  <cfquery name="Bug" datasource="#Application.dataSourceName#" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
                                             priorityID , severityID ,projectID,ownerID) values(
@@ -202,16 +202,16 @@
                                             <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>);
                                         </cfquery>
                                 
-                                     <cfquery name="getbugID" datasource="bugTracking">
+                                     <cfquery name="getbugID" datasource="#Application.dataSourceName#">
                                     select bugID from bugs where bugName="#form.bugName#";
                                 </cfquery>
-                                  <cfquery name="insertbuguser" datasource="bugTracking" result="insertbuser">
+                                  <cfquery name="insertbuguser" datasource="#Application.dataSourceName#" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
                                       <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
                                 </cfquery>
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
-                                    <cfquery name="getDetails" datasource="bugTracking" result=list>
+                                    <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list>
                                         SELECT u.email as uemail,
                                         u.userName as uname,
                                         p.projectName as pname 
@@ -220,7 +220,7 @@
                                         on u.userId=#form.teamMemberID#
                                         and p.projectID=#url.p#;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.userName as username,
                                         d.name as dname from users u
                                         inner join designations d
@@ -249,7 +249,7 @@
                                             </html>
                                         </cfmailpart>                     
                                     </cfmail>                                 
-                                    <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+                                    <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
                                         SELECT u.email as uemail,
                                         u.userName as uname,
                                         p.projectName as pname 
@@ -258,7 +258,7 @@
                                         p.projectID=#url.p# and
                                         p.userID=u.userID ;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.userName as username, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
