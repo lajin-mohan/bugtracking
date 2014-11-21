@@ -272,7 +272,7 @@
                     <cfqueryparam value="#form.designation#" CFSQLType="CF_SQL_TINYINT"/>
                 );
             </cfquery>
-            <cflocation url="employeeDetails.cfm" addtoken="false">
+            <cflocation url="employeeDetails.cfm" addtoken="false"/>
         </cfif>
     </cffunction>
 

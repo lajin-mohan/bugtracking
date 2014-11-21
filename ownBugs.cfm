@@ -42,10 +42,10 @@
                                         inner join bugUsers as bu
                                         on b.priorityID=p.priorityID and  b.statusID=s.statusID 
                                         and b.statusID!=6 and b.bugID=bu.bugID
-                                        and bu.userID = <cfqueryparam value="#session.userID#" 
-                                            cfsqltype="cf_sql_tinyint"/> order by b.bugName desc;
+                                        and bu.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+                                        order by b.bugName desc;
                                     </cfquery>
-                                <cfelseif Session.roleID eq 4>
+                                    <cfelseif Session.roleID eq 4>
                                     <cfquery name="bug" datasource="#Application.dataSourceName#">
                                         select b.bugID, b.bugName, b.projectID, b.estimatedEndDate,
                                         p.name as n ,s.name as s from bugs as b 
@@ -53,9 +53,10 @@
                                         inner join status as s
                                         inner join projectUsers as pu 
                                         on b.priorityID=p.priorityID and  b.statusID=s.statusID
-                                        and pu.userID = <cfqueryparam value="#session.userID#" 
-                                            cfsqltype="cf_sql_tinyint"/> and b.statusID=5 
-                                        and pu.projectID=b.projectID order by b.bugName desc;
+                                        and pu.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+                                        and b.statusID=5 
+                                        and pu.projectID=b.projectID 
+                                        order by b.bugName desc;
                                     </cfquery>
                                 </cfif>
                                 <cfoutput query="bug">
@@ -65,9 +66,7 @@
                                         <td>#dateformat(bug.estimatedEndDate,"yyyy-mm-dd")#</td>
                                         <td>#bug.n#</td>
                                         <td>#bug.s#</td>
-                                        <td>
-                                           
-                                            
+                                        <td> 
                                             <a href="editStatus.cfm?bugID=#bug.bugID#"
                                                class="btn  btn-mini btn-primary">
                       <i class="icon-edit"></i>Edit Status

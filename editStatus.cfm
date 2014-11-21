@@ -8,7 +8,6 @@
 <cfquery name="getData" datasource="#Application.dataSourceName#">
     select bugName from bugs where bugID = <cfqueryparam value='#url.bugID#' CFSQLType="CF_SQL_TINYINT">;
 </cfquery>
-
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm">
 <div class="container-fluid">
@@ -25,7 +24,8 @@
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
                         <cfoutput>
-                            <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
+                            <a href="ownBugs.cfm" 
+                               class="btn btn-default btn-primary" style="display:inline">
                                 <i class="icon-arrow-left"></i>&nbsp;Back
                             </a>
                         </cfoutput>
@@ -40,7 +40,9 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                         <cfoutput>
-                    		<form action="editStatus.cfm?bugID=#url.bugID#" id="form_sample_1" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    		<form action="editStatus.cfm?bugID=#url.bugID#" 
+                                  id="form_sample_1" class="form-horizontal"
+                                  method="post" enctype="multipart/form-data">
                         </cfoutput>
                     			<fieldset>                                    
 			                        <div class="alert alert-error hide">
@@ -54,11 +56,14 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Name</label>
 				                        <div class="controls">
-					             <cfoutput>           <input type="text" name="bugName" data-required="1" class="span6 m-wrap" value="#getData.bugName#" required disabled />   </cfoutput>
+					                <cfoutput><input type="text" name="bugName" 
+                                                  data-required="1" class="span6 m-wrap"                                                               value="#getData.bugName#" 
+                                                  required disabled />
+                                    </cfoutput>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->	
 
-                                    <cfif Session.roleID neq 1 or Session.roleID neq 2> 
+                                    <cfif Session.roleID neq 1 or Session.roleID neq 2>
                                         <cfif Session.roleID eq 3>     		                        
 			                            <div class="control-group">
 				                            <label class="control-label">Status<span class="required">*</span></label>
@@ -161,12 +166,11 @@
                      inner join projects p on u.userId=4 and p.projectID=7;
                 </cfquery> 
             </cfif> 
-
             <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
                 SELECT  u.firstName as fname,u.lastName as lname, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
-            </cfquery>    
+            </cfquery>
             <cfmail query="getDetails" from="#session.email#" to="#getDetails.uemail#" 
                     subject="Status Change" type="html">
                 <cfmailpart type="html">
@@ -182,11 +186,11 @@
                         </head>
                         <body>
                             <p>Dear #getDetails.fname# #getDetails.lname#,</p> <br><br>
-                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            The status of the bug - "#getData.bugName#" for the project                                                                    "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.fname# #getcurrent.lname#</p>              
+                            <p>#getcurrent.fname# #getcurrent.lname#</p>             
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
@@ -213,8 +217,8 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getProjectManager.fname# #getProjectManager.lname#,</p> <br><br>
-                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            <p>Dear #getProjectManager.fname# #getProjectManager.lname#,</p> <br>                                                          <br>
+                            The status of the bug - "#getData.bugName#" for the project                                                                   "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               

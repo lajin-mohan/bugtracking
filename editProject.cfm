@@ -92,7 +92,7 @@
                                         select * from priorities;
                                     </cfquery>
                                     <cfquery name="pUsers" datasource="#Application.dataSourceName#">
-                                        select u.userID, u.userName, u.employeeID, d.name, pu.isLead from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.hide=0 and pu.projectID=#url.projectID#;
+                                        select u.userID, u.firstName, u.employeeID, d.name, pu.isLead from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.hide=0 and pu.projectID=#url.projectID#;
                                     </cfquery>
                                     <form action="editProject.cfm?projectID=#url.projectID#" class="form-horizontal" method="post" onsubmit="return checkDate()">
                                         <fieldset>
@@ -194,7 +194,7 @@
     </cfoutput>
     <cfoutput query="pUsers">
         <tr>
-            <td><a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#">#pUsers.userName#</a>
+            <td><a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#">#pUsers.firstName#</a>
             </td>
             <td>#pUsers.employeeID#</td>
             <td>#pUsers.name#</td>

@@ -85,7 +85,7 @@
                                             <td>#projectName#</td>
                                             <td>#bugName#</td>
                                             <td>#description#</td>
-                                            <td>#userName#</td>
+                                            <td>#firstName#</td>
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>  

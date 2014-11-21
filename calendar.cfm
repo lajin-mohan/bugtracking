@@ -9,14 +9,14 @@
     
     <head>
         <title>Calendar</title>
-        <!-- Bootstrap -->
+        <!--- Bootstrap --->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="vendors/fullcalendar/fullcalendar.css" rel="stylesheet" media="screen">
         <link href="assets/styles.css" rel="stylesheet" media="screen">
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
+        <!--- HTML5 shim, for IE6-8 support of HTML5 elements --->
+        <!---[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <![endif]--->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     
@@ -34,7 +34,7 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i><cfoutput>&nbsp;#Session.userName#</cfoutput><i class="caret"></i>
+                                    <i class="icon-user"></i><cfoutput>&nbsp;#Session.firstName#</cfoutput><i class="caret"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>

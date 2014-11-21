@@ -34,7 +34,7 @@
                                     logs.loggedTime from projects inner join bugs on 
                                     bugs.projectID=projects.projectID inner join logs on 
                                     logs.bugID=bugs.bugID inner join users on logs.userID=users.userID 
-                                    and logs.activityID=10 and users.roleID=2;
+                                    and logs.activityID=10 and users.roleID=2;a
                                 </cfquery> 
                                 <cfoutput query="project">
                                     <cfif #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) 
