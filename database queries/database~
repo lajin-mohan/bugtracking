@@ -14,7 +14,7 @@ create table designations (designationID tinyint unsigned primary key auto_incre
 
 create table projects (projectID tinyint unsigned primary key auto_increment, projectName varchar(64), projectDescription varchar(512), estimatedStartDate datetime, actualStartDate datetime, estimatedEndDate datetime, actualEndDate datetime, statusID tinyint unsigned, priorityID tinyint unsigned, projectManager varchar(64), foreign key(statusID) references status(statusID), foreign key(priorityID) references priorities(priorityID));
 
-create table users (userID tinyint unsigned primary key auto_increment, firstName varchar(64), employeeID varchar(16), email varchar(64), password varchar(128), salt varchar(128), experience tinyint unsigned, conatctNumber1 varchar(16), contactNumber2 varchar(16), roleID tinyint unsigned, designationID tinyint unsigned, foreign key(roleID) references roles(roleID), foreign key(designationID) references designations(designationID));
+create table users (userID tinyint unsigned primary key auto_increment, userName varchar(64), employeeID varchar(16), email varchar(64), password varchar(128), salt varchar(128), experience tinyint unsigned, conatctNumber1 varchar(16), contactNumber2 varchar(16), roleID tinyint unsigned, designationID tinyint unsigned, foreign key(roleID) references roles(roleID), foreign key(designationID) references designations(designationID));
 
 create table projectUsers (projectID tinyint unsigned, userID tinyint unsigned, isLead bit, foreign key(userID) references users(userID), foreign key(projectID) references projects(projectID));
 
@@ -65,7 +65,7 @@ create table timeSheet(timeSheetID tinyint(3) unsigned primary key auto_incremen
 
 alter table timeSheet add column hide bit default 0;
 
-alter table users drop column firstName;
+alter table users drop column userName;
 
 alter table users add column firstName varchar(64);
 

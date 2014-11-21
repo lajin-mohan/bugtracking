@@ -8,11 +8,11 @@
     b.bugID=#url.bgid# order by b.bugName asc;
 </cfquery>
 <cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
-    select u.userID as uID, u.userName as uname  from bugUsers as bu 
+    select u.userID as uID, u.firstName as uname  from bugUsers as bu 
     inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
 </cfquery>
 <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
-    select pu.userID, u.userName as uname, pu.hide as phide from projectUsers as pu 
+    select pu.userID, u.firstName as uname, pu.hide as phide from projectUsers as pu 
     inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
 </cfquery>
 <script>
@@ -241,13 +241,13 @@
              <cfset teamMemberID = "#form.teamMemberID#" />
         </cfif>           
         <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list> 
-            SELECT u.email as uemail, u.userName as uname,
+            SELECT u.email as uemail, u.firstName as uname,
             p.projectName as pname from users as u 
             inner join projects p on u.userId=#teamMemberID#
             and p.projectID=#url.p#;
         </cfquery>
         <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-           SELECT  u.userName as username, d.name as dname 
+           SELECT  u.firstName as firstName, d.name as dname 
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
@@ -270,20 +270,20 @@
                         bug #form.bname#  in your  project #getDetails.pname# edited
                         <br> <br>
                         <p>Email sent by </p>               
-                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.firstName#</p>              
                         <p>#getcurrent.dname#</p>              
                     </body>
                 </html>
             </cfmailpart>                     
         </cfmail>                                   
         <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
-            SELECT u.email as uemail, u.userName as uname,
+            SELECT u.email as uemail, u.firstName as uname,
             p.projectName as pname from users as u 
             inner join projects p on p.projectID=#url.p#
             and p.userID=u.userID ;
         </cfquery>
         <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-            SELECT  u.userName as username, d.name as dname 
+            SELECT  u.firstName as firstName, d.name as dname 
             from users u inner join designations d
             on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
@@ -307,7 +307,7 @@
                         A bug - "#form.bname#" has been edited in the project "#getDetails.pname#"
                        <br> <br>
                        <p>Email sent by </p>               
-                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.firstName#</p>              
                         <p>#getcurrent.dname#</p>              
                    </body>
                </html>

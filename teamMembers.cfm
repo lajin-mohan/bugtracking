@@ -36,7 +36,7 @@
                                 <cfoutput>
                                 <cfloop query="getProjects">
                                     <cfquery name="getTeamMembers" datasource='bugTracking'>
-                                        select u.userName name,u.userID id,p.projectName from users u 
+                                        select u.firstName name,u.userID id,p.projectName from users u 
                                         inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
                                         p.projectID=#getProjects.projectID#;

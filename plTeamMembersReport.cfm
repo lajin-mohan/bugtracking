@@ -26,7 +26,7 @@
                                    </tr>
                          <cfloop query="getbugID">
                             <cfquery name="selectData" datasource="#Application.dataSourceName#">
-                               select u.userName name,u.userID id,p.projectName, 
+                               select u.firstName name,u.userID id,p.projectName, 
                                p.projectID pid,designations.name
                                from users u inner join projectUsers pu 
                                inner join projects p inner join designations

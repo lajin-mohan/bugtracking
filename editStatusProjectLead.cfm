@@ -96,13 +96,13 @@
         </cfoutput>
         <cfif check>
             <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on u.userId=#bugname.userID#
                 and p.projectID=#url.pid#;
             </cfquery>
             <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+                SELECT  u.firstName as firstName, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>      
@@ -123,20 +123,20 @@
                             Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
             <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result="manager"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on p.projectID=#url.pid#
                 and p.userID=u.userID ;
             </cfquery>
             <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+                SELECT  u.firstName as firstName, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>
@@ -157,7 +157,7 @@
                             A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                     </html>

@@ -2,7 +2,7 @@
 select b.projectID,b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate,b.estimatedEndDate,b.actualEndDate,s.name as sname,p.name as pname,se.name as sename,b.projectID as prid, proj.projectName as prname from bugs as b inner join priorities as p inner join status as s  inner join projects as proj inner join severities as se  on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=proj.projectID and b.severityID=se.severityID and b.bugID=#url.bid#  order by b.bugName desc;
 </cfquery>
 <cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
-select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bid# and bu.userID=u.userID;
+select u.userID as uID , u.firstName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bid# and bu.userID=u.userID;
 </cfquery>
 
 <cfinclude template="layouts/header.cfm" />

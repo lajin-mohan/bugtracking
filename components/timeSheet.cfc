@@ -17,7 +17,7 @@
     </cffunction>
     <cffunction name="selectBugDetails" access="public" output="false" returnType="query">
         <cfquery name="selectBugDetails" datasource="#Application.dataSourceName#">
-            select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" order by timeSheet.dateTime desc
+            select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.firstName,bugs.bugID,timeSheet.productiveHours from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" order by timeSheet.dateTime desc
         </cfquery>
         <cfreturn selectBugDetails>
     </cffunction>
@@ -25,7 +25,7 @@
       <cfargument name="fromDate" required="true" type="string">
       <cfargument name="toDate" required="true" type="string">
         <cfquery name="selectBugOnDate" datasource="#Application.dataSourceName#">
-            select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and timeSheet.dateTime between "#fromDate#" and "#toDate#"
+            select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.firstName,bugs.bugID,timeSheet.productiveHours from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and timeSheet.dateTime between "#fromDate#" and "#toDate#"
         </cfquery>
         <cfreturn selectBugOnDate>
     </cffunction> 

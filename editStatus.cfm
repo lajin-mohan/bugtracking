@@ -131,20 +131,20 @@
     <cfif check>
         <cfif Session.roleID eq 3 and form.status eq 5>
             <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u inner join projectUsers as pu
                 inner join projects p inner join bugs b on u.userId=pu.userID and pu.projectID=b.projectID 
                 and p.projectID=b.projectID and u.roleID=4;
             </cfquery>
         <cfelseif Session.roleID eq 4>
             <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u
                 inner join projects p on u.userId=4 and p.projectID=7;
             </cfquery> 
         </cfif> 
             <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+                SELECT  u.firstName as firstName, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>    
@@ -166,14 +166,14 @@
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
             <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result="manager"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p inner join projectUsers pu on p.projectID=7
                 and pu.userID=u.userID and pu.isLead=1 and pu.projectID=p.projectID;
@@ -196,7 +196,7 @@
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                     </html>

@@ -3,7 +3,7 @@
    <cfoutput>
 
       <cfquery name="selectData" datasource="#Application.dataSourceName#">
-          select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours,bugs.estimatedStartDate,bugs.actualStartDate from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and bugs.bugID="#url.bugID#" and timeSheet.projectID=projects.projectID order by timeSheet.dateTime desc 
+          select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.firstName,bugs.bugID,timeSheet.productiveHours,bugs.estimatedStartDate,bugs.actualStartDate from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and bugs.bugID="#url.bugID#" and timeSheet.projectID=projects.projectID order by timeSheet.dateTime desc 
        </cfquery>
                 <html>
                     <head><link href="report.css" rel="stylesheet"></head>
@@ -15,7 +15,7 @@
                             </cfquery><br />
                             <table>
                                  <tr> <td class="tdAlign"><b> <label>Name</b></label></td> 
-                                    <td class="tdAlign">                                                                                       <b><cfoutput>:#selectData.userName#</cfoutput></b></td>                                  </tr>
+                                    <td class="tdAlign">                                                                                       <b><cfoutput>:#selectData.firstName#</cfoutput></b></td>                                  </tr>
                                 <tr> <td class="tdAlign"><b> <label>Total Productive Hours</b>                                    </label></td> 
                                     <td class="tdAlign">                                                                                       <b><cfoutput>:#totalHours.totalProductive#</cfoutput>                                  </b></td></tr> 
                                 <tr><td class="tdAlign"> <b><label>Total times spend</label></b></td><td class="tdAlign"><b><cfoutput>:#totalHours.totalTimeSpent#</cfoutput></b></td></tr>

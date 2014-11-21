@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
-                                        select pu.userID,u.userName as uname from projectUsers as pu 
+                                        select pu.userID,u.firstName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
                                     </cfquery>
                                                                      
@@ -205,7 +205,7 @@
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
                                     <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list>
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as uname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p
@@ -213,7 +213,7 @@
                                         and p.projectID=#url.p#;
                                     </cfquery>
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-                                        SELECT  u.userName as username,
+                                        SELECT  u.firstName as firstName,
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
@@ -235,7 +235,7 @@
                                                         Added a new bug - "#form.bugName#" to your project "                                                        #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.firstName#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
@@ -243,7 +243,7 @@
                                     </cfmail>                                 
                                     <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as uname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p on    
@@ -251,7 +251,7 @@
                                         p.userID=u.userID ;
                                     </cfquery>
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-                                        SELECT  u.userName as username, d.name as dname 
+                                        SELECT  u.firstName as firstName, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
@@ -273,7 +273,7 @@
                                                         the project "#getDetails.pname#"
                                                         <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.firstName#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
