@@ -3,8 +3,8 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="memberview" datasource="bugTracking">
-select u.userName as uname,u.employeeID as ueid,u.email as uemail,u.contactNumber1 as contact1,u.contactNumber2 as contact2,d.name as dname from users as u inner join designations as d on u.userID=#url.userID# and u.designationID=d.designationID;
+<cfquery name="memberview" datasource="#dsn#">
+select u.firstName as fname,u.lastName as lname,u.employeeID as ueid,u.email as uemail,u.contactNumber1 as contact1,u.contactNumber2 as contact2,d.name as dname from users as u inner join designations as d on u.userID=#url.userID# and u.designationID=d.designationID;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -41,7 +41,7 @@ select u.userName as uname,u.employeeID as ueid,u.email as uemail,u.contactNumbe
                                         <div class="control-group">
                                             <label class="control-label">Name:</label>
                                             <div class="controls">
-                                                <input type="text" name="bname" data-required="1" class="span6 m-wrap"  disabled value="#memberview.uname#"/>
+                                                <input type="text" name="bname" data-required="1" class="span6 m-wrap"  disabled value="#memberview.fname# #memberview.lname#"/>
                                             </div>
                                         </div>
                                         

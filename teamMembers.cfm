@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getProjects" datasource="bugTracking">
+<cfquery name="getProjects" datasource="#dsn#">
     select projectID from projectUsers where userID=#Session.userID# and hide=0
 </cfquery>
 
@@ -35,8 +35,8 @@
                             <table class="table table-striped">
                                 <cfoutput>
                                 <cfloop query="getProjects">
-                                    <cfquery name="getTeamMembers" datasource='bugTracking'>
-                                        select u.userName name,u.userID id,p.projectName from users u 
+                                    <cfquery name="getTeamMembers" datasource='#dsn#'>
+                                        select u.firstName fname,u.lastName lname,u.userID id,p.projectName from users u 
                                         inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
                                         p.projectID=#getProjects.projectID#;
@@ -57,7 +57,7 @@
                                     <cfloop query="getTeamMembers">
                                         <cfif getTeamMembers.id neq Session.userID>
                                             <tr>
-                                                <td>#getTeamMembers.name#</td>
+                                                <td>#getTeamMembers.fname# #getTeamMembers.lname#</td>
                                                 <td>
                                                     <a href="userView.cfm?userID=#getTeamMembers.id#" class="btn  btn-mini btn-primary">
                                                     <i class="icon-edit"></i>View Profile</a>

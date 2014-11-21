@@ -30,13 +30,13 @@
                                     <td><strong>Priority</strong></td>
                                     <td><strong>Status</strong></td>
                                 </tr>
-                                <cfquery name="bug" datasource="bugTracking">
-                                    select b.bugID, b.bugName, b.estimatedEndDate, b.statusID, b.priorityID, p.name as pname, st.name as sname
+                                <cfquery name="bug" datasource="#dsn#">
+                                    select b.bugID, b.bugName, b.estimatedEndDate, b.statusID,                                         b.priorityID, p.name as pname, st.name as sname
                                     from bugs as b
                                     inner join bugUsers s
                                     inner join priorities as p
                                     inner join status as st
-                                    on b.bugID=s.bugID and s.userID=#Session.userID#
+                                    on b.bugID=s.bugID and s.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
                                     and b.statusID=st.statusID and b.priorityID=p.priorityID
                                     order by b.priorityID,b.estimatedEndDate;
                                 </cfquery> 
@@ -45,7 +45,7 @@
                                         <tr>
                                       
                                             <td>#bug.bugName#</td>
-                                            <td>#LSDateformat(bug.estimatedEndDate,"yyyy-mm-dd")#</td>
+                                            <td>#LSDateformat(bug.estimatedEndDate,"yyyy-mm-dd")#                                               </td>
                                             <td>#bug.pname#</td>
                                             <td>#bug.sname#</td>
                                         </tr>   

@@ -44,7 +44,7 @@
                                             <label class="control-label">Project
                                                 <span class="required">*</span></label>
 				                         <div class="controls">
-                                         <select name="project"> 
+                                         <select name="project" action="plTimeSheet.cfm"> 
                                             <cfquery name="selectProject" datasource="bugTracking">
                                                 select projects.projectName,projects.projectID from                                                 projects inner join projectUsers 
                                                 on projectUsers.projectID=projects.projectID and                                                   projectUsers.userID="#session.userID#" and projectUsers.hide=0;
@@ -62,12 +62,16 @@
                                          <label class="control-label">Bug</label>
 				                         <div class="controls">
                                          <select name="bug"> 
-                                             <cfinvoke component="components.timeSheet"                                                           method="selectUserBugs" 
-                                            returnVariable="getdetails"></cfinvoke>
-                                             <option value="0">Select</option>
-                                             <cfloop query="getdetails">
+                                            <!--- <cfinvoke component="components.timeSheet"                                                           method="selectUserBugs" 
+                                            returnVariable="getdetails"></cfinvoke>--->
+                                             <cfif isDefined("form.project")>
+                                                 <cfif #form.project# neq 0>
+                                             <cfquery name="getbug" datasource="bugTracking">
+                                              select bugs.bugName,bugs.bugID from bugs inner join bugUsers on bugs.bugID=bugUsers.bugID inner join projects on bugs.projectID=projects.projectID and projects.projectID="#form.project#" and bugUsers.userID="#session.userID#"  </cfquery>
+                                                                                                                                               <option value="0">Select</option>
+                                             <cfloop query="getbug">
                                              <cfoutput><option value="#bugID#">#bugName#</option>                                                </cfoutput>
-                                             </cfloop>
+                                                     </cfloop></cfif></cfif>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
                                         </div>
                                     </div>
@@ -152,4 +156,5 @@
    
     </cfif>
     </cfif>
+   
 <cfinclude template="layouts/footer.cfm">

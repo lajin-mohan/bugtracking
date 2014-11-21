@@ -27,7 +27,7 @@
                                             <cfquery name="selectProject" datasource="bugTracking">
                                                 select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
                                              </cfquery>
-                                             <option>Projects</option>
+                                             <option>Select Project</option>
                                              <cfloop query="selectProject">
                                              <cfoutput><option value="#projectID#">#projectName#</option></cfoutput>
                                              </cfloop>

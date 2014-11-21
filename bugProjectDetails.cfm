@@ -25,7 +25,7 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                         <div class="span12">
                             <legend>My Projects
                                 <div class="muted pull-right">
-                                    <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">
+                                    <a href="plMyprojectReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">
                                         <i class="icon-list-alt"></i>&nbsp;Generate Report
                                     </a>
                                 </div>
