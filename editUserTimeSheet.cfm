@@ -5,7 +5,7 @@
 --->
 <cfobject name="obj" component="components.user">
 <cfquery name="selectDetails" datasource="#Application.dataSourceName#">
-     select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours,timeSheet.statusID from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and timeSheet.bugID="#url.bugID#"
+     select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.firstName,bugs.bugID,timeSheet.productiveHours,timeSheet.statusID from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and timeSheet.bugID="#url.bugID#"
 </cfquery>
 <cfquery name="getbugs" datasource="#Application.dataSourceName#">
      select bugs.bugName,bugs.bugID from bugs inner join bugUsers on bugs.bugID=bugUsers.bugID and bugUsers.userID="#session.userID#" 

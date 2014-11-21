@@ -1,5 +1,6 @@
 
 <cfdocument format="PDF">
+<<<<<<< HEAD
     <cfoutput>
         <cfquery name="selectData" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
@@ -62,6 +63,7 @@
                         <hr>
                         <table class="report">
                             <tr class="trBackground">
+
                                 <th class="tdClass">Date</th>
                                 <th class="tdClass">Project Name</th>
                                 <th class="tdClass">Bug</th>

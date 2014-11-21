@@ -7,7 +7,7 @@
 <cfset StructDelete(Session,'userID')/>
 <cfset StructDelete(Session,'roleID')/>
 <cfset StructDelete(Session,'email')/>
-<cfset StructDelete(Session,'userName')/>
+<cfset StructDelete(Session,'firstName')/>
 <cfset StructDelete(Session,'highlight1')/>
 <cfset StructDelete(Session,'highlight2')/>
 <cfset StructDelete(Session,'highlight3')/>

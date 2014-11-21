@@ -47,7 +47,7 @@
                                 </tr>
                                 <cfoutput>
                                     <cfquery name="user" datasource="#Application.dataSourceName#">
-                                        select u.userName, u.employeeID, u.userID, d.name
+                                        select u.firstName, u.employeeID, u.userID, d.name
                                         from users u inner join designations d
                                         where u.designationID=d.designationID and u.hide=0
                                         and u.userID!=#Session.userID#;
@@ -55,7 +55,7 @@
                                 </cfoutput>
                                 <cfoutput query="user">
                                     <tr>
-                                        <td><a href="employeeProfile.cfm?userID=#user.userID#"  onclick="project_return()">#user.userName#</a></td>
+                                        <td><a href="employeeProfile.cfm?userID=#user.userID#"  onclick="project_return()">#user.firstName#</a></td>
                                         <td>#user.employeeID#</td>
                                         <td>#user.name#</td>
                                         <td>

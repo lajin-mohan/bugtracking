@@ -4,8 +4,9 @@
             Author: CF Freshers 2014
 --->
 
+
 <cfquery name="getbugID" datasource="#Application.dataSourceName#">
-    select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0;
+    select projectID from projectUsers where userID= <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and isLead=1 and hide=0;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -21,10 +22,12 @@
             <div class="row-fluid">
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                         <div class="muted pull-left">
+                        <center><h3>Current Projects</h3></center>
+                    </div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                        <legend>Projects</legend>
                            <table class="table table-striped">
                                 <tr>
 					                <td><strong>Project Name</strong></td>
@@ -32,12 +35,14 @@
                                     <td><strong>Status</strong></td>
                                 </tr>
                                     <cfloop query="getbugID">
+
                                         <cfquery name="viewproject" datasource="#Application.dataSourceName#">
 select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as status from projects as p inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  order by p.projectName asc;
+
                                         </cfquery>
                                         <cfoutput query="viewproject">
                                             <tr>
-                                                <td><a href="projectDetailsView.cfm?pid=#viewproject.projectID#">#viewproject.pname#</a></td>
+                                                <td><a href="projectDetailsView.cfm?                                                                                                   pid=#viewproject.projectID#">#viewproject.pname#</a></td>
                                                 <td>#dateformat(viewproject.eed)#</td>
                                                 <td>#viewproject.status#</td>
                                             </tr>   
@@ -49,10 +54,12 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                        <div class="muted pull-left">
+                        <center><h3>Assigned Bugs</h3></center>
+                    </div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>Assigned Bugs</legend>
                              <table class="table table-striped">
                                 <tr>
 					                <td><strong>Name</strong></td>
@@ -62,7 +69,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                 </tr>
                                  <cfloop query="getbugID">
                                     <cfquery name="viewdetails" datasource="#Application.dataSourceName#">
-                                        select u.userName uname, d.name dname, b.bugName bugname,
+                                        select u.firstName uname, d.name dname, b.bugName bugname,
                                         p.projectName projname, u.userID, p.projectID, b.bugID
                                         from users u inner join projectUsers pu inner join
                                         bugUsers bu inner join bugs b inner join projects p
@@ -77,7 +84,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                             <td><a href="userView.cfm?userID=#viewdetails.userID#">#viewdetails.uname#</a></td>
                                             <td>#viewdetails.dname#</td>
                                             <td><a href="bugview.cfm?bid=#viewdetails.bugID#">#viewdetails.bugname#</a></td>
-                                            <td><a href="projectDetailsView.cfm?pid=#viewdetails.projectID#">#viewdetails.projname#</a></td>
+                                            <td><a href="projectDetailsView.cfm?pid=#viewdetails.projectID#">#viewdetails.projname#                                                 </a></td>
                                         </tr>   
                                     </cfoutput> 
                                  </cfloop>

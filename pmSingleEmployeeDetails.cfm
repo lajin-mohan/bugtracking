@@ -2,7 +2,7 @@
 <cfdocument format="PDF">
    <cfoutput>
        <cfquery name="empDetails" datasource="#Application.dataSourceName#">
-           select users.userName,designations.name d from users 
+           select users.firstName,designations.name d from users 
            inner join designations on designations.designationID=users.designationID and                      users.userID="#url.uid#" 
        </cfquery>
        <cfquery name="projectlist" datasource="#Application.dataSourceName#">
@@ -19,7 +19,7 @@
                <div>
                    <table>
                        <tr><td class="tdAlign"><b> <label>Employee Name</b></label></td> 
-                           <td class="tdAlign">                                                                                <b><cfoutput>:#empDetails.userName#</cfoutput></b></td>                                        </tr>
+                           <td class="tdAlign">                                                                                <b><cfoutput>:#empDetails.firstName#</cfoutput></b></td>                                        </tr>
                        <tr> <td class="tdAlign"><b> 
                              <label>Designation</b>                                                                              </label></td> 
                             <td class="tdAlign">                                                                               <b><cfoutput>:#empDetails.d#</cfoutput>                                                             </b></td>
@@ -31,7 +31,7 @@
                        <table><tr><td class="tdAlign"><b><label>Project:</label></b></td>
                        <td class="tdAlign"><b><label>#projectlist.projectName#</label></b></td>                            </tr></table>
                        <cfquery name="selectData" datasource="#Application.dataSourceName#">
-                       select users.userName,designations.name d,bugs.bugName,projects.projectName,
+                       select users.firstName,designations.name d,bugs.bugName,projects.projectName,
                        bugs.estimatedStartDate,status.name s,projects.projectID from users 
                        inner join bugUsers on users.userID=bugUsers.userID 
                        inner join bugs on bugs.bugID=bugUsers.bugID 

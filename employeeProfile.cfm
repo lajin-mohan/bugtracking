@@ -68,7 +68,7 @@
                                     <div class="control-group">
                                         <label class="control-label">User Name:</label>
                                         <div class="controls">
-                                            <input type="text" name="uname" data-required="1" class="span6 m-wrap"  disabled value="#sample.userName#"/>
+                                            <input type="text" name="uname" data-required="1" class="span6 m-wrap"  disabled value="#sample.firstName#"/>
                                         </div>
                                     </div>
                                     <div class="control-group">

@@ -5,6 +5,7 @@
 --->
 
 <cfquery name="sample" datasource="#Application.dataSourceName#">
+    <!---getting details of employee--->
     select * from users u inner join designations d 
     where u.userID=
     <cfqueryparam value="#url.userID#" cfsqltype="cf_sql_tinyint"/>
@@ -17,7 +18,7 @@
     and u.roleID=r.roleID;
 </cfquery>
 <cfobject name="addUserObject" component="components.user"/>
-<cfinclude template="layouts/header.cfm" /><!--including header-->
+<cfinclude template="layouts/header.cfm" /><!---including header--->
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive"/>
@@ -42,7 +43,8 @@
                                     </a>
                                 </cfoutput>
                                 <cfelse>
-                                    <a href="employeeDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
+                                    <a href="employeeDetails.cfm" class="btn btn-default btn-primary"
+                                       style="display:inline">
                                         <i class="icon-arrow-left"></i>&nbsp;Employee Details
                                         <cfset Session.highlight2="inactive"/>
                                         <cfset Session.highlight5="active"/> 
@@ -56,7 +58,8 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                             <cfoutput>
-                                <form action="editEmployee.cfm?userID=#url.userID#" class="form-horizontal" method="post">
+                                <form action="editEmployee.cfm?userID=#url.userID#"
+                                      class="form-horizontal" method="post">
                                     <fieldset>
                                         <div class="alert alert-error hide">
                                             <button class="close" data-dismiss="alert"></button>
@@ -68,12 +71,22 @@
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">
-                                                User Name:
+                                                First Name:
                                                 <span class="required">*</span>
                                             </label>
                                             <div class="controls">
                                                 <input type="text" name="uname" data-required="1"
-                                                       class="span6 m-wrap" value="#sample.userName#" required/>
+                                                       class="span6 m-wrap" value="#sample.firstName#" required/>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">
+                                                Last Name:
+                                                <span class="required">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="uname" data-required="1"
+                                                       class="span6 m-wrap" value="#sample.lastName#" required/>
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -87,7 +100,10 @@
                                             </div>
                                         </div>
                                         <div class="control-group">
-                                            <label class="control-label">Email:<span class="required">*</span></label>
+                                            <label class="control-label">
+                                                Email:
+                                                <span class="required">*</span>
+                                            </label>
                                             <div class="controls">
                                                 <input name="email" type="text" class="span6 m-wrap"
                                                        value="#sample.email#" required/>
@@ -109,7 +125,8 @@
                                                         <span class="required">*</span>
                                                     </label>
                                                     <div class="controls">
-                                                        <input name="oldPassword" type="password" class="span3 m-wrap" />
+                                                        <input name="oldPassword" type="password"
+                                                               class="span3 m-wrap" />
                                                     </div>
                                                 </div>            
                                             </cfif>
@@ -154,12 +171,14 @@
                                                 </label>
                                                 <div class="controls">
                                                     <select class="span6 m-wrap" name="role">
-                                                        <cfset loopName2= #addUserObject.getDesignation("roles")#/>
+                                                        <cfset loopName2=#addUserObject.getDesignation("roles")#/>
                                                         <option value="#sample2.roleID#">#sample2.name#</option>
                                                         <cfloop query="loopName2">
                                                             <cfoutput>
                                                                 <cfif loopName2.roleID neq sample.roleID>
-                                                                    <option value="#loopName2.roleID#">#loopName2.name#</option>
+                                                                    <option value="#loopName2.roleID#">
+                                                                        #loopName2.name#
+                                                                    </option>
                                                                 </cfif>
                                                             </cfoutput>
                                                         </cfloop>
@@ -173,7 +192,7 @@
                                                 </label>
                                                 <div class="controls">
                                                     <select class="span6 m-wrap" name="designation">
-                                                        <cfset loopName1= #addUserObject.getDesignation("designations")#/>
+                                                        <cfset loopName1=#addUserObject.getDesignation("designations")#/>
                                                         <option value="#sample.designationID#">#sample.name#</option>
                                                         <cfloop query="loopName1">
                                                             <cfoutput>
@@ -216,4 +235,4 @@
         <cfoutput>#updateObject.updateProfile(userID)#</cfoutput>
     </cfif>
 </cfif>
-<cfinclude template="layouts/footer.cfm"/>
+<cfinclude template="layouts/footer.cfm"/><!---including footer--->

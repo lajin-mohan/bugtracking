@@ -146,7 +146,7 @@
             <cfif password eq loginValues.password>
                 <cfset Session.userID="#loginValues.userID#">
                 <cfset Session.roleID="#loginValues.roleID#">
-                <cfset Session.userName="#loginValues.userName#">
+                <cfset Session.firstName="#loginValues.firstName#">
                 <cfset Session.email="#loginValues.email#">
                 <cfset SessionRotate()>
                 <cfif Session.roleID eq '1'>
@@ -249,7 +249,8 @@
             <cfset password = Hash(trim(form.password) & salt,"SHA-512") />
             <cfquery name="inser" datasource="#Application.dataSourceName#">
                 insert into users (
-                    userName,
+                    fisrtName,
+                    lastName,
                     email,
                     password,
                     salt,
@@ -258,7 +259,8 @@
                     designationID 
                 )
                 values (
-                    <cfqueryparam value="#form.name#" CFSQLType="CF_SQL_VARCHAR"/>,
+                    <cfqueryparam value="#form.firstName#" CFSQLType="CF_SQL_VARCHAR"/>,
+                    <cfqueryparam value="#form.lastName#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#form.email#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#password#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#salt#" CFSQLType="CF_SQL_VARCHAR"/>,
@@ -267,7 +269,7 @@
                     <cfqueryparam value="#form.designation#" CFSQLType="CF_SQL_TINYINT"/>
                 );
             </cfquery>
-            <cflocation url="employeeDetails.cfm" addtoken="false">
+            <cflocation url="employeeDetails.cfm" addtoken="false"/>
         </cfif>
     </cffunction>
     <cffunction name="updateProfile" returnType="any">
@@ -276,7 +278,7 @@
             select * from users where userID = <cfqueryparam value="#tempUserID#" CFSQLType="CF_SQL_TINYINT">;
         </cfquery>
         <cfif isNull(form.uname)>
-            <cfset name = "#check.userName#" />
+            <cfset name = "#check.firstName#" />
         <cfelse>
             <cfset name = "#form.uname#" />
         </cfif>
@@ -339,7 +341,7 @@
         </cfif>
         <cfquery name="updateRecord" datasource="#Application.dataSourceName#">
             update users set
-            userName = <cfqueryparam value="#name#" CFSQLType="CF_SQL_VARCHAR">,
+            firstName = <cfqueryparam value="#name#" CFSQLType="CF_SQL_VARCHAR">,
             email = <cfqueryparam value="#email#" CFSQLType="CF_SQL_VARCHAR">,
             employeeID = <cfqueryparam value="#employeeCode#" CFSQLType="CF_SQL_VARCHAR">,
             password = <cfqueryparam value="#password#" CFSQLType="CF_SQL_VARCHAR">,

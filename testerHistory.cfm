@@ -13,13 +13,13 @@
 
         <div class="span9" id="content">
             <div class="row-fluid"> 
-                <div class="block"> <!-- block -->
+                <div class="block"> <!--- block --->
                     <div class="navbar navbar-inner block-header">
                         <div class="muted pull-left">Tester History</div>
                     </div>
                 <div class="block-content collapse in">
                     <div class="span12">
-		              <!-- BEGIN FORM-->
+		              <!--- BEGIN FORM--->
                     <form method="post" action="testerHistory.cfm"  class="form-horizontal">
                         <fieldset>
                             <div class="control-group">
@@ -60,15 +60,15 @@
                             </tr> 
                         </cfloop>        
                     </table>             
-		<!-- END FORM-->
+		<!--- END FORM--->
 		            </div>
 	            </div>
-                </div>  <!-- /block -->
+                </div>  <!--- /block --->
             </div>
         </div>                    	
     </div>
 </div>
-                     <!-- End of Add Project dtails -->
+                     <!--- End of Add Project dtails --->
     
 <cfinclude template="layouts/footer.cfm">   
 

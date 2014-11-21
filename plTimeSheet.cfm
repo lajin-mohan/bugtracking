@@ -17,22 +17,25 @@
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="block">
-                    <div class="navbar navbar-inner block-header">
-                       
-                    </div>
+                 <div class="navbar navbar-inner block-header">  
+                          <cfoutput>
+                       <div class="muted pull-left">
+                        <h3>Time Sheet</h3>
+                      </div>
+                        </cfoutput>
+                    </div><!--- close of navbar navbar-inner block-header --->
+
                     <div class="block-content collapse in">
                         <div class="span12">
                     		<form action="plTimeSheet.cfm" class="form-horizontal" method="post">
                     			<fieldset>
-                    			    <legend>Time Sheet
                                         <div class="muted pull-right">         
-                                            <a href="plTimeSheetHistory.cfm"
-                                               class="btn btn-default btn-primary"
-                                               style="display:inline">
+
+                                            <a href="plTimeSheetHistory.cfm" class="btn btn-default btn-primary"                                                                    style="display:inline">
+
                                                 <i class="icon-eye-open"></i>&nbsp;View
                                             </a>
 			                            </div>
-                                    </legend>
 			                        <div class="alert alert-error hide">
 				                        <button class="close" data-dismiss="alert"></button>
 				                        You have some form errors. Please check below.
@@ -45,22 +48,25 @@
                                             <label class="control-label">Project
                                                 <span class="required">*</span></label>
 				                         <div class="controls">
-
                                          <select name="project"> 
+
                                             <cfquery name="selectProject"
                                             datasource="#Application.dataSourceName#">
                                             select projects.projectName,projects.projectID from                                                                           projects inner join projectUsers 
                                             on projectUsers.projectID=projects.projectID and                                                                             projectUsers.userID="#session.userID#" and                                                                                   projectUsers.hide=0;
-                                             </cfquery>
+                                            </cfquery>
                                              <option value="0">Select</option>
                                              <cfloop query="selectProject">
                                              <cfoutput>
+
                                                  <option value="#projectID#">#projectName#</option>                                                                         </cfoutput>
+
                                              </cfloop>
                                              </select>
                                              <span style="display:none;color:red"                                                                   class="sp">Required</span>
                                    </div>
                                 </div>
+
                                     <div class="control-group">
                                     <label class="control-label">Bug</label>
 				                     <div class="controls">
@@ -74,6 +80,7 @@
                                              </select>
                                              <span style="display:none;color:red"
                                                    class="sp">Required</span>
+
                                     </div>
                                 </div>
 			                    <div class="control-group">
@@ -89,6 +96,7 @@
 				                        <label class="control-label">Hours Worked
                                             <span class="required">*</span></label>
 				                        <div class="controls">
+
 					                        <input name="hours" type="number" 
                                                    class="span6 m-wrap" required>
                                         </div>
@@ -117,6 +125,7 @@
                                         </label>
 				                        <div class="controls">
 					                       <select name="status"> 
+
                                              <option value="0">Status</option>
                                              <option value="4">Ongoing</option>
                                              <option value="3">Pending</option>
@@ -127,6 +136,7 @@
                                                     class="sp">Required
                                            </span>
                                            </div>
+
                                      </div>
 			                    	 <div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" 
@@ -151,6 +161,7 @@
                 '#form.project#','#form.bug#')
             </cfquery>
             <cflocation url="plTimeSheetHistory.cfm">
+
    <cfelse>
        <cfquery name="addTimeSheet" datasource="#Application.dataSourceName#">
            insert into timeSheet (description,workingHour,dateTime,userID,

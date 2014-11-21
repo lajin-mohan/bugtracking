@@ -3,7 +3,7 @@
    <cfoutput>
 
       <cfquery name="selectData" datasource="#Application.dataSourceName#">
-         select projects.projectName,projects.estimatedStartDate,projects.actualStartDate,users.userName,status.name from projects inner join users on users.userID=projects.userID inner join status on status.statusID=projects.statusID 
+         select projects.projectName,projects.estimatedStartDate,projects.actualStartDate,users.firstName,status.name from projects inner join users on users.userID=projects.userID inner join status on status.statusID=projects.statusID 
         
        </cfquery>
                 <html>
@@ -30,7 +30,7 @@
                                            <td class="tdClass">#projectName#</td>
                             <td class="tdClass">#DateFormat(estimatedStartDate,'dd/mm/yyyy')#</td>
                             <td class="tdClass">#DateFormat(actualStartDate,'dd/mm/yyyy')#</td>
-                                            <td class="tdClass">#userName#</td>
+                                            <td class="tdClass">#firstName#</td>
                                             <td class="tdClass">#name#</td>                                                                 </tr>
                                     </cfoutput>
                                  </cfloop>
