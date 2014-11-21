@@ -1,10 +1,9 @@
-<cfquery name="sample" datasource="bugTracking">
+<cfquery name="sample" datasource="#Application.dataSourceName#">
 select b.projectID,b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,b.actualStartDate,b.estimatedEndDate,b.actualEndDate,s.name as sname,p.name as pname,se.name as sename,b.projectID as prid, proj.projectName as prname from bugs as b inner join priorities as p inner join status as s  inner join projects as proj inner join severities as se  on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=proj.projectID and b.severityID=se.severityID and b.bugID=#url.bid#  order by b.bugName desc;
 </cfquery>
-<cfquery name="bugviewmember" datasource="bugTracking">
-select u.userID as uID , u.userName as uname  from bugUsers as bu inner join users as u  on  bu.bugId=#url.bid# and bu.userID=u.userID;
+<cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
+select u.userID as uID , u.firstName as fname,u.lastName as lname from bugUsers as bu inner join users as u  on  bu.bugId=#url.bid# and bu.userID=u.userID;
 </cfquery>
-
 <cfinclude template="layouts/header.cfm" />
 <cfobject name="addUserObject" component="components.user">
 <cfoutput>
@@ -77,7 +76,7 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                          <div class="control-group">
                                             <label class="control-label">Project Member Name :</label>
                                             <div class="controls">
-                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#bugviewmember.uname#"/>
+                                                <input type="text" name="prjname" data-required="1" class="span6 m-wrap"  disabled value="#bugviewmember.fname# #bugviewmember.lname#"/>
                                             </div>
                                         </div>
                                         
@@ -147,7 +146,9 @@ select u.userID as uID , u.userName as uname  from bugUsers as bu inner join use
                                     <td><strong>Description</strong></td>
                                     <td><strong>File Name</strong></td>
                                     </tr>
-                                 <cfquery name="attachmentView" datasource="bugTracking" result="aCheck">
+
+                                 <cfquery name="attachmentView" datasource="#Application.dataSourceName#" result="aCheck">
+
                                     select r.name as subject, r.description as des, a.fileName as fname
                                     from remarks as r inner join attachments as a on r.bugID=#url.bid# 
                                     and r.remarkID=a.remarkID;                                  

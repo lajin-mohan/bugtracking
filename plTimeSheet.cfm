@@ -44,8 +44,10 @@
                                             <label class="control-label">Project
                                                 <span class="required">*</span></label>
 				                         <div class="controls">
+
                                          <select name="project"> 
-                                            <cfquery name="selectProject" datasource="bugTracking">
+                                            <cfquery name="selectProject" datasource="#Application.dataSourceName#">
+
                                                 select projects.projectName,projects.projectID from                                                 projects inner join projectUsers 
                                                 on projectUsers.projectID=projects.projectID and                                                   projectUsers.userID="#session.userID#" and projectUsers.hide=0;
                                              </cfquery>
@@ -62,12 +64,16 @@
                                          <label class="control-label">Bug</label>
 				                         <div class="controls">
                                          <select name="bug"> 
-                                             <cfinvoke component="components.timeSheet"                                                           method="selectUserBugs" 
-                                            returnVariable="getdetails"></cfinvoke>
-                                             <option value="0">Select</option>
-                                             <cfloop query="getdetails">
+                                            <!--- <cfinvoke component="components.timeSheet"                                                           method="selectUserBugs" 
+                                            returnVariable="getdetails"></cfinvoke>--->
+                                             <cfif isDefined("form.project")>
+                                                 <cfif #form.project# neq 0>
+                                             <cfquery name="getbug" datasource="bugTracking">
+                                              select bugs.bugName,bugs.bugID from bugs inner join bugUsers on bugs.bugID=bugUsers.bugID inner join projects on bugs.projectID=projects.projectID and projects.projectID="#form.project#" and bugUsers.userID="#session.userID#"  </cfquery>
+                                                                                                                                               <option value="0">Select</option>
+                                             <cfloop query="getbug">
                                              <cfoutput><option value="#bugID#">#bugName#</option>                                                </cfoutput>
-                                             </cfloop>
+                                                     </cfloop></cfif></cfif>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
                                         </div>
                                     </div>
@@ -132,12 +138,12 @@
 
 <cfif #form.project# neq 0 and #form.status# neq 0>
    <cfif #form.bug# neq 0>
-    <cfquery name="addTimeSheet" datasource="bugTracking">
+    <cfquery name="addTimeSheet" datasource="#Application.dataSourceName#">
             insert into timeSheet (description,workingHour,dateTime,userID,productiveHours,statusID,projectID,bugID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#','#form.bug#')
         </cfquery>
 <cflocation url="plTimeSheetHistory.cfm">
    <cfelse>
-       <cfquery name="addTimeSheet" datasource="bugTracking">
+       <cfquery name="addTimeSheet" datasource="#Application.dataSourceName#">
             insert into timeSheet                           (description,workingHour,dateTime,userID,productiveHours,statusID,projectID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#')
        </cfquery>
 <cflocation url="plTimeSheetHistory.cfm">  
@@ -152,4 +158,5 @@
    
     </cfif>
     </cfif>
+   
 <cfinclude template="layouts/footer.cfm">

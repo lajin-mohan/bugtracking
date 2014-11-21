@@ -75,7 +75,7 @@
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    <cfquery name="bugaddmember" datasource="#Application.SourceName#">
+                                    <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
                                         select pu.userID,u.userName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
                                     </cfquery>

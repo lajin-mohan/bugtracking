@@ -25,7 +25,7 @@
                             </a>
                         </div>
                     </div>
-                    <cfquery name="remainder" datasource="bugtracking">
+                    <cfquery name="remainder" datasource="#Application.dataSourceName#">
                         select * from remainders where remainderID=#url.remainderID#
                     </cfquery>
                     <div class="block">
@@ -70,7 +70,7 @@
     </div>
     <cfif structkeyexists(form,'submit')>
         <cfset remainderDate=#dateformat(form.date,'yyyy-mm-dd')#/>
-        <cfquery name="remainderEdit" datasource="bugTracking">
+        <cfquery name="remainderEdit" datasource="#Application.dataSourceName#">
             update remainders set name='#form.name#', description='#form.description#',
             date='#form.date#' where remainderID=#url.remainderID#
         </cfquery>

@@ -4,7 +4,8 @@
             Author: CF Freshers 2014
 --->
 
-<cfquery name="getData" datasource="bugTracking">
+
+<cfquery name="getData" datasource="#Application.dataSourceName#">
     select bugName from bugs where bugID=#url.bugID#;
 </cfquery>
 
@@ -130,21 +131,22 @@
     </cfoutput>
     <cfif check>
         <cfif Session.roleID eq 3 and form.status eq 5>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+            <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
+                SELECT u.email as uemail, u.firstName as fname,u.lastName as lname,
                 p.projectName as pname from users as u inner join projectUsers as pu
                 inner join projects p inner join bugs b on u.userId=pu.userID and pu.projectID=b.projectID 
                 and p.projectID=b.projectID and u.roleID=4;
             </cfquery>
         <cfelseif Session.roleID eq 4>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+            <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
+                 SELECT u.email as uemail, u.firstName as fname,u.lastName as lname,
                 p.projectName as pname from users as u
                 inner join projects p on u.userId=4 and p.projectID=7;
             </cfquery> 
         </cfif> 
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+
+            <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
+                SELECT  u.firstName as fname,u.lastName as lname, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>    
@@ -161,19 +163,20 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getDetails.uname#,</p> <br><br>
+                            <p>Dear #getDetails.fname# #getDetails.lname#,</p> <br><br>
                             The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.fname# #getcurrent.lname#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
-            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
-                SELECT u.email as uemail, u.userName as uname,
+
+            <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result="manager"> 
+                SELECT u.email as uemail,u.firstName as fname,u.lastName as lname,
                 p.projectName as pname from users as u 
                 inner join projects p inner join projectUsers pu on p.projectID=7
                 and pu.userID=u.userID and pu.isLead=1 and pu.projectID=p.projectID;
@@ -191,12 +194,12 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getProjectManager.uname#,</p> <br><br>
+                            <p>Dear #getProjectManager.fname# #getProjectManager.lname#,</p> <br><br>
                             The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.fname# #getcurrent.lname#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                     </html>
