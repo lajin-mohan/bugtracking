@@ -3,8 +3,9 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getProjects" datasource="bugTracking">
-    select projectID from projectUsers where userID=#Session.userID# and hide=0
+<cfquery name="getProjects" datasource="#Application.dataSourceName#">
+    select projectID from projectUsers where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+    and hide=0
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -35,8 +36,8 @@
                             <table class="table table-striped">
                                 <cfoutput>
                                 <cfloop query="getProjects">
-                                    <cfquery name="getTeamMembers" datasource='bugTracking'>
-                                        select u.userName name,u.userID id,p.projectName from users u 
+                                    <cfquery name="getTeamMembers" datasource="#Application.dataSourceName#">
+                                        select u.firstName name,u.lastName name,u.userID id,p.projectName from users u 
                                         inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
                                         p.projectID=#getProjects.projectID#;
