@@ -7,6 +7,18 @@
 <cfquery name="getProjects" datasource="#Application.dataSourceName#">
     select projectID from projectUsers where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
     and hide=0
+<<<<<<< HEAD
+=======
+
+<cfquery name="getProjects" datasource="#Application.dataSourceName#">
+<<<<<<< HEAD
+    select projectID from projectUsers where userID=<cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/> and       hide=0
+=======
+    select projectID from projectUsers where userID=#Session.userID# and hide=0
+>>>>>>> upstream/master
+>>>>>>> upstream/master
+=======
+>>>>>>> upstream/master
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -32,6 +44,7 @@
                             <table class="table table-striped">
                                 <cfoutput>
                                 <cfloop query="getProjects">
+
                                     <cfquery name="getTeamMembers" datasource='#Application.dataSourceName#'>
                                         select u.firstName fname,u.lastName lname,u.userID id,p.projectName 
                                         from users u inner join projectUsers pu inner join projects p 

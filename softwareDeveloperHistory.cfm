@@ -9,22 +9,19 @@
     <cfset Session.highlight3="inactive"/>
     <cfset Session.highlight4="inactive"/>
     <cfset Session.highlight5="active"/>
-
-    <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
+    <cfinclude template="layouts/sidebar.cfm"/>
     <div class="span9" id="content">
         <div class="row-fluid">
-    <!-- block -->
             <div class="block">
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">Bug History</div>
                 </div>
                 <div class="block-content collapse in">
                     <div class="span12">
-		<!-- BEGIN FORM-->
 	                    <form method="post" action="userHistory.cfm" class="form-horizontal">
 		                    <fieldset>
 		                        <div class="control-group">
-  	                                <label class="control-label">Projects<span class="required">                                       </span></label>
+  	                                <label class="control-label">Projects<span class="required">                                                                 </span></label>
   	                                <div class="controls">
                                         <select class="span6 m-wrap" name="category" id="slct">
                                             <cfinvoke component="components.projectDetails" 
@@ -33,7 +30,7 @@
                                             <option value="0">All</option>
                                             <cfloop query="getdetails">
                                                 <cfoutput> 
-                                                    <option value="#statusID#">#name#</option>                                                     </cfoutput>
+                                                    <option value="#statusID#">#name#</option>                                                                               </cfoutput>
                                             </cfloop>
   	                                    </select>
                                         <input type="submit" name="submit" value="submit" />
@@ -44,7 +41,7 @@
 		                <cfif #session.roleID# EQ 1>
                             <cfif isDefined("form.category") and #form.category# GT 0 >
                                 <cfinvoke component="components.projectDetails" 
-                                  method="adminBugs" value="#form.category#"                                                         returnVariable="getdetails">
+                                  method="adminBugs" value="#form.category#" returnVariable="getdetails">
                                 </cfinvoke> 
                             <cfelseif !isDefined("form.category") or #form.category# EQ 0 >
                                  <cfinvoke component="components.projectDetails" 
@@ -54,7 +51,7 @@
                             <cfelse>
                             <cfif isDefined("form.category") and #form.category# GT 0 >
                                  <cfinvoke component="components.projectDetails" 
-                                  method="selectBugs" value="#form.category#"                                                         returnVariable="getdetails">
+                                  method="selectBugs" value="#form.category#" returnVariable="getdetails">
                                  </cfinvoke> 
                              <cfelseif !isDefined("form.category") or #form.category# EQ 0 >
                                  <cfinvoke component="components.projectDetails" 
@@ -84,12 +81,10 @@
                                 </tr>
                            </cfloop>        
                         </table>  
-                </div>    
-		<!-- END FORM--> 
-             </div>
+                    </div>    
+              </div>
 	       </div>
 	    </div>
     </div> 
-</div><!-- /block -->
-                       <!-- End of Add Project dtails -->
- <cfinclude template="layouts/footer.cfm">   
+</div>
+<cfinclude template="layouts/footer.cfm">   
