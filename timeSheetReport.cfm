@@ -1,8 +1,7 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-
-      <cfquery name="selectData" datasource="bugTracking">
+  <cfquery name="selectData" datasource="#Application.dataSourceName#">
           select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
           bugs.bugName,projects.projectName,status.name,users.firstName,users.lastName,
           bugs.bugID,timeSheet.productiveHours,bugs.estimatedStartDate,bugs.actualStartDate 
@@ -19,11 +18,10 @@
                     <body>
                         <div class="divHeading"><h2>Time Sheet Report</h2></div>
                         <div>
-                             <cfquery name="totalHours" datasource="bugTracking">
-                            select sum(productiveHours) as totalProductive,
-                            sum(workingHour) as totalTimeSpent
-                            from timeSheet where bugID="#url.bugID#" and 
-                            userID= <cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_tinyint"/>
+
+                             <cfquery name="totalHours" datasource="#Application.dataSourceName#">
+                            select sum(productiveHours) as totalProductive,sum(workingHour) as totalTimeSpent from timeSheet where bugID="#url.bugID#" and userID=<cfqueryparam value="#session.userID#"  cfsqltype="cf_sql_tinyint"/>
+
                             </cfquery><br />
                             <table>
                                  <tr> <td class="tdAlign"><b> <label>Name</b></label></td> 

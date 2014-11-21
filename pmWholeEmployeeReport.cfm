@@ -1,7 +1,7 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-       <cfquery name="selectData" datasource="bugTracking">
+       <cfquery name="selectData" datasource="#Application.dataSourceName#">
               select users.userName,designations.name,logs.loggedTime from users 
               inner join designations on users.designationID=designations.designationID 
               inner join logs on users.userID=logs.userID

@@ -1,7 +1,7 @@
 
 <cfcomponent displayname="projectDtls">
     <cffunction name="selectUserBugs" access="public" output="false" returnType="query">
-        <cfquery name="selectbugs" datasource="bugTracking">
+        <cfquery name="selectbugs" datasource="#Application.dataSourceName#">
             select bugs.bugName,bugs.bugID 
             from bugs 
             inner join bugUsers on bugs.bugID=bugUsers.bugID and 
@@ -10,10 +10,10 @@
         <cfreturn selectbugs>
     </cffunction>
     <cffunction name="addTimeSheet">
-        <cfquery name="projectid" datasource="bugTracking">
+        <cfquery name="projectid" datasource="#Application.dataSourceName#">
              select projectID from bugs where bugID="#form.bug#"
         </cfquery>
-        <cfquery name="addTimeSheet" datasource="bugTracking">
+        <cfquery name="addTimeSheet" datasource="#Application.dataSourceName#">
             insert into timeSheet                                                                               (description,workingHour,dateTime,bugID,userID,
             productiveHours,statusID,projectID)
             values ('#form.description#',#form.hours#,
@@ -23,7 +23,7 @@
         </cfquery>
     </cffunction>
     <cffunction name="selectBugDetails" access="public" output="false" returnType="query">
-        <cfquery name="selectBugDetails" datasource="bugTracking">
+        <cfquery name="selectBugDetails" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
             bugs.bugName,projects.projectName,status.name,users.userName,
             bugs.bugID,timeSheet.productiveHours 
@@ -40,7 +40,7 @@
   <cffunction name="selectBugOnDate" access="public" output="false" returnType="query">'
       <cfargument name="fromDate" required="true" type="string">
       <cfargument name="toDate" required="true" type="string">
-        <cfquery name="selectBugOnDate" datasource="bugTracking">
+        <cfquery name="selectBugOnDate" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
             bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,
             timeSheet.productiveHours 
@@ -54,7 +54,7 @@
         <cfreturn selectBugOnDate>
     </cffunction> 
     <cffunction name="pmDetails" access="public" output="false" returnType="query">
-         <cfquery name="getdetails" datasource="bugTracking">
+         <cfquery name="getdetails" datasource="#Application.dataSourceName#">
              select timeSheet.dateTime,projects.projectName,timeSheet.description,
              timeSheet.workingHour,timeSheet.productiveHours,status.name,projects.projectID,
              timeSheet.timeSheetID
@@ -69,7 +69,7 @@
     <cffunction name="pmDetailsOnDate" access="public" output="false" returnType="query">
         <cfargument name="fromDate" required="true" type="string">
         <cfargument name="toDate" required="true" type="string">
-         <cfquery name="getdetails" datasource="bugTracking">
+         <cfquery name="getdetails" datasource="#Application.dataSourceName#">
              select timeSheet.dateTime,projects.projectName,timeSheet.description,
              timeSheet.workingHour,timeSheet.productiveHours,status.name,
              projects.projectID,timeSheet.timeSheetID 
@@ -79,11 +79,11 @@
              inner join projects on projects.projectID=timeSheet.projectID and 
              timeSheet.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>                and timeSheet.dateTime between "#fromDate#" and 
              "#toDate#" and timeSheet.hide=0 and projectUsers.projectID=projects.projectID
-       </cfquery>
+         </cfquery>
       <cfreturn getdetails>
     </cffunction>
  <cffunction name="plDetails" access="public" output="false" returnType="query">
-         <cfquery name="getdetails" datasource="bugTracking">
+         <cfquery name="getdetails" datasource="#Application.dataSourceName#">
              select timeSheet.dateTime,projects.projectName,timeSheet.description,
              timeSheet.workingHour,timeSheet.productiveHours,status.name,
              projects.projectID,timeSheet.timeSheetID 
@@ -98,7 +98,7 @@
  <cffunction name="plDetailsOnDate" access="public" output="false" returnType="query">
     <cfargument name="fromDate" required="true" type="string">
     <cfargument name="toDate" required="true" type="string">
-         <cfquery name="getdetails" datasource="bugTracking">
+         <cfquery name="getdetails" datasource="#Application.dataSourceName#">
              select timeSheet.dateTime,projects.projectName,timeSheet.description,
              timeSheet.workingHour,timeSheet.productiveHours,status.name,
              projects.projectID,timeSheet.timeSheetID 
@@ -112,7 +112,7 @@
      <cfreturn getdetails>
     </cffunction>
 <cffunction name="updateUserTimeSheet">
-    <cfquery name="value" datasource="bugTracking">
+    <cfquery name="value" datasource="#Application.dataSourceName#">
         update timeSheet set 
         description=<cfqueryparam value="#form.description#" cfsqltype="cf_sql_varchar"/>,
         workingHour='#form.hours#',
@@ -122,7 +122,7 @@
     </cfquery>
 </cffunction>    
 <cffunction name="updatePlTimeSheet">
-    <cfquery name="value" datasource="bugTracking">
+    <cfquery name="value" datasource="#Application.dataSourceName#">
        update timeSheet set 
         description=<cfqueryparam value="#form.description#" cfsqltype="cf_sql_varchar"/>,
         workingHour='#form.hours#',
@@ -134,7 +134,7 @@
     </cfquery>
 </cffunction>  
 <cffunction name="updatePmTimeSheet">
-    <cfquery name="value" datasource="bugTracking">
+    <cfquery name="value" datasource="#Application.dataSourceName#">
        update timeSheet set 
         description=<cfqueryparam value="#form.description#" cfsqltype="cf_sql_varchar"/>,
         workingHour='#form.hours#',

@@ -7,15 +7,15 @@
 <cfcomponent>
     <cffunction name="fileupload" returnType="any">
         <cfif isDefined('form.status')>
-            <cfquery name="updateStatusID" datasource="bugTracking">
+            <cfquery name="updateStatusID" datasource="#Application.dataSourceName#">
                 update bugs set 
                 statusID=<cfqueryparam value="#form.status#" CFSQLType="CF_SQL_TINYINT">
-                where bugID=#url.bugID#;
+                where bugID=<cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
         </cfif>
 
          <cfset dat=now()/>
-        <cfquery name="remarkTableInsert" datasource="bugTracking" result="remark">
+        <cfquery name="remarkTableInsert" datasource="#Application.dataSourceName#" result="remark">
             insert into remarks (
             name,
             description,
@@ -47,10 +47,10 @@
                 <cfset filepa=""/>
                 <cfset filety=""/>
         </cfif>
-            <cfquery name="getRemarkID" datasource="bugTracking" result="remarkID">
+            <cfquery name="getRemarkID" datasource="#Application.dataSourceName#" result="remarkID">
                 select remarkID from remarks where createdOn=#dat#;
             </cfquery>
-            <cfquery name="attachmentInsert" datasource="bugTracking" result="attachmentRsult">
+            <cfquery name="attachmentInsert" datasource="#Application.dataSourceName#" result="attachmentRsult">
                 insert into attachments (
                 fileName,
                 remarkID,    
@@ -77,11 +77,13 @@
     <cffunction name="bug" returnType="any">
         <cfargument name="tempbugID" required="true">
         <cfoutput>
-            <cfquery name="bugcheck" datasource="bugTracking" result="checkbug">
-                select * from bugs where bugID = #tempbugID#;
+            <cfquery name="bugcheck" datasource="#Application.dataSourceName#" result="checkbug">
+                select * from bugs where 
+                bugID = <cfqueryparam value="#tempbugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
-            <cfquery name="bugusercheck" datasource="bugTracking" result="checkbuguser">
-                select userID from bugUsers where bugID = #tempbugID#;
+            <cfquery name="bugusercheck" datasource="#Application.dataSourceName#" result="checkbuguser">
+                select userID from bugUsers where 
+                bugID = <cfqueryparam value="#tempbugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
             <cfif form.statusID eq 0 >
                 <cfset statusID = "#bugcheck.statusID#" />
@@ -103,7 +105,7 @@
             <cfelse>
                 <cfset teamMemberID = "#form.teamMemberID#" />
             </cfif>   
-            <cfquery name="updatebug" datasource="bugTracking" result="updatedbug">
+            <cfquery name="updatebug" datasource="#Application.dataSourceName#" result="updatedbug">
                 update bugs set
                 bugName = <cfqueryparam value="#form.bname#" CFSQLType="CF_SQL_VARCHAR">,
                 bugDescription = <cfqueryparam value="#form.bugdes#" CFSQLType="CF_SQL_VARCHAR">,
@@ -111,12 +113,12 @@
                 statusID = <cfqueryparam value="#statusID#" CFSQLType="CF_SQL_TINYINT">,
                 priorityID = <cfqueryparam value="#priorityID#" CFSQLType="CF_SQL_TINYINT">,
                 severityID = <cfqueryparam value="#severityID#" CFSQLType="CF_SQL_TINYINT"> 
-                where bugID=#tempbugID#;
+                where bugID=<cfqueryparam value="#tempbugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
-            <cfquery name="updatebugUser" datasource="bugTracking" result="updatedbuguser">
+            <cfquery name="updatebugUser" datasource="#Application.dataSourceName#" result="updatedbuguser">
                 update bugUsers set
                 userID= <cfqueryparam value="#teamMemberID#" CFSQLType="CF_SQL_TINYINT" >  
-                where bugID=#tempbugID#;
+                where bugID=<cfqueryparam value="#tempbugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
             <cfif updatedbug.recordcount eq 1 and updatedbuguser.recordcount eq 1>
                 <cfreturn true />
@@ -129,13 +131,13 @@
     </cffunction>
     <cffunction name="getDesignation">
         <cfargument name="tableName" required="true" />
-        <cfquery name="designationValues" datasource="bugTracking" result="designationRecord">
+        <cfquery name="designationValues" datasource="#Application.dataSourceName#" result="designationRecord">
             select * from #arguments.tableName#;
         </cfquery>
         <cfreturn designationValues />
     </cffunction>
     <cffunction name="loginCheck">
-        <cfquery name="loginValues" datasource="bugTracking" result="loginRecord">
+        <cfquery name="loginValues" datasource="#Application.dataSourceName#" result="loginRecord">
             select * from users where
             email = <cfqueryparam value="#form.email#" CFSQLType="CF_SQL_VARCHAR">
         </cfquery>
@@ -214,7 +216,7 @@
         </cfif>
     </cffunction>
     <cffunction name="selectProject" access="public" output="false" returnType="query">
-        <cfquery name="projects" datasource="bugTracking">
+        <cfquery name="projects" datasource="#Application.dataSourceName#">
             select projects.*, status.name 
             from projects inner join status on 
             status.statusID=projects.statusID
@@ -223,21 +225,21 @@
     </cffunction>
     <cffunction name="projectStatus" access="public" output="false" returnType="query">
         <cfargument name="value" required="true" type="string">
-            <cfquery name="projectStatus" datasource="bugTracking">
+            <cfquery name="projectStatus" datasource="#Application.dataSourceName#">
                 select projects.*, status.name from projects inner join status
                 on status.statusID=projects.statusID and status.statusID="#value#"
             </cfquery>
             <cfreturn projectStatus>
     </cffunction>
     <cffunction name="selectStatus" access="public" output="false" returnType="query">
-        <cfquery name="status" datasource="bugTracking">
+        <cfquery name="status" datasource="#Application.dataSourceName#">
             select * from status
         </cfquery>
         <cfreturn status>
     </cffunction>
     <cffunction name="addUser">
-        <cfquery result="checkEmail" datasource="bugTracking">
-            select email from users where email="#form.email#"
+        <cfquery result="checkEmail" datasource="#Application.dataSourceName#">
+            select email from users where email=<cfqueryparam value="#form.email#" CFSQLType="CF_SQL_VARCHAR">
         </cfquery>
 
         <cfif checkEmail.recordcount>
@@ -245,7 +247,7 @@
         <cfelse>
             <cfset salt = Hash(GenerateSecretKey("AES"),"SHA-512") />
             <cfset password = Hash(trim(form.password) & salt,"SHA-512") />
-            <cfquery name="inser" datasource="bugTracking">
+            <cfquery name="inser" datasource="#Application.dataSourceName#">
                 insert into users (
                     userName,
                     email,
@@ -270,8 +272,8 @@
     </cffunction>
     <cffunction name="updateProfile" returnType="any">
         <cfargument name="tempUserID" default="#Session.userID#" >
-        <cfquery name="check" datasource="bugTracking" result="checkRecord">
-            select * from users where userID = "#tempUserID#";
+        <cfquery name="check" datasource="#Application.dataSourceName#" result="checkRecord">
+            select * from users where userID = <cfqueryparam value="#tempUserID#" CFSQLType="CF_SQL_TINYINT">;
         </cfquery>
         <cfif isNull(form.uname)>
             <cfset name = "#check.userName#" />
@@ -335,7 +337,7 @@
         <cfelse>
             <cfset newNumber2 = "#check.contactNumber2#" />
         </cfif>
-        <cfquery name="updateRecord" datasource="bugTracking">
+        <cfquery name="updateRecord" datasource="#Application.dataSourceName#">
             update users set
             userName = <cfqueryparam value="#name#" CFSQLType="CF_SQL_VARCHAR">,
             email = <cfqueryparam value="#email#" CFSQLType="CF_SQL_VARCHAR">,
@@ -345,7 +347,7 @@
             contactNumber2 = <cfqueryparam value="#newNumber2#" CFSQLType="CF_SQL_VARCHAR">,
             roleID = <cfqueryparam value="#roleID#" CFSQLType="CF_SQL_TINYINT">,
             designationID = <cfqueryparam value="#designationID#" CFSQLType="CF_SQL_TINYINT"> 
-            where userID="#tempUserID#";
+            where userID=<cfqueryparam value="#tempUserID#" CFSQLType="CF_SQL_TINYINT">;
         </cfquery>
         <cfif Session.userID eq 1>
             <cflocation url="employeeDetails.cfm" addtoken="false"/>

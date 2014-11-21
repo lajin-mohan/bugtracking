@@ -1,4 +1,4 @@
-<cfquery name="sample" datasource="bugTracking">
+<cfquery name="sample" datasource="#Application.dataSourceName#">
     select b.bugID, b.bugName, b.bugDescription, b.estimatedstartDate, b.actualStartDate, 
     b.estimatedEndDate, b.actualEndDate, b.statusID as sid, b.severityID as seid, 
     b.priorityID as pid, s.name as sname, p.name as pname, se.name as sename, b.projectID as prid, 
@@ -7,11 +7,11 @@
     b.projectID=proj.projectID and b.statusID=s.statusID and b.severityID=se.severityID and 
     b.bugID=#url.bgid# order by b.bugName asc;
 </cfquery>
-<cfquery name="bugviewmember" datasource="bugTracking">
+<cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
     select u.userID as uID, u.userName as uname  from bugUsers as bu 
     inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
 </cfquery>
-<cfquery name="bugaddmember" datasource="bugTracking">
+<cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
     select pu.userID, u.userName as uname, pu.hide as phide from projectUsers as pu 
     inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
 </cfquery>
@@ -232,7 +232,7 @@
             <cfset check=#updateObject.bug("#sample.bugID#")#>
     </cfoutput>
     <cfif check> 
-        <cfquery name="bugusercheck" datasource="bugTracking" result="checkbuguser">
+        <cfquery name="bugusercheck" datasource="#Application.dataSourceName#" result="checkbuguser">
              select userID from bugUsers where bugID = #sample.bugID#;
         </cfquery>
         <cfif form.teamMemberID eq 0 >
@@ -240,23 +240,20 @@
         <cfelse>
              <cfset teamMemberID = "#form.teamMemberID#" />
         </cfif>           
-        <cfquery name="getDetails" datasource="bugTracking" result=list> 
+        <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list> 
             SELECT u.email as uemail, u.userName as uname,
             p.projectName as pname from users as u 
             inner join projects p on u.userId=#teamMemberID#
             and p.projectID=#url.p#;
         </cfquery>
-        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+        <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
            SELECT  u.userName as username, d.name as dname 
            from users u inner join designations d
            on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-<<<<<<< HEAD
-       <cfmail from="#session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
-=======
+
        <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
->>>>>>> upstream/master
            <cfmailpart type="html">
                 <html> 
                     <head> 
@@ -279,23 +276,21 @@
                 </html>
             </cfmailpart>                     
         </cfmail>                                   
-        <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+        <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
             SELECT u.email as uemail, u.userName as uname,
             p.projectName as pname from users as u 
             inner join projects p on p.projectID=#url.p#
             and p.userID=u.userID ;
         </cfquery>
-        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+        <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
             SELECT  u.userName as username, d.name as dname 
             from users u inner join designations d
             on userID=#session.userID# and u.designationID=d.designationID; 
         </cfquery>
       
-<<<<<<< HEAD
-       <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
-=======
+
        <cfmail from="#Session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
->>>>>>> upstream/master
+
            <cfmailpart type="html">
                <html> 
                    <head> 

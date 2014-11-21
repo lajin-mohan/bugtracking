@@ -23,7 +23,7 @@
                         <div class="control-group muted pull-right">
 				                    <form action="" method="post">
 				                      <div class="controls">                                                                                   <select name="project"> 
-                                            <cfquery name="selectProject" datasource="bugTracking">
+                                            <cfquery name="selectProject" datasource="#Application.dataSourceName#">
                                                 select projects.projectName,projects.projectID 
                                                 from projects inner join projectUsers on 
                                                 projectUsers.projectID=projects.projectID 

@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="bugname" datasource="bugTracking">
+<cfquery name="bugname" datasource="#Application.dataSourceName#">
     select b.bugName as bugName,bu.userID as userID 
     from bugs b inner join bugUsers bu on  
     b.bugID=#url.bugID# and b.bugID=bu.bugID;
@@ -95,13 +95,13 @@
             <cfset check = #addUserObject.fileupload()# />
         </cfoutput>
         <cfif check>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+            <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
                 SELECT u.email as uemail, u.userName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on u.userId=#bugname.userID#
                 and p.projectID=#url.pid#;
             </cfquery>
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+            <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
                 SELECT  u.userName as username, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
@@ -129,13 +129,13 @@
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
-            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
+            <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result="manager"> 
                 SELECT u.email as uemail, u.userName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on p.projectID=#url.pid#
                 and p.userID=u.userID ;
             </cfquery>
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+            <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current"> 
                 SELECT  u.userName as username, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 

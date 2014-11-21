@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getbugID" datasource="bugTracking">
+<cfquery name="getbugID" datasource="#Application.dataSourceName#">
 select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -36,7 +36,7 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                                 </tr>
                                 <cfoutput>
                                     <cfloop query="getbugID">
-                                        <cfquery name="viewdetails" datasource="bugTracking">
+                                        <cfquery name="viewdetails" datasource="#Application.dataSourceName#">
                                             select u.userName name,u.userID id,p.projectName, p.projectID pid
                                             from users u inner join projectUsers pu inner join projects p
                                             on u.userID=pu.userID and pu.projectID=p.projectID and 
@@ -58,7 +58,7 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
                                
                                         <cfloop query="viewdetails">
                                             <cfif viewdetails.id neq Session.userID>
-                                                <cfquery name="listBugs" datasource="bugTracking">
+                                                <cfquery name="listBugs" datasource="#Application.dataSourceName#">
                                                     select b.bugID bid, b.bugName, b.projectID from bugs b
                                                     inner join bugUsers bu on b.bugID=bu.bugID 
                                                     and bu.userID=#viewdetails.id# and b.statusID!=6;

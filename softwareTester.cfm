@@ -29,7 +29,7 @@
                                     <td><strong>Project Lead</strong></td>
                                     <td><strong>Marked for Review On</strong></td>
                                 </tr>
-                                <cfquery name="project" datasource="bugTracking">
+                                <cfquery name="project" datasource="#Application.dataSourceName#">
                                     select projects.projectID,projects.projectName,users.userName,logs.loggedTime 
                                     from projects inner join bugs on bugs.projectID=projects.projectID 
                                     inner join logs on logs.bugID=bugs.bugID 

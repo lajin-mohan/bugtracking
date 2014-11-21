@@ -24,7 +24,7 @@
 				                    <form action="plTimeSheetHistory.cfm" method="post">
 				                        <div class="controls">
                                     <select name="project"> 
-                                            <cfquery name="selectProject" datasource="bugTracking">
+                                            <cfquery name="selectProject" datasource="#Application.dataSourceName#">
                                                 select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
                                              </cfquery>
                                              <option>Select Project</option>
@@ -81,7 +81,7 @@
                                 
                             <cfif #getdetails.RecordCount# GT 0>
                                 <cfloop query="getdetails">
-                                     <cfquery name="bug" datasource="bugTracking">
+                                     <cfquery name="bug" datasource="#Application.dataSourceName#">
                                    select bugs.bugName,bugs.bugID,timeSheet.timeSheetID from bugs,timeSheet where timeSheet.bugID=bugs.bugID and timeSheet.projectID="#getdetails.projectID#" and timeSheet.userID="#session.userID#" and timeSheet.timeSheetID="#getdetails.timeSheetID#"
                                </cfquery>
                                     <cfoutput>

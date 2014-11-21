@@ -1,11 +1,11 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-       <cfquery name="empDetails" datasource="bugTracking">
+       <cfquery name="empDetails" datasource="#Application.dataSourceName#">
            select users.userName,designations.name d from users 
            inner join designations on designations.designationID=users.designationID and                      users.userID="#url.uid#" 
        </cfquery>
-       <cfquery name="projectlist" datasource="bugTracking">
+       <cfquery name="projectlist" datasource="#Application.dataSourceName#">
            select projects.projectName,
            projects.actualStartDate,status.name s,projects.projectID from                                      status,projects,projectUsers where projects.projectID=projectUsers.projectID and                    status.statusID=projects.statusID and
            projectUsers.userID="#url.uid#" 
@@ -30,7 +30,7 @@
                    <cfloop query="projectlist">
                        <table><tr><td class="tdAlign"><b><label>Project:</label></b></td>
                        <td class="tdAlign"><b><label>#projectlist.projectName#</label></b></td>                            </tr></table>
-                       <cfquery name="selectData" datasource="bugTracking">
+                       <cfquery name="selectData" datasource="#Application.dataSourceName#">
                        select users.userName,designations.name d,bugs.bugName,projects.projectName,
                        bugs.estimatedStartDate,status.name s,projects.projectID from users 
                        inner join bugUsers on users.userID=bugUsers.userID 
