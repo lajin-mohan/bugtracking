@@ -26,38 +26,49 @@
                         </div>
                     </div>
                     <cfquery name="remainder" datasource="#Application.dataSourceName#">
-                        select * from remainders where remainderID=#url.remainderID#
+                        select * from remainders where 
+                        remainderID = <cfqueryparam value="#url.remainderID#" CFSQLType="CF_SQL_TINYINT">;
                     </cfquery>
                     <div class="block">
-                        <div class="navbar navbar-inner block-header"></div>
+                        <div class="navbar navbar-inner block-header">
+                            <div class="muted pull-left">
+                                <h3>Remainder Details</h3>
+                            </div>
+                        </div>
                         <div class="block-content collapse in">
                             <div class="span12">
                                 <form method="post" action="">
                                     <fieldset>
-                                        <legend>Remainder Details</legend>
                                         <div class="control-group">
                                             <label class="control-label">Name:</label>
                                             <div class="controls">
-                                                <input name="name" type="text" data-required="1" class="span6 m-wrap"  value="#remainder.name#"/>
+                                                <input name="name" type="text" data-required="1" 
+                                                        class="span6 m-wrap"  value="#remainder.name#"/>
                                             </div>
                                         </div>
                                         <br/>
                                         <div class="control-group">
                                             <label class="control-label">Description:</label>
                                             <div class="controls">
-                                                <input name="description" type="text" class="span6 m-wrap" value="#remainder.description#"/>              									
+                                                <input name="description" type="text" class="span6 m-wrap" 
+                                                        value="#remainder.description#"/> 					
                                             </div>
                                         </div>
                                         <br/>
                                         <div class="control-group">
                                             <label class="control-label">Date:</label>
                                             <div class="controls">
-                                                <input name="date" type="date" class="span6 m-wrap" required value="#Dateformat(remainder.date,'yyyy-mm-dd')#"/>
+                                                <input name="date" type="date" class="span6 m-wrap" required 
+                                                        value="#Dateformat(remainder.date,'yyyy-mm-dd')#"/>
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary" name="submit">Edit Details</button>
-                                            <a href="remainders.cfm?remainderID=#url.remainderID#"><button type="button" class="btn">Cancel</button></a>
+                                            <button type="submit" class="btn btn-primary" name="submit">
+                                                Edit Details
+                                            </button>
+                                            <a href="remainders.cfm?remainderID=#url.remainderID#">
+                                                <button type="button" class="btn">Cancel</button>
+                                            </a>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -71,8 +82,11 @@
     <cfif structkeyexists(form,'submit')>
         <cfset remainderDate=#dateformat(form.date,'yyyy-mm-dd')#/>
         <cfquery name="remainderEdit" datasource="#Application.dataSourceName#">
-            update remainders set name='#form.name#', description='#form.description#',
-            date='#form.date#' where remainderID=#url.remainderID#
+            update remainders set 
+            name = <cfqueryparam value='#form.name#' CFSQLType="CF_SQL_VARCHAR">,
+            description = <cfqueryparam value='#form.description#' CFSQLType="CF_SQL_VARCHAR">,
+            date = <cfqueryparam value='#form.date#' CFSQLType="CF_SQL_DATE">
+            where remainderID = <cfqueryparam value='#url.remainderID#' CFSQLType="CF_SQL_TINYINT">;
         </cfquery>
         <cflocation url="remainders.cfm?remainderID=#url.remainderID#" addtoken="false"/>
     </cfif>

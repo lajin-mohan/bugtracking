@@ -24,14 +24,26 @@
         <cfargument name = "SessionScope" required=true/>
     </cffunction> 
 
-    <cffunction name="onError"> 
+   <cffunction name="onError"> 
         <cfargument name="Exception" required=true/> 
         <cfargument type="String" name = "EventName" required=true/> 
- 
-            <cfif NOT (Arguments.EventName IS onSessionEnd) OR  
-                (Arguments.EventName IS onApplicationEnd)> 
-            <cflocation url="error.cfm" addToken="false"/>
+
+        <cfif isdefined("exception.rootcause")> 
+            <cfoutput>  
+                Root Cause Message: #exception.rootcause.message#
+            </cfoutput> 
         </cfif> 
+ 
+        <cfif NOT (Arguments.EventName IS onSessionEnd) OR  
+            (Arguments.EventName IS onApplicationEnd)> 
+            <cfoutput> 
+                <h2>An unexpected error occurred.</h2> 
+                <p>Please provide the following information to technical support:</p> 
+                <p>Error Event: #EventName#</p> 
+                <p>Error details:<br> 
+                <cfdump var=#exception#></p> 
+            </cfoutput> 
+        </cfif>    
     </cffunction> 
 </cfcomponent>
 

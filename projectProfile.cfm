@@ -58,119 +58,136 @@
                 <div class="span9" id="content">
                     <div class="row-fluid">
                         <div class="navbar navbar-inner block-header">
-
-                            <div class="muted pull-right">
-
-                            </div>
-
                             <div class="muted pull-left">
                                 <cfif isdefined( 'url.flag')>
-                                    <a href="projectManagerHistory.cfm" class="btn btn-default btn-primary" style="display:inline">
+                                    <a href="projectManagerHistory.cfm" 
+                                        class="btn btn-default btn-primary" style="display:inline">
                                         <i class="icon-arrow-left"></i>&nbsp;Project History
                                     </a>
                                     <cfset Session.highlight2="inactive" />
                                     <cfset Session.highlight6="active" />
-                                    <cfelse>
-                                        <a href="projectDetails.cfm" class="btn btn-default btn-primary" style="display:inline">
-                                            <i class="icon-arrow-left"></i>&nbsp;Project Details
-                                        </a>
-                                        <cfset Session.highlight2="active" />
-                                        <cfset Session.highlight6="inactive" />
+                                <cfelse>
+                                    <a href="projectDetails.cfm" 
+                                       class="btn btn-default btn-primary" style="display:inline">
+                                        <i class="icon-arrow-left"></i>&nbsp;Project Details
+                                    </a>
+                                    <cfset Session.highlight2="active" />
+                                    <cfset Session.highlight6="inactive" />
                                 </cfif>
                             </div>
                             <div class="muted pull-right">
-                                <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" class="btn btn-default btn-primary" style="display:inline">Report</a> &nbsp; &nbsp;
-                                <a href="editProject.cfm?projectID=#url.projectID#&flag" class="btn btn-default btn-primary" style="display:inline">
+                                <a href="pmSingleProjectReport.cfm?pid=#url.projectID#" 
+                                    class="btn btn-default btn-primary" style="display:inline">Report
+                                </a> &nbsp; &nbsp;
+                                <a href="editProject.cfm?projectID=#url.projectID#&flag" 
+                                    class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-plus-sign"></i>&nbsp;Edit Project
                                 </a>
                             </div>
                         </div>
                     </div>
                     <cfquery name="project" datasource="#Application.dataSourceName#">
-                        select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, u.userName from projects p inner join status s inner join priorities pr inner join users u where p.projectID=#url.projectID# and p.statusID=s.statusID and p.userID=u.userID and p.priorityID=pr.priorityID
-                    </cfquery>
+                        select p.projectName, p.projectDescription, p.estimatedStartDate, p.actualStartDate, 
+                        p.estimatedEndDate, p.actualEndDate, p.userID, s.name statusName, pr.name priorityname, 
+                        u.firstName, u.lastName from projects p inner join status s inner join priorities pr 
+                        inner join users u where p.statusID=s.statusID and p.userID=u.userID and 
+                        p.priorityID=pr.priorityID and p.projectID = <cfqueryparam value="#url.projectID#" 
+                        CFSQLType="CF_SQL_TINYINT">
+                    </cfquery>                    
                     <div class="block">
-
-
+                        <div class="navbar navbar-inner block-header">
+                            <h3>Project Profile</h3>
+                        </div>
                         <div id="progressbar-5">
                             <div class="progress-label">
                                 Loading...
                             </div>
-                        </div>
-
+                        </div><br/><br/>
                         <div class="block-content collapse in">
                             <div class="span12">
                                 <fieldset>
-                                    <legend>Project Profile</legend>
                                     <form action=" " class="form-horizontal" method="post">
                                     <div class="control-group">
                                         <label class="control-label">Name:</label>
                                         <div class="controls">
-                                            <input type="text" data-required="1" class="span6 m-wrap" disabled value="#project.projectName#" />
+                                            <input type="text" data-required="1" class="span6 m-wrap" 
+                                                    disabled value="#project.projectName#" />
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Description:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" disabled value="#project.projectDescription#" />
+                                            <input type="text" class="span6 m-wrap" disabled 
+                                                    value="#project.projectDescription#" />
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Estimated Start Date:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" required disabled value="#LSDateformat(project.estimatedStartDate," yyyy-mm-dd ")#"/>
+                                            <input type="text" class="span6 m-wrap" required disabled
+                                                    value="#LSDateFormat(project.estimatedStartDate)#"/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Actual Start Date:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualStartDate," yyyy-mm-dd ")#" disabled/>
+                                            <input type="text" class="span6 m-wrap" disabled 
+                                                    value="#LSDateFormat(project.actualStartDate)#" />
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Estimated End Date:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.estimatedEndDate," yyyy-mm-dd ")#" disabled/>
+                                            <input type="text" class="span6 m-wrap"  disabled
+                                                    value="#LSDateFormat(project.estimatedEndDate)#"/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Actual End Date:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#LSDateformat(project.actualEndDate," yyyy-mm-dd ")#" disabled/>
+                                            <input type="text" class="span6 m-wrap" disabled 
+                                                    value="#LSDateFormat(project.actualEndDate)#"/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Status:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#project.statusName#" disabled/>
+                                            <input type="text" class="span6 m-wrap" 
+                                                    value="#project.statusName#" disabled/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="control-group">
                                         <label class="control-label">Priority:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#project.priorityName#" disabled/>
+                                            <input type="text" class="span6 m-wrap" disabled 
+                                                    value="#project.priorityName#"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label">Project Manager:</label>
                                         <div class="controls">
-                                            <input type="text" class="span6 m-wrap" value="#project.userName#" disabled/>
+                                            <input type="text" class="span6 m-wrap" disabled 
+                                                    value="#project.firstName&' '&project.lastName#"/>
                                         </div>
                                     </div>
-                                    </form>
+                                </form>
     </cfoutput>
     <cfquery name="pUsers" datasource="#Application.dataSourceName#">
-        select u.userID, u.userName, u.employeeID, d.name, pu.hide from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.projectID=#url.projectID#
+        select u.userID, u.firstName, u.lastName, u.employeeID, d.name, pu.hide from projectUsers pu 
+        inner join users u inner join designations d where pu.userID=u.userID and 
+        d.designationID=u.designationID and 
+        pu.projectID = <cfqueryparam value="#url.projectID#" CFSQLType="CF_SQL_TINYINT">
     </cfquery>
     <cfquery name="m1" datasource="#Application.dataSourceName#">
-        select milestoneStatus from milestones where projectID=#url.projectID# and milestoneStatus="completed" and milestoneHide=0;
+        select milestoneStatus from milestones where milestoneStatus="completed" and milestoneHide=0 and 
+        projectID = <cfqueryparam value="#url.projectID#" CFSQLType="CF_SQL_TINYINT">;
     </cfquery>
     <cfset mcount=0>
         <cfoutput query="m1">
@@ -275,7 +292,7 @@
                                             <tr>
                                                 <td>#etotal#</td>
                                                 <td><a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#">
-                                                            #pUsers.userName#</a>
+                                                            #pUsers.firstName# #pUsers.lastname#</a>
                                                 </td>
                                                 <td>#pUsers.employeeID#</td>
                                                 <td>#pUsers.name#</td>
