@@ -5,7 +5,7 @@
 --->
 <cfif isDefined("form.add")>
     <cfif len(trim(form.formMilestoneName)) and (form.formMilestoneStatus neq "select")>
-        <cfquery name="mins" datasource="bugtracking">
+        <cfquery name="mins" datasource="#Application.dataSourceName#">
             insert into milestones 
             (projectID,milestoneName,milestoneDescription,milestoneDate,milestoneStatus)
             values(

@@ -93,16 +93,16 @@
                             </div>
                             <div class="block-content collapse in">
                                 <div class="span12">
-                                    <cfquery name="project" datasource="bugTracking">
+                                    <cfquery name="project" datasource="#Application.dataSourceName#">
                                         select p.projectID, p.projectName, p.projectDescription, p.estimatedStartDate, p.estimatedEndDate, p.statusID, p.priorityID, s.name as statusName, pr.name as priorityName from projects as p inner join status as s inner join priorities pr on p.statusID=s.statusID and p.projectID=#url.projectID# and p.priorityID=pr.priorityID
                                     </cfquery>
-                                    <cfquery name="status" datasource="bugtracking">
+                                    <cfquery name="status" datasource="#Application.dataSourceName#">
                                         select * from status;
                                     </cfquery>
-                                    <cfquery name="priority" datasource="bugtracking">
+                                    <cfquery name="priority" datasource="#Application.dataSourceName#">
                                         select * from priorities;
                                     </cfquery>
-                                    <cfquery name="pUsers" datasource="bugtracking">
+                                    <cfquery name="pUsers" datasource="#Application.dataSourceName#">
                                         select u.userID, u.userName, u.employeeID, d.name, pu.isLead from projectUsers pu inner join users u inner join designations d where pu.userID=u.userID and d.designationID=u.designationID and pu.hide=0 and pu.projectID=#url.projectID#;
                                     </cfquery>
                                     <form action="editProject.cfm?projectID=#url.projectID#" class="form-horizontal" method="post" onsubmit="return checkDate()">
@@ -245,7 +245,7 @@
 
 
 
-    <cfquery name="milestones" datasource="bugtracking">
+    <cfquery name="milestones" datasource="#Application.dataSourceName#">
         select * from milestones where projectID=#url.projectID# and milestoneHide=0 order by milestoneStatus;
     </cfquery>
 
@@ -318,7 +318,7 @@
     </div>
     <cfif structkeyexists(form, 'submit')>
         <cfoutput>
-            <cfquery name="editProject" datasource="bugTracking" result="ep">
+            <cfquery name="editProject" datasource="#Application.dataSourceName#" result="ep">
                 update projects set projectName='#form.projectName#', projectDescription='#form.projectDescription#', estimatedStartDate='#form.estimatedStartDate#', estimatedEndDate='#form.estimatedEndDate#', statusID='#form.statusID#', priorityID='#form.priorityID#', userID=#Session.userID# where projectID=#url.projectID#
             </cfquery>
             <cfif ep.recordcount>

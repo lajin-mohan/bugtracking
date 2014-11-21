@@ -42,11 +42,11 @@
                                              <cfinvoke component="components.timeSheet" method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
                                              <option value="0">Select Bugs</option>
                                              <cfloop query="getdetails">
-                                             <cfoutput><option value="#bugID#">#bugName#</option>                                                </cfoutput>
+                                             <cfoutput><option value="#bugID#">#bugName#</option>                                                                              </cfoutput>
                                              </cfloop>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
-                              <div class="muted pull-right">         
-                                  <a href="http://localhost/bugTracking/timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View Time Sheet</a></div></div>
+                            <div class="muted pull-right">         
+                                  <a href="timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View     Time Sheet</a></div></div>
 			                        </div><!--- close of control-group --->
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Description<span class="required">*</span></label>
@@ -80,13 +80,13 @@
 				                        <div class="controls">
 					                       
                                          <select name="status" required> 
-                                                                                                                                                <option value="0">Select Status</option>
+                                                                                                                                                                          <option value="0">Select Status</option>
                                              <option value="4">Ongoing</option>
                                              <option value="3">Pending</option>
                                              <option value="5">Testing</option>
                                              <option value="7">Completed</option>
-                                            </select><span style="display:none;color:red" class="sp">Required</span>
-                                           </div>
+                                             </select><span style="display:none;color:red" class="sp">Required</span>
+                                             </div>
                           
 			                        </div><!--- close of control-group --->
 			                    	                    

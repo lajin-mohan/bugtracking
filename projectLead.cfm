@@ -4,7 +4,8 @@
             Author: CF Freshers 2014
 --->
 
-<cfquery name="getbugID" datasource="bugTracking">
+
+<cfquery name="getbugID" datasource="#Application.dataSourceName#">
     select projectID from projectUsers where userID= <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and isLead=1 and hide=0;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -34,9 +35,10 @@
                                     <td><strong>Status</strong></td>
                                 </tr>
                                     <cfloop query="getbugID">
-                                        <cfquery name="viewproject" datasource="bugTracking">
-           select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as status from projects as p 
-            inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  order by p.projectName  asc;
+
+                                        <cfquery name="viewproject" datasource="#Application.dataSourceName#">
+select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as status from projects as p inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  order by p.projectName asc;
+
                                         </cfquery>
                                         <cfoutput query="viewproject">
                                             <tr>
@@ -66,9 +68,10 @@
                                     <td><strong>Project Name</strong></td>
                                 </tr>
                                  <cfloop query="getbugID">
+
                                     <cfquery name="viewdetails" datasource="bugTracking">
                                         select u.firstName uname, d.name dname, b.bugName bugname,
-                                        p.projectName projname, u.userID, p.projectID, b.bugID
+                                       ojectName projname, u.userID, p.projectID, b.bugID
                                         from users u inner join projectUsers pu inner join
                                         bugUsers bu inner join bugs b inner join projects p
                                         inner join designations d

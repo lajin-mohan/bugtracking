@@ -3,7 +3,8 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getbugID" datasource="bugTracking">
+
+<cfquery name="getbugID" datasource="#Application.dataSourceName#">
 select projectID from projectUsers where userID=
 <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and isLead=1 and hide=0;
 </cfquery>
@@ -20,13 +21,15 @@ select projectID from projectUsers where userID=
         <div class="span9" id="content">
             <div class="block">
             <div class="row-fluid">
+
                     <div class="navbar navbar-inner block-header">
                     <cfoutput>
                        <div class="muted pull-left">
                         <h3>Projects </h3>
                       </div>
                          <div class="muted pull-right">
-                                    <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary"                                                          style="display:inline">
+                                    <a href="plMyprojectReport.cfm" class="muted pull-right btn btn-default btn-primary"                                                          style="display:inline">
+
                                         <i class="icon-list-alt"></i>&nbsp;Generate Report
                                     </a>
                                 </div>
@@ -41,10 +44,12 @@ select projectID from projectUsers where userID=
                                             <td><h5>Status</h5></td>
                                 </tr>
                                 <cfloop query="getbugID">
-                                    <cfquery name="viewproject" datasource="bugTracking">
+
+                                    <cfquery name="viewproject" datasource="#Application.dataSourceName#">
                                         select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from projects as p 
                                         inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  
                                         order by p.projectName asc;
+
                                     </cfquery>
                                     <cfoutput query="viewproject">
                                     <tr>

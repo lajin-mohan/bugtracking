@@ -5,10 +5,10 @@
 --->
 
 <cfoutput>
-    <cfquery name="lead" datasource="bugtracking" result="l">
+    <cfquery name="lead" datasource="#Application.dataSourceName#" result="l">
         update projectUsers set islead=1 where userID=#url.userID#
     </cfquery>
-    <cfquery name="lead2" datasource="bugtracking" result="l2">
+    <cfquery name="lead2" datasource="#Application.dataSourceName#" result="l2">
         update projectUsers set islead=0 where userID!=#url.userID#
     </cfquery>
     <cfif l.recordcount>

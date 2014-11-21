@@ -3,7 +3,7 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="bugname" datasource="bugTracking">
+<cfquery name="bugname" datasource="#Application.dataSourceName#">
     select b.bugName as bugName,bu.userID as userID 
     from bugs b inner join bugUsers bu on  
     b.bugID=<cfqueryparam value="#url.bugID#" cfsqltype="cf_sql_tinyint"/> and b.bugID=bu.bugID;
@@ -98,14 +98,18 @@
             <cfset check = #addUserObject.fileupload()# />
         </cfoutput>
         <cfif check>
+
             <cfquery name="getDetails" datasource="bugTracking" result="list"> 
                 SELECT u.email as uemail, u.firstName as uname,
+
                 p.projectName as pname from users as u 
                 inner join projects p on u.userId=#bugname.userID#
                 and p.projectID=<cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>		;
             </cfquery>
+
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
                 SELECT  u.firstName as username, d.name as dname 
+
                 from users u inner join designations d on 
                 userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
             </cfquery>      
@@ -132,14 +136,18 @@
                      </html>
                 </cfmailpart>                     
             </cfmail>                                   
+
             <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
                 SELECT u.email as uemail, u.firstName as uname,
+
                 p.projectName as pname from users as u 
                 inner join projects p on p.projectID=#url.pid#
                 and p.userID=u.userID ;
             </cfquery>
+
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
                 SELECT  u.firstName as username, d.name as dname 
+
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>

@@ -1,10 +1,10 @@
 <cfoutput>
     <cfif #url.mstatus# eq "progress">
-    <cfquery name="ms" datasource="bugtracking" result="r">
+    <cfquery name="ms" datasource="#Application.dataSourceName#" result="r">
         update milestones set milestoneStatus="completed" where milestoneID=#url.mID#
     </cfquery>
         <cfelse>
-    <cfquery name="ms" datasource="bugtracking" result="r">
+    <cfquery name="ms" datasource="#Application.dataSourceName#" result="r">
         update milestones set milestoneStatus="progress" where milestoneID=#url.mID#
     </cfquery>
         </cfif>

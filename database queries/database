@@ -65,3 +65,8 @@ create table timeSheet(timeSheetID tinyint(3) unsigned primary key auto_incremen
 
 alter table timeSheet add column hide bit default 0;
 
+alter table users drop column userName;
+
+alter table users add column firstName varchar(64);
+
+alter table users add column lastName varchar(64);

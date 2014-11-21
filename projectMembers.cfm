@@ -3,7 +3,8 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getbugID" datasource="bugTracking">
+
+<cfquery name="getbugID" datasource="#Application.dataSourceName#">
 select projectID from projectUsers where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and isLead=1 and hide=0
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -36,8 +37,8 @@ select projectID from projectUsers where userID=<cfqueryparam value="#session.us
                             <table class="table table-striped">
                                 <cfoutput>
                                     <cfloop query="getbugID">
-                                        <cfquery name="viewdetails" datasource="bugTracking">
-                                            select u.firstName name,u.userID id,p.projectName, p.projectID pid
+                                   <cfquery name="viewdetails" datasource="#Application.dataSourceName#">
+                                            select u.firstName uname,u.userID id,p.projectName, p.projectID pid
                                             from users u inner join projectUsers pu inner join projects p
                                             on u.userID=pu.userID and pu.projectID=p.projectID and 
                                             p.projectID=#getbugID.projectID#;
@@ -57,13 +58,13 @@ select projectID from projectUsers where userID=<cfqueryparam value="#session.us
                                         </td></tr>
                                         <cfloop query="viewdetails">
                                             <cfif viewdetails.id neq Session.userID>
-                                                <cfquery name="listBugs" datasource="bugTracking">
+                                                <cfquery name="listBugs" datasource="#Application.dataSourceName#">
                                                     select b.bugID bid, b.bugName, b.projectID from bugs b
                                                     inner join bugUsers bu on b.bugID=bu.bugID 
                                                     and bu.userID=#viewdetails.id# and b.statusID!=6;
                                                 </cfquery>
                                                 <tr><td>
-                                                    <a href="userView.cfm?userID=#viewdetails.id#">#viewdetails.name#</a>
+                                                    <a href="userView.cfm?userID=#viewdetails.id#">#viewdetails.uname#</a>
                                                 </td><td>
                                                     <cfloop query="listBugs">
                                                         <cfif viewdetails.pid eq listBugs.projectID>

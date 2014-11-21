@@ -4,7 +4,7 @@ Bug Tracker - Project Details CFM
             Author: CF Freshers 2014
 --->
 
-<script>
+<cfscript>
     function checkDate() {
         var EnteredDate = $(".txtdate").val();
         var year = EnteredDate.substring(0, 4);
@@ -17,14 +17,9 @@ Bug Tracker - Project Details CFM
         var month2 = EnteredDate2.substring(5, 7);
         var date2 = EnteredDate2.substring(8, 10);
         var myDate2 = new Date(year2, month2-1, date2);
-        /*var EnteredDate = $("#txtdate").val();
-        var year = EnteredDate.substring(0, 4);
-        var month = EnteredDate.substring(5, 7);
-        var date = EnteredDate.substring(8, 10)+1;
-        var myDate = new Date(year, month-1, date);*/                                                                                                 
+
+
         var today = new Date();
-        //alert(myDate);
-        //alert(today);
         if (myDate2 >= myDate) {
             return true;
         }
@@ -33,11 +28,11 @@ Bug Tracker - Project Details CFM
             return false;
         }
     }
-</script>  
-<cfparam name="session.userID" default="0"/>
-<cfparam name="url.p" default="0"/>
+
+</cfscript>     
+
 <cfobject name="addUserObject" component="components.user">
-<cfinclude template="layouts/header.cfm"><!--- including header --->
+<cfinclude template="layouts/header.cfm" /><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive">
@@ -85,9 +80,11 @@ Bug Tracker - Project Details CFM
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    <cfquery name="bugaddmember" datasource="bugTracking">
+
+                                    <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
                                         select pu.userID,u.firstName as uname from projectUsers as pu 
-                                        inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
+                                        inner join users as u on pu.projectId=<cfqueryparam value="#url.p#" 
+                                        cfsqltype="cf_sql_tinyint"/> and pu.userID=u.userID;
                                     </cfquery>
                                                                      
                                      <div class="control-group">
@@ -185,7 +182,7 @@ Bug Tracker - Project Details CFM
                             </form>
                             <cfif structkeyexists(form,"submit")>
                                 <cfif len(trim(#form.bugName#)) and trim(#form.teamMemberID#)>
-                                  <cfquery name="Bug" datasource="bugTracking" result="insertbug">
+                                  <cfquery name="Bug" datasource="#Application.dataSourceName#" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
                                             priorityID , severityID ,projectID,ownerID) values(
@@ -200,16 +197,16 @@ Bug Tracker - Project Details CFM
                                             <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>);
                                         </cfquery>
                                 
-                                     <cfquery name="getbugID" datasource="bugTracking">
-                                    select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
+                        <cfquery name="getbugID" datasource="#Application.dataSourceName#">
+                select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
                                 </cfquery>
-                                  <cfquery name="insertbuguser" datasource="bugTracking" result="insertbuser">
+                                  <cfquery name="insertbuguser" datasource="#Application.dataSourceName#" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
                                       <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
                                 </cfquery>
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
-                                    <cfquery name="getDetails" datasource="bugTracking" result=list>
+                                    <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list>
                                         SELECT u.email as uemail,
                                         u.firstName as uname,
                                         p.projectName as pname 
@@ -218,8 +215,10 @@ Bug Tracker - Project Details CFM
                                         on u.userId=#form.teamMemberID#
                                         and p.projectID=#url.p#;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as username,
+
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
@@ -247,7 +246,7 @@ Bug Tracker - Project Details CFM
                                             </html>
                                         </cfmailpart>                     
                                     </cfmail>                                 
-                                    <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+                                    <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
                                         SELECT u.email as uemail,
                                         u.firstName as uname,
                                         p.projectName as pname 
@@ -256,8 +255,10 @@ Bug Tracker - Project Details CFM
                                         p.projectID=#url.p# and
                                         p.userID=u.userID ;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as username, d.name as dname 
+
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
