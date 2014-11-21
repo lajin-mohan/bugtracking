@@ -3,9 +3,15 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
+<<<<<<< HEAD
+<cfquery name="getProjects" datasource="#Application.dataSourceName#">
+    select projectID from projectUsers where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+    and hide=0
+=======
 
 <cfquery name="getProjects" datasource="#Application.dataSourceName#">
     select projectID from projectUsers where userID=#Session.userID# and hide=0
+>>>>>>> upstream/master
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
