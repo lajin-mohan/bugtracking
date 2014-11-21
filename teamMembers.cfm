@@ -5,7 +5,7 @@
 --->
 
 <cfquery name="getProjects" datasource="#Application.dataSourceName#">
-    select projectID from projectUsers where userID=#Session.userID# and hide=0
+    select projectID from projectUsers where userID=<cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/> and       hide=0
 </cfquery>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
@@ -37,7 +37,8 @@
                                 <cfoutput>
                                 <cfloop query="getProjects">
                                     <cfquery name="getTeamMembers" datasource='#dsn#'>
-                                        select u.firstName fname,u.lastName lname,u.userID id,p.projectName from users u 
+                                        select u.firstName fname,u.lastName lname,u.userID id,
+                                        p.projectName from users u 
                                         inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
                                         p.projectID=#getProjects.projectID#;
@@ -60,7 +61,8 @@
                                             <tr>
                                                 <td>#getTeamMembers.fname# #getTeamMembers.lname#</td>
                                                 <td>
-                                                    <a href="userView.cfm?userID=#getTeamMembers.id#" class="btn  btn-mini btn-primary">
+                                                    <a href="userView.cfm?userID=#getTeamMembers.id#" 
+                                                       class="btn  btn-mini btn-primary">
                                                     <i class="icon-edit"></i>View Profile</a>
                                                 </td>
                                             </tr> 

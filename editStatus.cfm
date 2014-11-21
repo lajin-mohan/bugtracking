@@ -6,9 +6,8 @@
 
 
 <cfquery name="getData" datasource="#Application.dataSourceName#">
-    select bugName from bugs where bugID=#url.bugID#;
+    select bugName from bugs where bugID=<cfqueryparam value="#url.bugID#" cfsqltype="cf_sql_tinyint"/>;
 </cfquery>
-
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm">
 <div class="container-fluid">
@@ -25,7 +24,8 @@
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">
                         <cfoutput>
-                            <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
+                            <a href="ownBugs.cfm" 
+                               class="btn btn-default btn-primary" style="display:inline">
                                 <i class="icon-arrow-left"></i>&nbsp;Back
                             </a>
                         </cfoutput>
@@ -38,7 +38,9 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                         <cfoutput>
-                    		<form action="editStatus.cfm?bugID=#url.bugID#" id="form_sample_1" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    		<form action="editStatus.cfm?bugID=#url.bugID#" 
+                                  id="form_sample_1" class="form-horizontal"
+                                  method="post" enctype="multipart/form-data">
                         </cfoutput>
                     			<fieldset>
                                     <legend>Update status of project</legend>
@@ -53,21 +55,31 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Name</label>
 				                        <div class="controls">
-					             <cfoutput>           <input type="text" name="bugName" data-required="1" class="span6 m-wrap" value="#getData.bugName#" required disabled />   </cfoutput>
+					                <cfoutput><input type="text" name="bugName" 
+                                                  data-required="1" class="span6 m-wrap"                                                               value="#getData.bugName#" 
+                                                  required disabled />
+                                    </cfoutput>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->	
 
                                     <cfif Session.roleID neq 1 or Session.roleID neq 2> 
                                     <cfif Session.roleID eq 3>     		                        
 			                        <div class="control-group">
-				                        <label class="control-label">Status<span class="required">*</span></label>
+				                        <label class="control-label">Status
+                                            <span class="required">*</span>
+                                        </label>
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="status">
-                                            <cfset loopName1= #addUserObject.getDesignation("status")#>
+                                            <cfset loopName1= 
+                                             #addUserObject.getDesignation("status")#>
                                             <cfloop query="loopName1">
                                                 <cfoutput>
-                                                <cfif loopName1.name eq "testing" or loopName1.name eq "pending" or loopName1.name eq "ongoing">
-                                                    <option value="#loopName1.statusID#">#loopName1.name#</option>
+                                                <cfif loopName1.name eq "testing" or 
+                                                      loopName1.name eq "pending" or
+                                                      loopName1.name eq "ongoing">
+                                                    <option value="#loopName1.statusID#">
+                                                        #loopName1.name#
+                                                    </option>
                                                 </cfif>
                                                 </cfoutput>
                                             </cfloop>
@@ -77,14 +89,17 @@
 
                                     <cfelseif Session.roleID eq 4>    		                        
 			                        <div class="control-group">
-				                        <label class="control-label">Status<span class="required">*</span></label>
+				                        <label class="control-label">Status
+                                            <span class="required">*</span>
+                                        </label>
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="status">
-                                            <cfset loopName1= #addUserObject.getDesignation("status")#>
+                                        <cfset loopName1= #addUserObject.getDesignation("status")#>
                                             <cfloop query="loopName1">
                                                 <cfoutput>
-                                                <cfif loopName1.name eq "testing" or loopName1.name eq "resolved" or loopName1.name eq "unresolved">
-                                                    <option value="#loopName1.statusID#">#loopName1.name#</option>
+                                                <cfif loopName1.name eq "testing" or loopName1.name                                                 eq "resolved" or loopName1.name eq "unresolved">
+                                                    <option value="#loopName1.statusID#">
+                                                        #loopName1.name#</option>
                                                 </cfif>
                                                 </cfoutput>
                                             </cfloop>
@@ -95,26 +110,33 @@
                                     </cfif>
 			                        
                                     <div class="control-group">
-				                        <label class="control-label">Subject<span class="required">*</span></label>
+				                        <label class="control-label">Subject
+                                            <span class="required">*</span>
+                                        </label>
 				                        <div class="controls">
-					                        <input type="text" name="subject" data-required="1" class="span6 m-wrap" required />
+					                        <input type="text" name="subject" 
+                                            data-required="1" class="span6 m-wrap" required />
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->	
                                     <div class="control-group">
 				                        <label class="control-label">Leave a remark</label>
 				                        <div class="controls">
-					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap"></textarea>
+					                        <textarea type="text" name="remark" 
+                                            data-required="1" class="span6 m-wrap"></textarea>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->		
                                     <div class="control-group">
 				                        <label class="control-label">Upload attachment</label>
 				                        <div class="controls">
-					                        <input type="file" name="attachment" data-required="1" class="span6 m-wrap"/>
+					                        <input type="file" name="attachment" 
+                                            data-required="1" class="span6 m-wrap"/>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->			                        
 			                        <div class="form-actions">
-				                        <input type="submit" class="btn btn-primary" name="submit" value="Update">
-				                        <input type="submit" class="btn" name="cancel" value="Cancel">
+				                        <input type="submit" class="btn btn-primary" 
+                                        name="submit" value="Update">
+				                        <input type="submit" class="btn" 
+                                        name="cancel" value="Cancel">
 			                        </div><!--- close of form-actions --->
 		                        </fieldset><!--- close of fieldset --->
 	                        </form><!--- close of fieldset --->
@@ -134,7 +156,7 @@
             <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
                 SELECT u.email as uemail, u.firstName as fname,u.lastName as lname,
                 p.projectName as pname from users as u inner join projectUsers as pu
-                inner join projects p inner join bugs b on u.userId=pu.userID and pu.projectID=b.projectID 
+                inner join projects p inner join bugs b on u.userId=pu.userID and                                                             pu.projectID=b.projectID 
                 and p.projectID=b.projectID and u.roleID=4;
             </cfquery>
         <cfelseif Session.roleID eq 4>
@@ -150,7 +172,8 @@
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>    
-            <cfmail query="getDetails" from="#session.email#" to="#getDetails.uemail#" subject="Status Change" type="html">
+            <cfmail query="getDetails" from="#session.email#" 
+                    to="#getDetails.uemail#" subject="Status Change" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -164,7 +187,7 @@
                         </head>
                         <body>
                             <p>Dear #getDetails.fname# #getDetails.lname#,</p> <br><br>
-                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            The status of the bug - "#getData.bugName#" for the project                                                                    "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
@@ -181,7 +204,8 @@
                 inner join projects p inner join projectUsers pu on p.projectID=7
                 and pu.userID=u.userID and pu.isLead=1 and pu.projectID=p.projectID;
             </cfquery>
-            <cfmail query="getProjectManager" from="#session.email#" to="#getProjectManager.uemail#" subject="Status Change_projectManager" type="html">
+            <cfmail query="getProjectManager" from="#session.email#" to="#getProjectManager.uemail#" 
+                    subject="Status Change_projectManager" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -194,8 +218,8 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getProjectManager.fname# #getProjectManager.lname#,</p> <br><br>
-                            The status of the bug - "#getData.bugName#" for the project "#getDetails.pname#" 
+                            <p>Dear #getProjectManager.fname# #getProjectManager.lname#,</p> <br>                                                          <br>
+                            The status of the bug - "#getData.bugName#" for the project                                                                   "#getDetails.pname#" 
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
