@@ -4,12 +4,12 @@
             Author: CF Freshers 2014
 --->
 
-<cfquery name="sample" datasource="bugTracking">
+<cfquery name="sample" datasource="#Application.dataSourceName#">
     select * from users u inner join designations d
     where u.userID=#url.userID# and
     u.designationID=d.designationID;
 </cfquery>
-<cfquery name="sample2" datasource="bugTracking">
+<cfquery name="sample2" datasource="#Application.dataSourceName#">
     select * from users u inner join roles 
     r where u.userID=#url.userID# and
     u.roleID=r.roleID;

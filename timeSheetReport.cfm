@@ -2,7 +2,7 @@
 <cfdocument format="PDF">
    <cfoutput>
 
-      <cfquery name="selectData" datasource="bugTracking">
+      <cfquery name="selectData" datasource="#Application.dataSourceName#">
           select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,timeSheet.productiveHours,bugs.estimatedStartDate,bugs.actualStartDate from timeSheet inner join bugs on timeSheet.bugID=bugs.bugID inner join projects on projects.projectID=bugs.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and bugs.bugID="#url.bugID#" and timeSheet.projectID=projects.projectID order by timeSheet.dateTime desc 
        </cfquery>
                 <html>
@@ -10,7 +10,7 @@
                     <body>
                         <div class="divHeading"><h2>Time Sheet Report</h2></div>
                         <div>
-                             <cfquery name="totalHours" datasource="bugTracking">
+                             <cfquery name="totalHours" datasource="#Application.dataSourceName#">
                             select sum(productiveHours) as totalProductive,sum(workingHour) as totalTimeSpent from timeSheet where bugID="#url.bugID#" and userID="#session.userID#"
                             </cfquery><br />
                             <table>

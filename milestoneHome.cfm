@@ -5,7 +5,7 @@
     --->
 
 <cfif isDefined( "form.subn")>
-    <cfquery name="mins" datasource="bugtracking">
+    <cfquery name="mins" datasource="#Application.dataSourceName#">
         update milestones set projectID=
         <cfqueryparam cfsqltype="cf_sql_tinyint" value="#url.projectID#">, milestoneName=
             <cfqueryparam value='#form.milestoneName#' cfsqltype="cf_sql_varchar">, milestoneDescription=
@@ -67,7 +67,7 @@
                                 </button>
                             </div>
                         </div>
-                        <cfquery name="m" datasource="bugtracking">
+                        <cfquery name="m" datasource="#Application.dataSourceName#">
                             select * from milestones where milestoneID=#url.milestoneID#;
                         </cfquery>
                         <div class="block">

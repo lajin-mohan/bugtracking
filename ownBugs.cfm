@@ -39,7 +39,7 @@
                                     <td></td>
                                 </tr>
                                 <cfif Session.roleID eq 3>
-                                <cfquery name="bug" datasource="bugTracking">
+                                <cfquery name="bug" datasource="#Application.dataSourceName#">
                                     select b.bugID, b.bugName, b.projectID, b.estimatedEndDate,
                                     p.name as n ,s.name as s from bugs as b 
                                     inner join priorities as p 
@@ -51,7 +51,7 @@
                                     order by b.bugName desc;
                                 </cfquery>
                                 <cfelseif Session.roleID eq 4>
-                                <cfquery name="bug" datasource="bugTracking">
+                                <cfquery name="bug" datasource="#Application.dataSourceName#">
                                     select b.bugID, b.bugName, b.projectID, b.estimatedEndDate,
                                     p.name as n ,s.name as s from bugs as b 
                                     inner join priorities as p 

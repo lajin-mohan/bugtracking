@@ -48,7 +48,7 @@
                                     <td><strong>Status</strong></td>
                                     <td></td>
                                 </tr>
-                                <cfquery name="bug" datasource="bugTracking">
+                                <cfquery name="bug" datasource="#Application.dataSourceName#">
 select b.bugID, b.bugName,b.projectID,b.estimatedEndDate,p.name as n ,s.name as s from bugs as b inner join priorities as p inner join status as s on b.priorityID=p.priorityID and  b.statusID=s.statusID and b.projectID=#url.pid# and b.statusID!=6 order by b.bugName desc;
                                 </cfquery>
                                 <cfoutput query="bug">

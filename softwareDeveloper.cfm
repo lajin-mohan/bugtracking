@@ -30,7 +30,7 @@
                                     <td><strong>Priority</strong></td>
                                     <td><strong>Status</strong></td>
                                 </tr>
-                                <cfquery name="bug" datasource="bugTracking">
+                                <cfquery name="bug" datasource="#Application.dataSourceName#">
                                     select b.bugID, b.bugName, b.estimatedEndDate, b.statusID, b.priorityID, p.name as pname, st.name as sname
                                     from bugs as b
                                     inner join bugUsers s

@@ -2,7 +2,7 @@
 <cfdocument format="PDF">
    <cfoutput>
 
-      <cfquery name="selectData" datasource="bugTracking">
+      <cfquery name="selectData" datasource="#Application.dataSourceName#">
           select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,projects.projectName,status.name,users.userName,projects.projectID,timeSheet.productiveHours,projects.estimatedStartDate,projects.actualStartDate,timeSheet.timeSheetID from timeSheet inner join projects on timeSheet.projectID=projects.projectID inner join status on timeSheet.statusID=status.statusID inner join users on timeSheet.userID=users.userID and users.userID="#session.userID#" and projects.projectID="#url.projectID#" and users.roleID=2 order by timeSheet.dateTime desc 
        </cfquery>
                 <html>
@@ -10,7 +10,7 @@
                     <body>
                         <div class="divHeading"><h2>Time Sheet Report</h2></div>
                         <div>
-                             <cfquery name="totalHours" datasource="bugTracking">
+                             <cfquery name="totalHours" datasource="#Application.dataSourceName#">
                             select sum(productiveHours) as totalProductive,sum(workingHour) as totalTimeSpent from timeSheet where projectID="#url.projectID#" and userID="#session.userID#"
                             </cfquery><br />
                             <table>
@@ -37,7 +37,7 @@
                                    </tr>
                                 <cfif #selectData.RecordCount# neq 0>
                                 <cfloop query="selectData">
-                                     <cfquery name="bug" datasource="bugTracking">
+                                     <cfquery name="bug" datasource="#Application.dataSourceName#">
                                    select bugs.bugName,bugs.bugID,timeSheet.timeSheetID from bugs,timeSheet where timeSheet.bugID=bugs.bugID and timeSheet.projectID="#selectData.projectID#" and timeSheet.userID="#session.userID#" and timeSheet.timeSheetID="#selectData.timeSheetID#"
                                </cfquery>
                                     <cfoutput>

@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 
-<cfquery name="bugview" datasource="bugTracking">
+<cfquery name="bugview" datasource="#Application.dataSourceName#">
 select b.projectID,b.bugName as bname,b.estimatedStartDate as esd,b.actualStartDate as asd,b.estimatedEndDate as eed,b.actualEndDate as aed,s.name as status,p.name as priority,se.name as severity from bugs b inner join status as s inner join priorities as p inner join  severities as se on b.bugID=#url.bid# and s.statusID=b.statusID and p.priorityID=b.priorityID and se.severityID=b.severityID;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->

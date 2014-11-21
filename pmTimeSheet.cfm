@@ -39,7 +39,7 @@
                                          <label class="control-label">Project<span class="required">*</span></label>
 				                         <div class="controls">
                                          <select name="project"> 
-                                            <cfquery name="selectProject" datasource="bugTracking">
+                                            <cfquery name="selectProject" datasource="#Application.dataSourceName#">
                                                 select projects.projectName,projects.projectID from projects where statusID!=1
                                              </cfquery>
                                              <option value="0">Projects</option>
@@ -108,7 +108,7 @@
 </div><!--- close of container-fluid --->
 <cfif isDefined('form.submit')>
     <cfif #form.project# neq 0 and #form.status# neq 0>
-    <cfquery name="addTimeSheet" datasource="bugTracking">
+    <cfquery name="addTimeSheet" datasource="#Application.dataSourceName#">
             insert into timeSheet (description,workingHour,dateTime,userID,productiveHours,statusID,projectID) values ('#form.description#',#form.hours#,'#DateFormat(form.editedDate,'yyyy/mm/dd')#',#session.userID#,#form.productiveHours#,'#form.status#','#form.project#')
         </cfquery>
             <cflocation url="pmTimeSheetHistory.cfm">

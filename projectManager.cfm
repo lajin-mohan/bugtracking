@@ -29,7 +29,7 @@
                                     <td><strong>Estimated End Date</strong></td>
                                     <td><strong>Project Status</strong></td>
                                 </tr>
-                                <cfquery name="project" datasource="bugTracking">
+                                <cfquery name="project" datasource="#Application.dataSourceName#">
                                     select p.projectName, p.projectDescription,p.projectID,  
                                     p.estimatedStartDate, p.actualStartDate, p.estimatedEndDate, 
                                     s.name from projects p inner join status s 

@@ -2,7 +2,7 @@
 <cfdocument format="PDF">
    <cfoutput>
 
-      <cfquery name="selectData" datasource="bugTracking">
+      <cfquery name="selectData" datasource="#Application.dataSourceName#">
          select projects.projectName,projects.estimatedEndDate,status.name from projects 
           inner join projectUsers on projects.projectID=projectUsers.projectID 
           inner join status on status.statusID=projects.statusID 
