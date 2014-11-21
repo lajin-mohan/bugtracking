@@ -139,7 +139,7 @@
             </cfquery>
         <cfelseif Session.roleID eq 4>
             <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list"> 
-                 SELECT u.email as uemail, u.firstName as fname,u.lastName as lname,
+                 SELECT u.email as uemail, u.firstName as fname,u.lastName as lname
                 p.projectName as pname from users as u
                 inner join projects p on u.userId=4 and p.projectID=7;
             </cfquery> 
@@ -168,7 +168,7 @@
                             has been changed. View the bug description for additional details.
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.fname# #getcurrent.lname#</p>              
+                            <p>#getcurrent.fname# #getcurrent.lname#</p>             
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>

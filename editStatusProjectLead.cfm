@@ -130,12 +130,12 @@
                             Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
                 </cfmailpart>                     
-            </cfmail>                                   
+            </cfmail>    
 
             <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
                 SELECT u.email as uemail, u.firstName as uname,
@@ -168,7 +168,7 @@
                             A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.username#</p>              
+                            <p>#getcurrent.firstName#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                     </html>

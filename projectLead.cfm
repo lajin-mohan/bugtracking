@@ -68,10 +68,9 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                     <td><strong>Project Name</strong></td>
                                 </tr>
                                  <cfloop query="getbugID">
-
-                                    <cfquery name="viewdetails" datasource="bugTracking">
+                                    <cfquery name="viewdetails" datasource="#Application.dataSourceName#">
                                         select u.firstName uname, d.name dname, b.bugName bugname,
-                                       ojectName projname, u.userID, p.projectID, b.bugID
+                                        p.projectName projname, u.userID, p.projectID, b.bugID
                                         from users u inner join projectUsers pu inner join
                                         bugUsers bu inner join bugs b inner join projects p
                                         inner join designations d

@@ -218,7 +218,6 @@ Bug Tracker - Project Details CFM
 
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as username,
-
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
@@ -240,7 +239,7 @@ Bug Tracker - Project Details CFM
                                                         Added a new bug - "#form.bugName#" to your project " #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.firstName#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
@@ -258,7 +257,6 @@ Bug Tracker - Project Details CFM
 
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as username, d.name as dname 
-
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
@@ -280,7 +278,7 @@ Bug Tracker - Project Details CFM
                                                         the project "#getDetails.pname#"
                                                         <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.firstName#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>

@@ -10,8 +10,10 @@
           inner join projects on projects.projectID=bugs.projectID 
           inner join status on timeSheet.statusID=status.statusID 
           inner join users on timeSheet.userID=users.userID and
-          users.userID= <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and               bugs.bugID="#url.bugID#" and 
-          timeSheet.projectID=projects.projectID order by timeSheet.dateTime desc 
+          users.userID= <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and               bugs.bugID=
+      <cfqueryparam value="#url.bugID#" cfsqltype="cf_sql_tinyint"/>
+      and 
+          timeSheet.projectID=projects.projectID order by timeSheet.dateTime desc
        </cfquery>
                 <html>
                     <head><link href="report.css" rel="stylesheet"></head>
@@ -25,6 +27,7 @@
                             </cfquery><br />
                             <table>
                                  <tr> <td class="tdAlign"><b> <label>Name</b></label></td> 
+
                                     <td class="tdAlign">                                                                                <b><cfoutput>:#selectData.firstName# & #selectData.lastName#                                           </cfoutput>
                                      </b>
                                      </td>

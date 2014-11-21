@@ -36,9 +36,17 @@
                                     on p.statusID=s.statusID order by p.estimatedEndDate desc;
                                 </cfquery> 
                                 <cfoutput query="project">
-                                    <cfif #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")# GT now()>
+                                    <cfif #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")#
+                                          LT Dateadd("d",7,now())
+                                          and #LSDateformat(project.estimatedEndDate ,"yyyy-mm-dd")#
+                                          GT now()>
                                         <tr>
-                                            <td><a href="projectProfile.cfm?projectID=#project.projectID#"  onclick="project_return()">#project.projectName#</a></td>
+                                            <td>
+                                                <a href="projectProfile.cfm?projectID=#project.projectID#"
+                                                   onclick="project_return()">
+                                                    #project.projectName#
+                                                </a>
+                                            </td>
                                             <td>#dateformat(project.estimatedStartDate)#</td>
                                             <td>#dateformat(project.estimatedEndDate)#</td>
                                             <td>#project.name#</td>
@@ -53,4 +61,4 @@
         </div>
     </div>
 </div>
-<cfinclude template="layouts/footer.cfm"/>
+<cfinclude template="layouts/footer.cfm"/><!---including footer--->

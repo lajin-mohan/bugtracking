@@ -100,7 +100,7 @@ select u.userID as uID , u.firstName as fname ,u.lastName as lname  from bugUser
                                         <div class="control-group">
                                             <label class="control-label">Estimated Start Date :</label>
                                             <div class="controls">
-                                                <input name="esd" type="text" class="span6 m-wrap" disabled                                                                                     value="#lsdateformat(sample.estimatedStartDate)#"/>              		s                                        </div>
+                                                <input name="esd" type="text" class="span6 m-wrap" disabled                                                                                     value="#lsdateformat(sample.estimatedStartDate)#"/>              		                                        </div>
                                         </div>
                                              <div class="control-group">
                                             <label class="control-label">Actual Start Date :</label>
