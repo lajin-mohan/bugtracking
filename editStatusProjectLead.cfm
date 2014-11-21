@@ -6,7 +6,7 @@
 <cfquery name="bugname" datasource="bugTracking">
     select b.bugName as bugName,bu.userID as userID 
     from bugs b inner join bugUsers bu on  
-    b.bugID=#url.bugID# and b.bugID=bu.bugID;
+    b.bugID=<cfqueryparam value="#url.bugID#" cfsqltype="cf_sql_tinyint"/> and b.bugID=bu.bugID;
 </cfquery>
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm">
@@ -36,14 +36,17 @@
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                        <cfoutput>
+                       <div class="muted pull-left">
+                        <h3>Upadte Bug Status</h3>
+                      </div>
+                        </cfoutput>
                         <div class="muted pull-left"></div>
                     </div><!--- close of navbar navbar-inner block-header --->
                     <div class="block-content collapse in">
                         <div class="span12"><cfoutput>
-                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#&pid=#url.pid#" id="form_sample_1" class="form-horizontal" method="post" enctype="multipart/form-data">
-                                
-                    			<fieldset>
-                                    <legend>Update status of Bug</legend>
+                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#&pid=#url.pid#" id="form_sample_1"                                                       class="form-horizontal" method="post" enctype="multipart/form-data">
+                                	<fieldset>
 			                        <div class="alert alert-error hide">
 				                        <button class="close" data-dismiss="alert"></button>
 				                        You have some form errors. Please check below.
@@ -55,7 +58,7 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Name</label>
 				                        <div class="controls">
-					                        <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required disabled value="#bugname.bugName#" />
+					                        <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required                                                       disabled value="#bugname.bugName#" />
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->			                        
 			                        <div class="control-group">
@@ -67,7 +70,7 @@
                                     <div class="control-group">
 				                        <label class="control-label">Leave a remark</label>
 				                        <div class="controls">
-					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap" required></textarea>
+					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap" required>                                               </textarea>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->		
                                     <div class="control-group">
@@ -78,7 +81,7 @@
 			                        </div><!--- close of control-group --->			                        
 			                        <div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" name="submit" value="Update">
-                                        <a href="bugview.cfm?bid=#url.bugID#"> <input type="submit" class="btn" name="cancel" value="Cancel"></a>
+                                        <a href="bugview.cfm?bid=#url.bugID#"> <input type="submit" class="btn" name="cancel"                                                           value="Cancel"></a>
 			                        </div><!--- close of form-actions --->
 		                        </fieldset><!--- close of fieldset --->
                                     </cfoutput>
@@ -96,17 +99,17 @@
         </cfoutput>
         <cfif check>
             <cfquery name="getDetails" datasource="bugTracking" result="list"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on u.userId=#bugname.userID#
-                and p.projectID=#url.pid#;
+                and p.projectID=<cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>		;
             </cfquery>
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+                SELECT  u.firstName as username, d.name as dname 
                 from users u inner join designations d on 
-                userID=#session.userID# and u.designationID=d.designationID; 
+                userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
             </cfquery>      
-            <cfmail from="mynew@domain.com" to="#getDetails.uemail#" subject="New remark" type="html">
+            <cfmail from="#session.email#" to="#getDetails.uemail#" subject="New remark" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -130,17 +133,17 @@
                 </cfmailpart>                     
             </cfmail>                                   
             <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
-                SELECT u.email as uemail, u.userName as uname,
+                SELECT u.email as uemail, u.firstName as uname,
                 p.projectName as pname from users as u 
                 inner join projects p on p.projectID=#url.pid#
                 and p.userID=u.userID ;
             </cfquery>
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.userName as username, d.name as dname 
+                SELECT  u.firstName as username, d.name as dname 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
             </cfquery>
-            <cfmail from="mynew@domain.com" to="#getProjectManager.uemail#" subject="New Remark_projectManager" type="html">
+            <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="New Remark_projectManager" type="html">
                 <cfmailpart type="html">
                     <html> 
                         <head> 
@@ -166,7 +169,5 @@
         <cfelse>
             <cfoutput>failed</cfoutput>        
         </cfif>
-<cfelseif isDefined('form.cancel')>
-    <cflocation url="#CGI.HTTP_REFERER#" addToken="false" />
 </cfif>
 <cfinclude template="layouts/footer.cfm">

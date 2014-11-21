@@ -4,7 +4,8 @@
             Author: CF Freshers 2014
 --->
 <cfquery name="getbugID" datasource="bugTracking">
-select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0;
+select projectID from projectUsers where userID=
+<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and isLead=1 and hide=0;
 </cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -19,36 +20,37 @@ select projectID from projectUsers where userID=#session.userID# and isLead=1 an
         <div class="span9" id="content">
             <div class="block">
             <div class="row-fluid">
-              
-                    <div class="navbar navbar-inner block-header"></div>
-                    <div class="block-content collapse in">
-                        <div class="span12">
-                            <legend>My Projects
-                                <div class="muted pull-right">
-                                    <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary" style="display:inline">
+                    <div class="navbar navbar-inner block-header">
+                    <cfoutput>
+                       <div class="muted pull-left">
+                        <h3>Projects </h3>
+                      </div>
+                         <div class="muted pull-right">
+                                    <a href="plTeamMembersReport.cfm" class="muted pull-right btn btn-default btn-primary"                                                          style="display:inline">
                                         <i class="icon-list-alt"></i>&nbsp;Generate Report
                                     </a>
                                 </div>
-                            </legend>
+                        </cfoutput>
+                    </div>
+                    <div class="block-content collapse in">
+                        <div class="span12">
                            <table class="table table-striped">
                                 <tr>
 					               <td><h5>Project Name</h5></td>
                                         <td><h5>Dead Line</h5></td>
                                             <td><h5>Status</h5></td>
-                                    
                                 </tr>
                                 <cfloop query="getbugID">
                                     <cfquery name="viewproject" datasource="bugTracking">
-select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from projects as p inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  order by p.projectName asc;
+                                        select p.projectName as pname,p.estimatedEndDate as eed,s.name as status from projects as p 
+                                        inner join status as s on p.statusID=s.statusID and p.projectID=#getbugID.projectID#  
+                                        order by p.projectName asc;
                                     </cfquery>
                                     <cfoutput query="viewproject">
                                     <tr>
                                         <td><a href="bugDetails.cfm?pid=#getbugID.projectID#"                                                                                    onclick="project_return()">#viewproject.pname# </a></td>
                                             <td>#dateformat(viewproject.eed)#</td>
                                                 <td>#viewproject.status#</td>
-                                        
-                                        
-                                        
                                     </tr>   
                                     </cfoutput>
                                 </cfloop>

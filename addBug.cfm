@@ -1,5 +1,5 @@
 <!---
-            Bug Tracker - Project Details CFM
+Bug Tracker - Project Details CFM
             October 30, 2014
             Author: CF Freshers 2014
 --->
@@ -21,7 +21,7 @@
         var year = EnteredDate.substring(0, 4);
         var month = EnteredDate.substring(5, 7);
         var date = EnteredDate.substring(8, 10)+1;
-        var myDate = new Date(year, month-1, date);*/
+        var myDate = new Date(year, month-1, date);*/                                                                                                 
         var today = new Date();
         //alert(myDate);
         //alert(today);
@@ -33,7 +33,9 @@
             return false;
         }
     }
-</script>     
+</script>  
+<cfparam name="session.userID" default="0"/>
+<cfparam name="url.p" default="0"/>
 <cfobject name="addUserObject" component="components.user">
 <cfinclude template="layouts/header.cfm"><!--- including header --->
 <div class="container-fluid">
@@ -57,14 +59,15 @@
                         </div>
                     </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header"></div>
-                    <div class="block-content collapse in">
+                    <div class="navbar navbar-inner block-header">
+                     <div class="muted pull-left">
+                        <center><h3>Add Bug Details</h3></center>
+                    </div>
+                    </div>
+                    <div class="block-content collapse in"> 
                         <div class="span12">
                             <form action=" " method="post" class="form-horizontal" onsubmit="return checkDate()">
                                 <fieldset>
-                                     
-                                    
-                                    <legend>Bug Details</legend>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
                                         You have some form errors. Please check below.
@@ -82,9 +85,8 @@
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    
                                     <cfquery name="bugaddmember" datasource="bugTracking">
-                                        select pu.userID,u.userName as uname from projectUsers as pu 
+                                        select pu.userID,u.firstName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
                                     </cfquery>
                                                                      
@@ -105,15 +107,13 @@
 					                        </select>
 				                        </div>
 			                        </div>
-                                    
-                                    
                                     <div class="control-group">
                                         <label class="control-label">
                                             Bug Description
                                             <span class="required">*</span>
                                         </label>
                                         <div class="controls">
-                                            <input type="text" name="bugDescription" data-required="1" class="span6 m-wrap" required/>
+                                            <input type="text" name="bugDescription" data-required="1" class="span6 m-wrap"                                                                 required/>
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -134,8 +134,6 @@
                                             <input name="estimatedEndDate" type="date" class="txtdate2 span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    
-                                   
                                     <div class="control-group">
                                         <label class="control-label">
                                             Bug Status
@@ -181,7 +179,7 @@
 			                        </div> <cfoutput>
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary" name="submit">Add Bug</button>
-                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn" name="cancel">Cancel</button></a>
+                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn"                                                                          name="cancel">Cancel</button></a>
                                     </div></cfoutput>
                                 </fieldset>
                             </form>
@@ -203,7 +201,7 @@
                                         </cfquery>
                                 
                                      <cfquery name="getbugID" datasource="bugTracking">
-                                    select bugID from bugs where bugName="#form.bugName#";
+                                    select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
                                 </cfquery>
                                   <cfquery name="insertbuguser" datasource="bugTracking" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
@@ -213,7 +211,7 @@
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
                                     <cfquery name="getDetails" datasource="bugTracking" result=list>
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as uname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p
@@ -221,7 +219,7 @@
                                         and p.projectID=#url.p#;
                                     </cfquery>
                                     <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-                                        SELECT  u.userName as username,
+                                        SELECT  u.firstName as username,
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
@@ -240,7 +238,7 @@
                                                 </head>
                                                 <body>
                                                     <p>Dear #getDetails.uname#,</p> <br><br>
-                                                        Added a new bug - "#form.bugName#" to your project "                                                        #getDetails.pname#"
+                                                        Added a new bug - "#form.bugName#" to your project " #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
                                                     <p>#getcurrent.username#</p>              
@@ -251,7 +249,7 @@
                                     </cfmail>                                 
                                     <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as uname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p on    
@@ -259,11 +257,11 @@
                                         p.userID=u.userID ;
                                     </cfquery>
                                     <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-                                        SELECT  u.userName as username, d.name as dname 
+                                        SELECT  u.firstName as username, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="#Session.userID#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+                                    <cfmail from="#Session.userID#" to="#getProjectManager.uemail#"                                                                                         subject="Add_bug_projectManager" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -300,3 +298,4 @@
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfinclude template="layouts/footer.cfm"><!--- including footer --->
+
