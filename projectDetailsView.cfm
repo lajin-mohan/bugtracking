@@ -12,7 +12,6 @@
     inner join status as s inner join priorities as prior on p.projectID=
     <cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>
     and s.statusID=p.statusID and prior.priorityID=p.priorityID
-</cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
@@ -26,12 +25,24 @@
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
-                    <div class="muted pull-left"></div>
-                </div>
+                    <div class="muted pull-left">
+                        <cfoutput>
+                            <a href="#listlast(cgi.http_referer,"/")#"
+                               class="btn btn-default btn-primary"
+                               style="display:inline">
+                                <i class="icon-arrow-left"></i>&nbsp;Back
+                            </a> 
+                        </cfoutput>
+                    </div>
+                </div> 
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <center> <h3>Project Details  </h3></center>
-                    </div>
+                        <cfoutput>
+                            <div class="muted pull-left">
+                                <h3><b>Project Profile </b> - #projview.pname#</h3>
+                            </div>
+                        </cfoutput>
+                    </div> <br> <br>
                     <div class="block-content collapse in">
                         <div class="span12">
                             <form action=" " class="form-horizontal" method="post">

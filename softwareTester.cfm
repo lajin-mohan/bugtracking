@@ -30,7 +30,7 @@
                                     <td><strong>Marked for Review On</strong></td>
                                 </tr>
                                 <cfquery name="project" datasource="#Application.dataSourceName#">
-                                    select projects.projectID,projects.projectName,users.firstName,logs.loggedTime 
+                                    select projects.projectID,projects.projectName,users.firstName,users.lastName,logs.loggedTime 
                                     from projects inner join bugs on bugs.projectID=projects.projectID 
                                     inner join logs on logs.bugID=bugs.bugID 
                                     inner join users on logs.userID=users.userID and logs.activityID=10 
@@ -42,6 +42,7 @@
                                             <td>#project.projectID#</td>
                                             <td>#project.projectName#</td>
                                             <td>#project.firstName#</td>
+                                            <td>#project.lastName#</td>
                                             <td>#LSDateformat(project.loggedTime,"yyyy-mm-dd")#</td>
                                         </tr>   
                                     </cfif>

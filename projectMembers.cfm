@@ -5,7 +5,7 @@
 --->
 
 <cfquery name="getbugID" datasource="#Application.dataSourceName#">
-select projectID from projectUsers where userID=
+    select projectID from projectUsers where userID=
     <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
     and isLead=1 and hide=0
 </cfquery>
@@ -34,16 +34,15 @@ select projectID from projectUsers where userID=
                                         &nbsp;Generate Report
                                     </a>
                                 </div>
-                            </legend>
+                        </cfoutput>
+                    </div>
+                    <div class="block-content collapse in">
+                        <div class="span12">
                             <table class="table table-striped">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Assigned Bugs</th>
-                                </tr>
                                 <cfoutput>
                                     <cfloop query="getbugID">
                                         <cfquery name="viewdetails" datasource="#Application.dataSourceName#">
-                                            select u.firstName name,u.userID id,p.projectName, p.projectID pid
+                                            select u.firstName uname,u.userID id,p.projectName, p.projectID pid
                                             from users u inner join projectUsers pu inner join projects p
                                             on u.userID=pu.userID and pu.projectID=p.projectID and 
                                             p.projectID=#getbugID.projectID#;
@@ -58,8 +57,8 @@ select projectID from projectUsers where userID=
                                             </td>
                                             <td>
                                                 <div class="navbar navbar-inner block-header">
-                                                    <div class="muted pull-right">
-                                                        <strong>View Information</strong>
+                                                    <div class="muted pull-">
+                                                        <strong>Assigned Bugs</strong>
                                                     </div>
                                                 </div>
                                             </td>

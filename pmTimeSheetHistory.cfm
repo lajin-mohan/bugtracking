@@ -68,12 +68,17 @@
                                     </div>
                                 </fieldset>
                             </form>
-                            <cfif isDefined("form.fromDate") and isDefined("form.toDate") and isDefined("form.submit")>
-                                <cfinvoke component="components.timeSheet" method="pmDetailsOnDate"
-                                          returnVariable="getdetails" fromDate="#form.fromDate#"
+                            <cfif isDefined("form.fromDate")
+                                  and isDefined("form.toDate")
+                                  and isDefined("form.submit")>
+                                <cfinvoke component="components.timeSheet"
+                                          method="pmDetailsOnDate"
+                                          returnVariable="getdetails"
+                                          fromDate="#form.fromDate#"
                                           toDate="#form.toDate#"></cfinvoke>
                                 <cfelse>
-                                    <cfinvoke component="components.timeSheet" method="pmDetails"
+                                    <cfinvoke component="components.timeSheet"
+                                              method="pmDetails"
                                               returnVariable="getdetails"></cfinvoke> 
                             </cfif>   
                             <table class="table table-bordered">
@@ -103,7 +108,8 @@
                                                 </td>
                                                 <td>
                                                     <a href="deleteRecord.cfm?timesheetpID=#getdetails.projectID#&pmTimeSheetID=#getdetails.timeSheetID#"
-                                                       class="btn btn-mini btn-danger" onclick="return confirmDelete()">
+                                                       class="btn btn-mini btn-danger"
+                                                       onclick="return confirmDelete()">
                                                         <i class="icon-remove"></i>
                                                     </a>
                                                 </td>
