@@ -4,7 +4,7 @@
             Author: CF Freshers 2014
 --->
 
-<script>
+<cfscript>
     function checkDate() {
         var EnteredDate = $(".txtdate").val();
         var year = EnteredDate.substring(0, 4);
@@ -17,14 +17,7 @@
         var month2 = EnteredDate2.substring(5, 7);
         var date2 = EnteredDate2.substring(8, 10);
         var myDate2 = new Date(year2, month2-1, date2);
-        /*var EnteredDate = $("#txtdate").val();
-        var year = EnteredDate.substring(0, 4);
-        var month = EnteredDate.substring(5, 7);
-        var date = EnteredDate.substring(8, 10)+1;
-        var myDate = new Date(year, month-1, date);*/
         var today = new Date();
-        //alert(myDate);
-        //alert(today);
         if (myDate2 >= myDate) {
             return true;
         }
@@ -33,9 +26,9 @@
             return false;
         }
     }
-</script>     
+</cfscript>     
 <cfobject name="addUserObject" component="components.user">
-<cfinclude template="layouts/header.cfm"><!--- including header --->
+<cfinclude template="layouts/header.cfm" /><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive">
@@ -82,7 +75,6 @@
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    
                                     <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
                                         select pu.userID,u.userName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
@@ -203,7 +195,7 @@
                                         </cfquery>
                                 
                                      <cfquery name="getbugID" datasource="#Application.dataSourceName#">
-                                    select bugID from bugs where bugName="#form.bugName#";
+                                    select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
                                 </cfquery>
                                   <cfquery name="insertbuguser" datasource="#Application.dataSourceName#" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
