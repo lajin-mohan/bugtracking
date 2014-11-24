@@ -17,6 +17,11 @@
             <cfqueryparam value='#form.formMilestoneStatus#' cfsqltype="cf_sql_varchar"/>
             )
         </cfquery>
+        <cfif isdefined('url.flag')>
+            <cflocation url="editProject.cfm?projectID=#url.projectID#&flag" addtoken="false"/>
+            <cfelse>
+                <cflocation url="editProject.cfm?projectID=#url.projectID#" addtoken="false"/>
+        </cfif>
         <cfelse>
             <p>Fields cannot be left blank</p>
     </cfif>
