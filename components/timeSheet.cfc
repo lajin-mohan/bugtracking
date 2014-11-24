@@ -24,8 +24,8 @@
     <cffunction name="selectBugDetails" access="public" output="false" returnType="query">
         <cfquery name="selectBugDetails" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
-            bugs.bugName,projects.projectName,status.name,users.userName,
-            bugs.bugID,timeSheet.productiveHours 
+            bugs.bugName,projects.projectName,status.name,users.firstName,users.lastName,
+            bugs.bugID,timeSheet.productiveHours,timeSheet.timeSheetID 
             from timeSheet 
             inner join bugs on timeSheet.bugID=bugs.bugID 
             inner join projects on projects.projectID=bugs.projectID 
@@ -41,8 +41,8 @@
       <cfargument name="toDate" required="true" type="string">
         <cfquery name="selectBugOnDate" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
-            bugs.bugName,projects.projectName,status.name,users.userName,bugs.bugID,
-            timeSheet.productiveHours 
+            bugs.bugName,projects.projectName,status.name,users.firstName,users.lastName,bugs.bugID,
+            timeSheet.productiveHours,timeSheet.timeSheetID  
             from timeSheet 
             inner join bugs on timeSheet.bugID=bugs.bugID 
             inner join projects on projects.projectID=bugs.projectID
