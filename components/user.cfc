@@ -248,6 +248,11 @@
         <cfif checkEmail.recordcount>
             <p>User already exists on database</p>
         <cfelse>
+            <cfquery result="upperLimit" datasource="#Application.dataSourceName#">
+                select userID from users;
+            </cfquery>
+            <cfset limit = #upperLimit.recordCount# />
+            <cfset empAutoID  = "TV#NumberFormat(limit+1,'0____')#" />
             <cfset salt = Hash(GenerateSecretKey("AES"),"SHA-512") />
             <cfset password = Hash(trim(form.password) & salt,"SHA-512") />
             <cfquery name="inser" datasource="#Application.dataSourceName#">
@@ -267,7 +272,7 @@
                     <cfqueryparam value="#form.email#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#password#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#salt#" CFSQLType="CF_SQL_VARCHAR"/>,
-                    <cfqueryparam value="#form.empCode#" CFSQLType="CF_SQL_VARCHAR"/>,
+                    <cfqueryparam value="#empAutoID#" CFSQLType="CF_SQL_VARCHAR"/>,
                     <cfqueryparam value="#form.role#" CFSQLType="CF_SQL_TINYINT"/>,
                     <cfqueryparam value="#form.designation#" CFSQLType="CF_SQL_TINYINT"/>
                 );

@@ -86,18 +86,6 @@
 			                        </div>
 			                        <div class="control-group">
 				                        <label class="control-label">
-                                            Employee Code
-                                            <span class="required">*</span>
-                                        </label>
-				                        <div class="controls">
-					                        <input name="empCode"
-                                                   type="text"
-                                                   class="span6 m-wrap"
-                                                   required/>
-					                    </div>
-			                        </div>
-			                        <div class="control-group">
-				                        <label class="control-label">
                                             Password
                                             <span class="required">*</span>
                                         </label>

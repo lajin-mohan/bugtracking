@@ -92,11 +92,11 @@
                                         <div class="control-group">
                                             <label class="control-label">
                                                 Employee ID:
-                                                <span class="required">*</span>
+                                                <span class="required"></span>
                                             </label>
                                             <div class="controls">
                                                 <input name="empid" type="text" class="span6 m-wrap"
-                                                       value="#sample.employeeID#" required/>
+                                                       value="#sample.employeeID#" disabled/>
                                             </div>
                                         </div>
                                         <div class="control-group">
