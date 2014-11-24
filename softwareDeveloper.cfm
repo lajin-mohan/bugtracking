@@ -39,15 +39,15 @@
                                     inner join priorities as p
                                     inner join status as st
                                     on b.bugID=s.bugID and s.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
-                                    and b.statusID=st.statusID and b.priorityID=p.priorityID
+                                    and b.statusID=st.statusID and b.priorityID=p.priorityID and b.statusID!=6 
                                     order by b.priorityID,b.estimatedEndDate;
                                 </cfquery> 
                                 <cfoutput query="bug">
-                                    <cfif #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) and #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# GT now()>  
+                                    <cfif #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) 
+                                        and #LSDateformat(bug.estimatedEndDate ,"yyyy-mm-dd")# GT now()>  
                                         <tr>
-                                      
                                             <td>#bug.bugName#</td>
-                                            <td>#LSDateformat(bug.estimatedEndDate,"yyyy-mm-dd")#                                               </td>
+                                            <td>#LSDateformat(bug.estimatedEndDate,"yyyy-mm-dd")#</td>
                                             <td>#bug.pname#</td>
                                             <td>#bug.sname#</td>
                                         </tr>   
