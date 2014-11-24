@@ -12,6 +12,21 @@
                 statusID=<cfqueryparam value="#form.status#" CFSQLType="CF_SQL_TINYINT">
                 where bugID=<cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
+            <cfif Session.roleID eq 4>
+                <cfquery name="relateTestertoBug" datasource="#Application.dataSourceName#" result="checkTester">
+                    select userID from bugUsers where
+                    userID = <cfqueryparam value="#Session.userID#" CFSQLType="CF_SQL_TINYINT"> and
+                    bugID = <cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">;
+                </cfquery>
+                <cfif !checkTester.recordcount>
+                    <cfquery name="insertRelation" datasource="#Application.dataSourceName#">
+                        insert into bugUsers(userID,bugID) values (
+                            <cfqueryparam value="#Session.userID#" CFSQLType="CF_SQL_TINYINT">,
+                            <cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">
+                        );
+                    </cfquery>
+                </cfif>
+            </cfif>
         </cfif>
         <cfset dat=now()/>
         <cfquery name="remarkTableInsert" datasource="#Application.dataSourceName#" result="remark">
@@ -83,17 +98,17 @@
                 select userID from bugUsers where 
                 bugID = <cfqueryparam value="#tempbugID#" CFSQLType="CF_SQL_TINYINT">;
             </cfquery>
-            <cfif form.statusID eq 0 >
+            <cfif form.statusID eq #bugcheck.statusID#>
                 <cfset statusID = "#bugcheck.statusID#" />
             <cfelse>
                 <cfset statusID = "#form.statusID#" />
             </cfif>
-            <cfif form.priorityID eq 0 >
+            <cfif form.priorityID eq #bugcheck.priorityID#>
                 <cfset priorityID = "#bugcheck.priorityID#" />
             <cfelse>
                 <cfset priorityID = "#form.priorityID#" />
             </cfif>
-            <cfif form.severityID eq 0 >
+            <cfif form.severityID eq #bugcheck.severityID#>
                 <cfset severityID = "#bugcheck.severityID#" />
             <cfelse>
                 <cfset severityID = "#form.severityID#" />
@@ -344,12 +359,12 @@
                 </cfif>
             </cfif>
         </cfif>
-        <cfif len(trim(#form.co1#) and isNumeric(#form.co1#))>
+        <cfif len(trim(#form.co1#)) and isNumeric(#form.co1#)>
             <cfset newNumber1 = "#form.co1#" />
         <cfelse>
             <cfset newNumber1 = "#check.contactNumber1#" />
         </cfif>
-        <cfif len(trim(#form.co2#) and isNumeric(#form.co2#))>
+        <cfif (len(trim(#form.co2#)) and isNumeric(#form.co2#)) or (len(#form.co2#) EQ 0)>
             <cfset newNumber2 = "#form.co2#" />
         <cfelse>
             <cfset newNumber2 = "#check.contactNumber2#" />

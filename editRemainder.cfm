@@ -42,8 +42,8 @@
                                         <div class="control-group">
                                             <label class="control-label">Name:</label>
                                             <div class="controls">
-                                                <input name="name" type="text" data-required="1" 
-                                                        class="span6 m-wrap"  value="#remainder.name#"/>
+                                                <input name="name" type="text" data-required="1" class="span6 m-wrap"  
+                                                        value="#remainder.name#" required />
                                             </div>
                                         </div>
                                         <br/>
@@ -81,13 +81,15 @@
     </div>
     <cfif structkeyexists(form,'submit')>
         <cfset remainderDate=#dateformat(form.date,'yyyy-mm-dd')#/>
-        <cfquery name="remainderEdit" datasource="#Application.dataSourceName#">
-            update remainders set 
-            name = <cfqueryparam value='#form.name#' CFSQLType="CF_SQL_VARCHAR">,
-            description = <cfqueryparam value='#form.description#' CFSQLType="CF_SQL_VARCHAR">,
-            date = <cfqueryparam value='#form.date#' CFSQLType="CF_SQL_DATE">
-            where remainderID = <cfqueryparam value='#url.remainderID#' CFSQLType="CF_SQL_TINYINT">;
-        </cfquery>
+        <cfif len(trim(#form.name#)) LTE 32 and len(trim(#form.description#)) LTE 512>
+            <cfquery name="remainderEdit" datasource="#Application.dataSourceName#">
+                update remainders set 
+                name = <cfqueryparam value='#form.name#' CFSQLType="CF_SQL_VARCHAR">,
+                description = <cfqueryparam value='#form.description#' CFSQLType="CF_SQL_VARCHAR">,
+                date = <cfqueryparam value='#form.date#' CFSQLType="CF_SQL_DATE">
+                where remainderID = <cfqueryparam value='#url.remainderID#' CFSQLType="CF_SQL_TINYINT">;
+            </cfquery>
+        </cfif>
         <cflocation url="remainders.cfm?remainderID=#url.remainderID#" addtoken="false"/>
     </cfif>
 </cfoutput>

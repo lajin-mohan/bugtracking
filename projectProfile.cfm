@@ -210,7 +210,7 @@
                                     </form>
                                 </cfoutput>
                                 <cfquery name="pUsers" datasource="#Application.dataSourceName#">
-                                    select u.userID, u.firstName, u.employeeID, d.name, pu.hide
+                                    select u.userID, u.firstName, u.lastName, u.employeeID, d.name, pu.hide
                                     from projectUsers pu inner join users u inner join designations d
                                     where pu.userID=u.userID and d.designationID=u.designationID
                                     and pu.projectID=
@@ -306,7 +306,8 @@
                                                     <cfset etotal="#etotal+1#"/>
                                                     <td>#etotal#</td>
                                                     <td>
-                                                        <a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#"> #pUsers.firstName# #pUsers.lastName#
+                                                        <a href="employeeProfile.cfm?userID=#pUsers.userID#&projectID=#url.projectID#">
+                                                            #pUsers.firstName# #pUsers.lastName#
                                                         </a>
                                                     </td>
                                                     <td>#pUsers.employeeID#</td>
