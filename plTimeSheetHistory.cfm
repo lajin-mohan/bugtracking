@@ -97,8 +97,8 @@
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>    
-                                        <td><a href="editPlTimeSheet.cfm?bugID=#bug.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?pltimesheetbID=#bug.bugID#&pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
+                                        <td><a href="editPlTimeSheet.cfm?pltimeSheetID=#getdetails.timeSheetID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
+                                            <td><a href="deleteRecord.cfm?pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>

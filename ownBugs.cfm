@@ -28,8 +28,7 @@
 					               
                                     <td>Bug Name</td>
                                     <td>End Date</td>
-                                    <td>Priority</td>
-                                   
+                                    <td>Priority</td>    
                                     <td>Status</td>
                                     <td></td>
                                 </tr>

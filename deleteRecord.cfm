@@ -250,12 +250,10 @@
             <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
         </cfquery>
         <cflocation url="timeSheetHistory.cfm" addToken="false"/>
-    <cfelseif isDefined('url.pltimesheetbID') and isDefined('url.pltimesheetprojectID')>
+    <cfelseif isDefined('url.pltimeSheetID') and isDefined('url.pltimesheetprojectID')>
         <cfquery name="deleteTimeSheet" datasource="#Application.dataSourceName#">
             <!---hiding timesheet entry from timesheet table--->
-            update timeSheet set hide=1 where bugID=
-            <cfqueryparam value="#url.pltimesheetbID#" cfsqltype="cf_sql_tinyint"/>
-            and userID=
+            update timeSheet set hide=1 where userID=
             <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
             and projectID=
             <cfqueryparam value="#url.pltimesheetprojectID#" cfsqltype="cf_sql_tinyint"/>

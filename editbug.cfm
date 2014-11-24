@@ -160,7 +160,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="priorityID">
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
-                                                    <option value="sample.pid">#sample.pname#</option>
+                                                    <option value="#sample.pid#">#sample.pname#</option>
                                             <cfloop query="loopName2">
                                                 <cfoutput>
                                                 <cfif loopName2.priorityID neq sample.pid>
@@ -178,7 +178,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="severityID">
                                             <cfset loopName3= #addUserObject.getDesignation("severities")#>
-                                                    <option value="sample.seid">#sample.sename#</option>
+                                                    <option value="#sample.seid#">#sample.sename#</option>
                                             <cfloop query="loopName3">
                                                 <cfoutput>
                                                 <cfif loopName3.severityID neq sample.seid>
@@ -196,7 +196,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="statusID">
                                             <cfset loopName4= #addUserObject.getDesignation("status")#>
-                                                    <option value="sample.sid">#sample.sname#</option>
+                                                    <option value="#sample.sid#">#sample.sname#</option>
                                             <cfloop query="loopName4">
                                                 <cfoutput>
                                                 <cfif loopName4.statusID neq sample.sid>

@@ -73,8 +73,8 @@
                 <cfquery name="empd" datasource="#Application.dataSourceName#">
                     insert into projectUsers(projectID, userID)
                     values(
-                    <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint"/>
-                    <cfqueryparam value="#pid#" cfsqltype="cf_sql_tinyint"/>)
+                    <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint" />, 
+                    <cfqueryparam value="#pid#" cfsqltype="cf_sql_tinyint" /> );
                 </cfquery>
         </cfif>
         <cfquery name="empd2" datasource="#Application.dataSourceName#">

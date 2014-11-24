@@ -30,11 +30,11 @@
                                     <td><strong>Marked for Review On</strong></td>
                                 </tr>
                                 <cfquery name="project" datasource="#Application.dataSourceName#">
-                                    select projects.projectID, projects.projectName, users.userName, 
-                                    logs.loggedTime from projects inner join bugs on 
+                                    select projects.projectID, projects.projectName, users.firstName,  
+                                    users.lastName, logs.loggedTime from projects inner join bugs on 
                                     bugs.projectID=projects.projectID inner join logs on 
                                     logs.bugID=bugs.bugID inner join users on logs.userID=users.userID 
-                                    and logs.activityID=10 and users.roleID=2;a
+                                    and logs.activityID=10 and users.roleID=2;
                                 </cfquery> 
                                 <cfoutput query="project">
                                     <cfif #LSDateformat(project.loggedTime ,"yyyy-mm-dd")# LT Dateadd("d",7,now()) 
