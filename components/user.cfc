@@ -6,6 +6,7 @@
 
 <cfcomponent>
     <cffunction name="fileupload" returnType="any">
+        <cfargument name="userid" required="false" /> 
         <cfif isDefined('form.status')>
             <cfquery name="updateStatusID" datasource="#Application.dataSourceName#">
                 update bugs set 
@@ -28,7 +29,9 @@
                 </cfif>
             </cfif>
         </cfif>
+               
         <cfset dat=now()/>
+        <cfif Session.roleID neq 1> 
         <cfquery name="remarkTableInsert" datasource="#Application.dataSourceName#" result="remark">
             insert into remarks (
             name,
@@ -43,7 +46,24 @@
             <cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">,
             <cfqueryparam value="#session.userID#" CFSQLType="CF_SQL_TINYINT">
             );
-        </cfquery>                 
+        </cfquery>  
+            <cfelse>
+          <cfquery name="remarkTableInsert" datasource="#Application.dataSourceName#" result="remark">
+            insert into remarks (
+            name,
+            description,
+            createdOn,
+            userID,
+            ProjectID
+            ) values (
+            <cfqueryparam value="#form.subject#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#form.remark#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#dat#" CFSQLType="CF_SQL_TIMESTAMP">,
+            <cfqueryparam value="#userid#" CFSQLType="CF_SQL_TINYINT">,
+            <cfqueryparam value="#url.pid#" CFSQLType="CF_SQL_TINYINT">
+            );
+        </cfquery>  
+                </cfif>
         <cfif len(trim(form.attachment))>
             <cffile action = "upload" 
                     fileField = "form.attachment" 
@@ -63,6 +83,7 @@
         <cfquery name="getRemarkID" datasource="#Application.dataSourceName#" result="remarkID">
             select remarkID from remarks where createdOn=#dat#;
         </cfquery>
+                <cfif Session.roleID neq 1> 
         <cfquery name="attachmentInsert" datasource="#Application.dataSourceName#" result="attachmentRsult">
             insert into attachments (
             fileName,
@@ -78,6 +99,23 @@
             <cfqueryparam value="#dat#" CFSQLType="CF_SQL_TIMESTAMP">
             );
         </cfquery>
+                <cfelse>
+                    <cfquery name="attachmentInsert" datasource="#Application.dataSourceName#" result="attachmentRsult">
+            insert into attachments (
+            fileName,
+            remarkID,    
+            filePath,
+            fileType,
+            uploadedOn
+            ) values (
+            <cfqueryparam value="#filen#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#getRemarkID.remarkID#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#filepa#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#filety#" CFSQLType="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#dat#" CFSQLType="CF_SQL_TIMESTAMP">
+            );
+        </cfquery>
+                </cfif>
         <cfif remarkID.recordcount eq 1 and remark.recordcount eq 1>
             <cfoutput>attachment inserted successfully</cfoutput>
             <cfreturn true />
