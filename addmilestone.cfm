@@ -43,7 +43,7 @@
                         <cfif isdefined('url.flag')>
                             <cfoutput>
                                 <a href="editProject.cfm?projectID=#url.projectID#&flag"
-                                         class="btn btn-default btn-  primary" style="display:inline">
+                                         class="btn btn-default btn-primary" style="display:inline">
                                     <i class="icon-arrow-left"></i>&nbsp;Edit Project
                                 </a>
                             </cfoutput>
