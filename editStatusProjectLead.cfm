@@ -100,17 +100,13 @@
         <cfif check>
 
             <cfquery name="getDetails" datasource="bugTracking" result="list"> 
-                SELECT u.email as uemail, u.firstName as uname,
-
-                p.projectName as pname from users as u 
+                SELECT u.email as uemail, u.firstName as fname,p.projectName as pname from users as u 
                 inner join projects p on u.userId=#bugname.userID#
                 and p.projectID=<cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>		;
             </cfquery>
 
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.firstName as username, d.name as dname 
-
-                from users u inner join designations d on 
+                SELECT  u.firstName as fname, d.name as dname from users u inner join designations d on 
                 userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
             </cfquery>      
             <cfmail from="#session.email#" to="#getDetails.uemail#" subject="New remark" type="html">
@@ -126,11 +122,11 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getDetails.uname#,</p> <br><br>
+                            <p>Dear #getDetails.fname#,</p> <br><br>
                             Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.firstName#</p>              
+                            <p>#getcurrent.fname#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                      </html>
@@ -138,7 +134,7 @@
             </cfmail>    
 
             <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
-                SELECT u.email as uemail, u.firstName as uname,
+                SELECT u.email as uemail, u.firstName as fname,
 
                 p.projectName as pname from users as u 
                 inner join projects p on p.projectID=#url.pid#
@@ -146,7 +142,7 @@
             </cfquery>
 
             <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.firstName as username, d.name as dname 
+                SELECT  u.firstName as fname, d.name as dname 
 
                 from users u inner join designations d on 
                 userID=#session.userID# and u.designationID=d.designationID; 
@@ -164,11 +160,11 @@
                             </style>
                         </head>
                         <body>
-                            <p>Dear #getProjectManager.uname#,</p> <br><br>
+                            <p>Dear #getProjectManager.fname#,</p> <br><br>
                             A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
                             <br> <br>
                             <p>Email sent by </p>               
-                            <p>#getcurrent.firstName#</p>              
+                            <p>#getcurrent.fname#</p>              
                             <p>#getcurrent.dname#</p>              
                         </body>
                     </html>

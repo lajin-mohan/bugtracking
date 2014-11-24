@@ -8,11 +8,11 @@
     b.bugID=<cfqueryparam value="#url.bgid#" cfsqltype="cf_sql_tinyint"/> order by b.bugName asc;
 </cfquery>
 <cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
-    select u.userID as uID, u.firstName as uname  from bugUsers as bu 
+    select u.userID as uID, u.firstName as fname  from bugUsers as bu 
     inner join users as u  on  bu.bugId=<cfqueryparam value="#url.bgid#" cfsqltype="cf_sql_tinyint"/> and bu.userID=u.userID;
 </cfquery>
 <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
-    select pu.userID, u.firstName as uname, pu.hide as phide from projectUsers as pu 
+    select pu.userID, u.firstName as fname, pu.hide as phide from projectUsers as pu 
     inner join users as u on pu.isLead=0 and pu.projectId=<cfqueryparam value="#url.p#" cfsqltype="cf_sql_tinyint"/> and pu.userID=u.userID;
 </cfquery>
 <script>
@@ -111,11 +111,11 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="teamMemberID">
                                             <cfset loopName0= #bugaddmember#>
-                                                    <option value="0">#bugviewmember.uname#</option>
+                                                    <option value="0">#bugviewmember.fname#</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
-                                                <cfif (loopname0.uname neq bugviewmember.uname) and (phide eq 0)> 
-                                                    <option value="#loopName0.userID#">#loopName0.uname#</option>
+                                                <cfif (loopname0.fname neq bugviewmember.fname) and (phide eq 0)> 
+                                                    <option value="#loopName0.userID#">#loopName0.fname#</option>
                                                 </cfif>
                                                 </cfoutput>
                                             </cfloop>
@@ -245,7 +245,7 @@
         </cfif>           
 
         <cfquery name="getDetails" datasource="bugTracking" result=list> 
-            SELECT u.email as uemail, u.firstName as uname,
+            SELECT u.email as uemail, u.firstName as fname,
 
        
             p.projectName as pname from users as u 
@@ -254,7 +254,7 @@
         </cfquery>
 
         <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-           SELECT  u.firstName as username, d.name as dname 
+           SELECT  u.firstName as fname, d.name as dname 
 
            from users u inner join designations d
            on userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
@@ -272,11 +272,11 @@
                         </style>
                     </head>
                     <body>
-                        <p>Dear #getDetails.uname#,</p> <br><br>
+                        <p>Dear #getDetails.fname#,</p> <br><br>
                         bug #form.bname#  in your  project #getDetails.pname# edited
                         <br> <br>
                         <p>Email sent by </p>               
-                        <p>#getcurrent.firstName#</p>              
+                        <p>#getcurrent.fname#</p>              
                         <p>#getcurrent.dname#</p>              
                     </body>
                 </html>
@@ -284,7 +284,7 @@
         </cfmail>        
 
         <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
-            SELECT u.email as uemail, u.firstName as uname,
+            SELECT u.email as uemail, u.firstName as fname,
 
             p.projectName as pname from users as u 
             inner join projects p on p.projectID=#url.p#
@@ -292,7 +292,7 @@
         </cfquery>
 
         <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-            SELECT  u.firstName as username, d.name as dname 
+            SELECT  u.firstName as fname, d.name as dname 
 
             from users u inner join designations d
                 on userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
@@ -310,11 +310,11 @@
                        </style>
                     </head>
                     <body>
-                       <p>Dear #getProjectManager.uname#,</p> <br><br>
+                       <p>Dear #getProjectManager.fname#,</p> <br><br>
                         A bug - "#form.bname#" has been edited in the project "#getDetails.pname#"
                        <br> <br>
                        <p>Email sent by </p>               
-                        <p>#getcurrent.firstName#</p>              
+                        <p>#getcurrent.fname#</p>              
                         <p>#getcurrent.dname#</p>              
                    </body>
                </html>
