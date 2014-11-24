@@ -1,6 +1,6 @@
 
 <cfdocument format="PDF">
-<<<<<<< HEAD
+
     <cfoutput>
         <cfquery name="selectData" datasource="#Application.dataSourceName#">
             select timeSheet.dateTime,timeSheet.description,timeSheet.workingHour,
@@ -25,7 +25,7 @@
                         </cfquery><br />
                         <table>
                             <tr><td class="tdAlign"><b> <label>Name</b></label></td> 
-                                <td class="tdAlign">                                                                                                             <b><cfoutput>:#selectData.firstName# & #selectData.lastName# </cfoutput>
+                                <td class="tdAlign">                                                                                                             <b><cfoutput>:#selectData.firstName# #selectData.lastName# </cfoutput>
                                     </b>
                                 </td>
                             </tr>

@@ -74,7 +74,7 @@
                                             <cfinvoke component="components.timeSheet"                                                                                   method="selectUserBugs" 
                                             returnVariable="getdetails"></cfinvoke>
                                              <option value="0">Select</option>
-                                             <cfloop query="getbug">
+                                             <cfloop query="getdetails">
                                              <cfoutput><option value="#bugID#">#bugName#</option>                                                                          </cfoutput>
                                              </cfloop>
                                              </select>
