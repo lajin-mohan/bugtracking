@@ -240,7 +240,7 @@
                                         month=12;
                                     }
                                     var date = new Date(year, month-2, day);
-                                    window.location.href = 'events.cfm?projectManager&name='+title+'&date='+date;
+                                    window.location.href = 'events.cfm?name='+title+'&date='+date;
                                 }
                                 $('#calendar').fullCalendar('unselect');
                             },
@@ -311,47 +311,7 @@
                                             true // make the event "stick"
                                         );
                                         var dateString=String(start);
-                                        var year = dateString.substring(11, 15);
-                                        var monthName = dateString.substring(4, 7);
-                                        var day = dateString.substring(8, 10);
-                                        if(monthName="Jan"){
-                                            month=01;
-                                        }
-                                        if(monthName="Feb"){
-                                            month=02;
-                                        }
-                                        if(monthName="Mar"){
-                                            month=03;
-                                        }
-                                        if(monthName="Apr"){
-                                            month=04;
-                                        }
-                                        if(monthName="May"){
-                                            month=05;
-                                        }
-                                        if(monthName="Jun"){
-                                            month=06;
-                                        }
-                                        if(monthName="Jul"){
-                                            month=07;
-                                        }
-                                        if(monthName="Aug"){
-                                            month=08;
-                                        }
-                                        if(monthName="Sep"){
-                                            month=09;
-                                        }
-                                        if(monthName="Oct"){
-                                            month=10;
-                                        }
-                                        if(monthName="Nov"){
-                                            month=11;
-                                        }
-                                        if(monthName="Dec"){
-                                            month=12;
-                                        }
-                                        var date = new Date(year, month-2, day);
-                                        window.location.href = 'events.cfm?name='+title+'&date='+date;
+                                        window.location.href = 'events.cfm?name='+title+'&date='+dateString;
                                     }
                                     $('#calendar').fullCalendar('unselect');
                                 },
