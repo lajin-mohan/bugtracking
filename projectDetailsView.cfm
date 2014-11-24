@@ -12,6 +12,7 @@
     inner join status as s inner join priorities as prior on p.projectID=
     <cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>
     and s.statusID=p.statusID and prior.priorityID=p.priorityID
+</cfquery>
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
@@ -47,7 +48,7 @@
                         <div class="span12">
                             <form action=" " class="form-horizontal" method="post">
                                 <fieldset>
-                                    <legend>Project Profile</legend>
+                                  
                                     <cfoutput>
                                         <div class="control-group">
                                             <label class="control-label">Project Name:</label>

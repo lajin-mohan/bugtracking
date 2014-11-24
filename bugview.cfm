@@ -1,6 +1,5 @@
 
 <cfquery name="sample" datasource="#Application.dataSourceName#">
-
     select b.projectID,b.bugID,b.bugName,b.bugDescription,b.estimatedstartDate,
     b.actualStartDate,b.estimatedEndDate,b.actualEndDate,s.name as sname,
     p.name as pname,se.name as sename,b.projectID as prid, proj.projectName as prname 
@@ -37,32 +36,31 @@
                            class="btn btn-default btn-primary" style="display:inline">
                     <cfelseif Session.roleID eq 3 or Session.roleID eq 4>                      
                         <a href="ownBugs.cfm" class="btn btn-default btn-primary" 
-                        style="display:inline">
+                           style="display:inline">
                     </cfif>
-                            <i class="icon-arrow-left"></i>&nbsp;Bug Details
+                          <i class="icon-arrow-left"></i>&nbsp;Bug Details
                         </a>
                     </div>
                     <cfif Session.roleID eq 2 or Session.roleID eq 1>
                         <div class="muted pull-right">
                          <cfif isdefined('url.flag')>
-
-                            <cfoutput>
+                             <cfoutput>
                                 <a href="editbug.cfm?bgid=#url.bid#&p=#sample.projectID#" 
-                                class="btn btn-default btn-primary" style="display:inline">
+                                   class="btn btn-default btn-primary" style="display:inline">
                             </cfoutput>
                                 <i class="icon-arrow-left"></i>&nbsp;Edit Bug
                             </a>
                             <cfelse>
                             <cfoutput>
                                 <a href="editbug.cfm?bgid=#url.bid#&p=#sample.projectID#&bugview" 
-                                class="btn btn-default btn-primary" style="display:inline">
+                                  class="btn btn-default btn-primary" style="display:inline">
                             </cfoutput>
                                     <i class="icon-plus-sign"></i>&nbsp;Edit Bug
                                 </a>
                          </cfif>
                          &nbsp;
                          <a href="editStatusProjectLead.cfm?bugID=#url.bid#&pid=#sample.projectID#" 
-                         class="btn btn-default btn-primary" style="display:inline">
+                            class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-plus-sign"></i>&nbsp;Remarks
                          </a>
                      </div>
@@ -85,16 +83,6 @@
                             <div class="span12">
                                 <form action=" " class="form-horizontal" method="post">
                                     <fieldset>
-                                        <legend>Bug Details
-                                            <cfoutput>
-                                                <a href="plBugViewReport.cfm?bugID=#url.bid#" 
-                                                class="btn btn-default btn-primary muted pull-right" 
-                                                style="display:inline">
-                                                    <i class="icon-list-alt"></i>
-                                                    &nbsp;Generate Report
-                                                </a>
-                                            </cfoutput>
-                                        </legend>
                                        <div class="alert alert-error hide">
                                             <button class="close" data-dismiss="alert"></button>
                                                 You have some form errors. Please check below.
@@ -121,70 +109,56 @@
                                                 class="span6 m-wrap" disabled 
                                                 value="#bugviewmember.fname# 
                                                 #bugviewmember.lname#"/>
-
                                             </div>
                                         </div>                                        
                                          <div class="control-group">
                                             <label class="control-label">Bug Description :</label>
                                             <div class="controls">
-
                                                 <input type="text" name="bugdesc" data-required="1" 
                                                 class="span6 m-wrap" disabled
                                                 value="#sample.bugDescription#"/>
-
                                             </div>
                                         </div>
                                           <div class="control-group">
                                             <label class="control-label">Project Name </label>
                                             <div class="controls">
-
                                                 <input name="prjname" type="text" 
                                                 class="span6 m-wrap" required disabled 
                                                 value="#sample.prname#"/>
-
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Estimated Start Date :                                                                            </label>
                                             <div class="controls">
-
                                                 <input name="esd" type="text" 
                                                 class="span6 m-wrap" disabled 
                                                 value="#lsdateformat(sample.estimatedStartDate)#"/>              								                        </div>
-
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Actual Start Date :</label>
                                             <div class="controls">
-
                                                 <input name="asd" type="text"
                                                 class="span6 m-wrap" disabled 
                                                 value="#lsdateformat(sample.actualStartDate)#"/>
-
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Estimated End Date :                                                                             </label>
                                             <div class="controls">
-
                                                 <input name="eed" type="text" 
                                                  class="span6 m-wrap" disabled 
                                                  value="#lsdateformat(sample.estimatedEndDate)#"/>              							                            </div>
-
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Actual End Date :</label>
                                             <div class="controls">
-
                                                 <input name="aed" type="text"
                                                 class="span6 m-wrap" disabled 
-                                                value="#lsdateformat(sample.actualEndDate)#"/>              									                        </div>
-
+                                                value="#lsdateformat(sample.actualEndDate)#"/>						                                                            </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Status </label>
                                             <div class="controls">
-
                                                 <input name="status" type="text" 
                                                  class="span6 m-wrap" required disabled 
                                                  value="#sample.sname#"/>
@@ -196,13 +170,11 @@
                                             <input name="severity" type="text" 
                                             class="span6 m-wrap" required disabled 
                                            value="#sample.pname#"/>
-
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">Severity </label>
                                             <div class="controls">
-
                                                 <input name="severity" type="text"
                                                   class="span6 m-wrap" required disabled 
                                                  value="#sample.sename#"/>
@@ -235,7 +207,6 @@
                                              <tr>
                                             <td></td>
                                             <td>
-
                                                 No attachments or comments available
                                             </td>
                                             <td></td>

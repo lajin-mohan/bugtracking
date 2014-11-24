@@ -42,7 +42,7 @@ select p.projectName as pname,p.projectID,p.estimatedEndDate as eed,s.name as st
                                         </cfquery>
                                         <cfoutput query="viewproject">
                                             <tr>
-                                                <td><a href="projectDetailsView.cfm?                                                                                                   pid=#viewproject.projectID#">#viewproject.pname#</a></td>
+                                <td> <a href="projectDetailsView.cfm?pid=#viewproject.projectID#">#viewproject.pname#</a></td>
                                                 <td>#dateformat(viewproject.eed)#</td>
                                                 <td>#viewproject.status#</td>
                                             </tr>   

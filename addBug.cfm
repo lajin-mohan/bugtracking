@@ -208,7 +208,7 @@ Bug Tracker - Project Details CFM
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
                                     <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list>
                                         SELECT u.email as uemail,
-                                        u.firstName as uname,
+                                        u.firstName as fname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p
@@ -217,7 +217,7 @@ Bug Tracker - Project Details CFM
                                     </cfquery>
 
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-                                        SELECT  u.firstName as username,
+                                        SELECT  u.firstName as fname,
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
@@ -235,11 +235,11 @@ Bug Tracker - Project Details CFM
                                                     </style>
                                                 </head>
                                                 <body>
-                                                    <p>Dear #getDetails.uname#,</p> <br><br>
+                                                    <p>Dear #getDetails.fname#,</p> <br><br>
                                                         Added a new bug - "#form.bugName#" to your project " #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.firstName#</p>              
+                                                    <p>#getcurrent.fname#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
@@ -247,7 +247,7 @@ Bug Tracker - Project Details CFM
                                     </cfmail>                                 
                                     <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
                                         SELECT u.email as uemail,
-                                        u.firstName as uname,
+                                        u.firstName as fname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p on    
@@ -256,7 +256,7 @@ Bug Tracker - Project Details CFM
                                     </cfquery>
 
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
-                                        SELECT  u.firstName as username, d.name as dname 
+                                        SELECT  u.firstName as fname, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
@@ -273,12 +273,12 @@ Bug Tracker - Project Details CFM
                                                     </style>
                                                 </head>
                                                 <body>
-                                                    <p>Dear #getProjectManager.uname#,</p> <br><br>
+                                                    <p>Dear #getProjectManager.fname#,</p> <br><br>
                                                         A new bug - "#form.bugName#" has been added to 
                                                         the project "#getDetails.pname#"
                                                         <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.firstName#</p>              
+                                                    <p>#getcurrent.fname#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
