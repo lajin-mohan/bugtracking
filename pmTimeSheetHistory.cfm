@@ -26,10 +26,7 @@
                                     <select name="project"> 
                                         <cfquery name="selectProject" datasource="#Application.dataSourceName#">
                                             select projects.projectName, projects.projectID 
-                                            from projects inner join projectUsers on 
-                                            projectUsers.projectID=projects.projectID 
-                                            and projectUsers.userID=
-                                            <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>
+                                            from projects 
                                         </cfquery>
                                         <option>Projects</option>
                                         <cfloop query="selectProject">

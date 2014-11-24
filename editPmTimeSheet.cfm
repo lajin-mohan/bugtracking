@@ -9,7 +9,7 @@
     select timeSheet.dateTime, projects.projectName, timeSheet.description, 
     timeSheet.workingHour, timeSheet.productiveHours, status.name, status.statusID
     from timeSheet inner join status on timeSheet.statusID=status.statusID 
-    inner join projectUsers on timeSheet.userID=projectUsers.userID 
+   
     inner join projects on projects.projectID=timeSheet.projectID 
     and timeSheet.userID=
     <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
