@@ -38,7 +38,6 @@
                                      <div class="control-group">
                                          <label class="control-label">Bug<span class="required">*</span></label>
 				                         <div class="controls">
-<<<<<<< HEAD
                                              <select name="bug" required> 
                                                 <cfinvoke component="components.timeSheet" 
                                                       method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
@@ -52,18 +51,6 @@
                                             class="btn btn-default btn-primary" style="display:inline">View Time Sheet
                                             </a></div></div>
 			                            </div>
-=======
-                                         <select name="bug" required> 
-                                             <cfinvoke component="components.timeSheet" method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
-                                             <option value="0">Select Bugs</option>
-                                             <cfloop query="getdetails">
-                                             <cfoutput><option value="#bugID#">#bugName#</option>                                                                              </cfoutput>
-                                             </cfloop>
-                                             </select><span style="display:none;color:red" class="sp">Required</span>
-                            <div class="muted pull-right">         
-                                  <a href="timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View     Time Sheet</a></div></div>
-			                        </div><!--- close of control-group --->
->>>>>>> upstream/master
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Description<span class="required">*</span></label>
 				                        <div class="controls">
