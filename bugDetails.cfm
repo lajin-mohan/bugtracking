@@ -69,7 +69,8 @@
                                         <td>
                                             <a href="editbug.cfm?bgid=#bug.bugID#&p=#url.pid#" class="btn  btn-mini btn-primary">
                                             <i class="icon-edit"></i></a>&nbsp;&nbsp;
-                                            <a href="deleteRecord.cfm?bugID=#bug.bugID#&projectID=#bug.projectID#" class="btn  btn-                                                     mini btn-danger">
+                                            <a href="deleteRecord.cfm?bugID=#bug.bugID#&projectID=#bug.projectID#" 
+                                               class="btn  btn-mini btn-danger">
                                             <i class="icon-remove"></i></a>
                                         </td>
                                     </tr>   

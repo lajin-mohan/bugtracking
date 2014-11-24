@@ -24,16 +24,18 @@ select u.firstName as fname,u.lastName as lname,u.employeeID as ueid,u.email as 
             <div class="row-fluid">
                  <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left"> 
-                     <a href="ProjectLead.cfm" class="btn btn-default btn-primary" style="display:inline">
+                        <cfoutput>
+                     <a href="#listlast(cgi.http_referer,"/")#" class="btn btn-default btn-primary" style="display:inline">
                             <i class="icon-arrow-left"></i>&nbsp;Back
-                        </a> 
+                        </a>
+                            </cfoutput>
                     </div>
                 </div> 
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
                           <cfoutput>
                        <div class="muted pull-left">
-                      <h3>Project Member Profile  -  #memberview.uname# </h3>
+                      <h3>Project Member Profile  -  #memberview.fname#  </h3>
                     </div>
                         </cfoutput> 
                         <div class="muted pull-right">
