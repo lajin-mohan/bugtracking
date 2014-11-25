@@ -6,7 +6,6 @@
 
 <!DOCTYPE html>
 <html>
-    
     <head>
         <title>Calendar</title>
         <!--- Bootstrap --->
@@ -18,13 +17,14 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]--->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    </head>
-    
+    </head>    
     <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <a class="btn btn-navbar"
+                       data-toggle="collapse"
+                       data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -33,12 +33,27 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i><cfoutput>&nbsp;#Session.firstName#</cfoutput><i class="caret"></i>
+                                <a href=" "
+                                   role="button"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown">
+                                    <i class="icon-user">
+                                    </i>
+                                    <cfoutput>
+                                        &nbsp;
+                                        #Session.firstName#
+                                    </cfoutput>
+                                    <i class="caret">
+                                    </i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <cfoutput><a tabindex="-1" href="userView.cfm?userID=#Session.userID#">Profile</a></cfoutput>
+                                        <cfoutput>
+                                            <a tabindex="-1"
+                                               href="userView.cfm?userID=#Session.userID#">
+                                                Profile
+                                            </a>
+                                        </cfoutput>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
@@ -52,95 +67,167 @@
                                 <a href="projectManager.cfm">Bug Tracker</a>
                             </li>
                         </ul>
-                    </div><!--- close of nav-collapse --->
-                </div><!--- close of container-fluid --->
-            </div><!--- close of navbar-inner --->
-        </div><!--- close of navbar navbar-fixed-top --->
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span3" id="sidebar"><!--- sidebar for software engineer --->
+            <div class="span3" id="sidebar">
                 <cfoutput>
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">        
-                    <cfif Session.roleID eq 1>
-                        <li class="inactive">
-                            <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Projects</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                        </li>
-                        <li class="active">
-                            <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Employees</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                        </li>
-                        <cfelseif Session.roleID eq 2>
+                        <cfif Session.roleID eq 1>
                             <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
+                                <a href="#Session.menu1#">
+                                    <i class="icon-chevron-right"></i>
+                                    Home
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Projects</a>
+                                <a href="#Session.menu2#">
+                                    <i class="icon-chevron-right"></i>
+                                    Projects
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
+                                <a href="#Session.menu3#">
+                                    <i class="icon-chevron-right"></i>
+                                    Time Sheet
+                                    </a>
                             </li>
                             <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
+                                <a href="#Session.menu4#">
+                                    <i class="icon-chevron-right"></i>
+                                    Calendar
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
+                                <a href="#Session.menu5#">
+                                    <i class="icon-chevron-right"></i>
+                                    Employees
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
+                                <a href="#Session.menu6#">
+                                    <i class="icon-chevron-right"></i>
+                                    History
+                                </a>
                             </li>
-                        <cfelseif Session.roleID eq 3>
-                            <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Bugs</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                            </li>
-                            <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                            </li>
-                        <cfelseif Session.roleID eq 4>
-                            <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Projects</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                            </li>
-                            <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                            </li>
-                    </cfif>
+                            <cfelseif Session.roleID eq 2>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Projects
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                            <cfelseif Session.roleID eq 3>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Bugs
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                            <cfelseif Session.roleID eq 4>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Projects
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                        </cfif>
                     </ul>
                 </cfoutput>
-            </div><!--- close of sidebar --->
+            </div>
             <cfif Session.roleID eq 1>
                     <div class="row-fluid">
                         <div class="span9" id="content">
@@ -151,7 +238,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                    <div class="fc-day-number"
+                         style="visibility:hidden"
+                         onload="return retrieveDate()"></div>
                 </div>
                 <hr/>
                 <footer>
@@ -200,7 +289,7 @@
                                         true // make the event "stick"
                                     );
                                     var dateString=String(start);
-                                    window.location.href = 'events.cfm?name='+title+'&date='+dateString;
+                                    window.location.href='events.cfm?name='+title+'&date='+dateString;
                                 }
                                 $('#calendar').fullCalendar('unselect');
                             },
@@ -222,7 +311,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                        <div class="fc-day-number"
+                             style="visibility:hidden"
+                             onload="return retrieveDate()"></div>
                     </div>
                     <hr/>
                     <footer>
@@ -271,7 +362,7 @@
                                             true // make the event "stick"
                                         );
                                         var dateString=String(start);
-                                        window.location.href = 'events.cfm?name='+title+'&date='+dateString;
+                                        window.location.href='events.cfm?name='+title+'&date='+dateString;
                                     }
                                     $('#calendar').fullCalendar('unselect');
                                 },
@@ -293,7 +384,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                            <div class="fc-day-number"
+                                 style="visibility:hidden"
+                                 onload="return retrieveDate()"></div>
                         </div>
                         <hr/>
                         <footer>
@@ -342,7 +435,7 @@
                                                 true // make the event "stick"
                                             );
                                             var dateString=String(start);
-                                            window.location.href = 'events.cfm?name='+title+'&date='+dateString;
+                                            window.location.href='events.cfm?name='+title+'&date='+dateString;
                                         }
                                         $('#calendar').fullCalendar('unselect');
                                     },
@@ -364,7 +457,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                            <div class="fc-day-number"
+                                 style="visibility:hidden"
+                                 onload="return retrieveDate()"></div>
                         </div>
                         <hr/>
                         <footer>
@@ -413,7 +508,7 @@
                                                 true // make the event "stick"
                                             );
                                             var dateString=String(start);
-                                            window.location.href = 'events.cfm?name='+title+'&date='+dateString;
+                                            window.location.href='events.cfm?name='+title+'&date='+dateString;
                                         }
                                         $('#calendar').fullCalendar('unselect');
                                     },

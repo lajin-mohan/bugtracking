@@ -111,7 +111,9 @@
                 </cfquery>
                 <div class="block">
                         <div class="navbar navbar-inner block-header">
-                            <h3>Project Profile</h3>
+                            <div class="muted pull-left">
+                                <h3>Project Profile</h3>
+                            </div>
                         </div>
                     <div id="progressbar-5">
                         <div class="progress-label">

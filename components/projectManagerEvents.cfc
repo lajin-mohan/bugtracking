@@ -37,7 +37,7 @@ component {
             arrayAppend(results,{
                 "title"=dbresultsMilestones.milestoneName[k],
                 "start"=dbresultsMilestones.milestoneDate[k],
-                "url"="milestoneHome.cfm?milestoneID="&dbresultsMilestones.milestoneID[k],
+                "url"="milestoneHome.cfm?milestoneID="&dbresultsMilestones.milestoneID[k]&"&projectID="&dbresultsMilestones.projectID[k],
                 "color"="green"
             });
         }
