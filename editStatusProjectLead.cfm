@@ -38,9 +38,10 @@
                             <a href="ownBugs.cfm" class="btn btn-default btn-primary" style="display:inline">
                                  <i class="icon-arrow-left"></i>&nbsp;Bug Details
                             </a>
-                                <cfelse>
-                                 <a href="projectProfile.cfm?projectID=#url.pid#" class="btn btn-default btn-primary"                                                   style="display:inline"> 
-                                      <i class="icon-arrow-left"></i>&nbsp;Project Details
+                        <cfelse>
+                             <a href="projectProfile.cfm?projectID=#url.pid#" 
+                                    class="btn btn-default btn-primary" style="display:inline"> 
+                                  <i class="icon-arrow-left"></i>&nbsp;Project Details
                             </a>
                         </cfif>
                         </cfoutput>
@@ -51,7 +52,7 @@
                     <div class="navbar navbar-inner block-header">
                         <cfoutput>
                        <div class="muted pull-left">
-                        <h3>Upadte Bug Status</h3>
+                        <h3>Update Bug Status</h3>
                       </div>
                         </cfoutput>
                         <div class="muted pull-left"></div>
@@ -69,7 +70,8 @@
                     <div class="block-content collapse in">
                         <div class="span12"><cfoutput>
                              <cfif Session.roleID neq 1>
-                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#&pid=#url.pid#" id="form_sample_1"                                                       class="form-horizontal" method="post" enctype="multipart/form-data">
+                    		<form action="editStatusProjectLead.cfm?bugID=#url.bugID#&pid=#url.pid#" id="form_sample_1" 
+                                  class="form-horizontal" method="post" enctype="multipart/form-data">
                                 <cfelse>
                                     <form action="editStatusProjectLead.cfm?pid=#url.pid#" id="form_sample_1"                                                       class="form-horizontal" method="post" enctype="multipart/form-data">
                                     </cfif>
@@ -100,13 +102,15 @@
 			                        <div class="control-group">
 				                        <label class="control-label">Subject</label>
 				                        <div class="controls">
-					                        <input type="text" name="subject" data-required="1" class="span6 m-wrap" required />
+					                        <input type="text" name="subject" data-required="1" 
+                                                   class="span6 m-wrap" required />
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->			
                                     <div class="control-group">
 				                        <label class="control-label">Leave a remark</label>
 				                        <div class="controls">
-					                        <textarea type="text" name="remark" data-required="1" class="span6 m-wrap" required>                                               </textarea>
+					                        <textarea type="text" name="remark" data-required="1" 
+                                                      class="span6 m-wrap" required></textarea>
 				                        </div><!--- close of control-label --->
 			                        </div><!--- close of control-group --->		
                                     <div class="control-group">
@@ -125,7 +129,9 @@
                                                  <cfoutput>
                                              <div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" name="submit" value="Update">
-                                        <a href="projectProfile.cfm?projectID=#url.pid#"> <input type="submit" class="btn" name="cancel"                                                           value="Cancel"></a>
+                                        <a href="projectProfile.cfm?projectID=#url.pid#"> 
+                                            <input type="submit" class="btn" name="cancel" value="Cancel">
+                                        </a>
 			                        </div><!--- close of form-actions ---> 
                                                </cfoutput>
                                            </cfif>
@@ -148,122 +154,118 @@
                  </cfif>
         </cfoutput>
         <cfif check>
- <cfif Session.roleID neq 1>
-            <cfquery name="getDetails" datasource="bugTracking" result="list"> 
-                SELECT u.email as uemail, u.firstName as fname,p.projectName as pname from users as u 
-                inner join projects p on u.userId=#bugname.userID#
-                and p.projectID=<cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>		;
-            </cfquery>
+            <cfif Session.roleID neq 1>
+                <cfquery name="getDetails" datasource="bugTracking" result="list"> 
+                    SELECT u.email as uemail, u.firstName as fname,p.projectName as pname from users as u 
+                    inner join projects p on u.userId=#bugname.userID#
+                    and p.projectID=<cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>		;
+                </cfquery>
 
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.firstName as fname, d.name as dname from users u inner join designations d on 
-                userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
-            </cfquery>      
-            <cfmail from="#session.email#" to="#getDetails.uemail#" subject="New remark" type="html">
-                <cfmailpart type="html">
-                    <html> 
-                        <head> 
-                            <style type="text/css"> 
-                                body { 
-                                font-family:sans-serif;
-                                font-size:12px;
-                                color:black;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <p>Dear #getDetails.fname#,</p> <br><br>
-                            Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
-                            <br> <br>
-                            <p>Email sent by </p>               
-                            <p>#getcurrent.fname#</p>              
-                            <p>#getcurrent.dname#</p>              
-                        </body>
-                     </html>
-                </cfmailpart>                     
-            </cfmail>    
+                <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                    SELECT  u.firstName as fname, d.name as dname from users u inner join designations d on 
+                    userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
+                </cfquery>      
+                <cfmail from="#session.email#" to="#getDetails.uemail#" subject="New remark" type="html">
+                    <cfmailpart type="html">
+                        <html> 
+                            <head> 
+                                <style type="text/css"> 
+                                    body { 
+                                    font-family:sans-serif;
+                                    font-size:12px;
+                                    color:black;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <p>Dear #getDetails.fname#,</p> <br><br>
+                                Added a new remark to your bug - "#bugname.bugName#" for the project "#getDetails.pname#"
+                                <br> <br>
+                                <p>Email sent by </p>               
+                                <p>#getcurrent.fname#</p>              
+                                <p>#getcurrent.dname#</p>              
+                            </body>
+                         </html>
+                    </cfmailpart>                     
+                </cfmail>    
 
-            <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
-                SELECT u.email as uemail, u.firstName as fname,
+                <cfquery name="getProjectManager" datasource="bugTracking" result="manager"> 
+                    SELECT u.email as uemail, u.firstName as fname,
 
-                p.projectName as pname from users as u 
-                inner join projects p on p.projectID=#url.pid#
-                and p.userID=u.userID ;
-            </cfquery>
+                    p.projectName as pname from users as u 
+                    inner join projects p on p.projectID=#url.pid#
+                    and p.userID=u.userID ;
+                </cfquery>
 
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.firstName as fname, d.name as dname 
+                <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                    SELECT  u.firstName as fname, d.name as dname 
 
-                from users u inner join designations d on 
-                userID=#session.userID# and u.designationID=d.designationID; 
-            </cfquery>
-            <cfmail from="#session.email#" to="#getProjectManager.uemail#" subject="New Remark_projectManager" type="html">
-                <cfmailpart type="html">
-                    <html> 
-                        <head> 
-                            <style type="text/css"> 
-                                body { 
-                                font-family:sans-serif;
-                                font-size:12px;
-                                color:black;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <p>Dear #getProjectManager.fname#,</p> <br><br>
-                            A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
-                            <br> <br>
-                            <p>Email sent by </p>               
-                            <p>#getcurrent.fname#</p>              
-                            <p>#getcurrent.dname#</p>              
-                        </body>
-                    </html>
-                </cfmailpart>                     
-            </cfmail>
-            
-       
-            <cfelse>
-                <cfquery name="getProjectLead" datasource="bugTracking" result="manager"> 
-                    select u.email as uemail, u.firstName as fname, p.projectName as pname
-                    from users u inner join projects p inner
-                    join projectUsers pu where p.projectID=#url.pid#
-                    and pu.userID=u.userID
-                    and pu.isLead=1 and p.projectID=pu.projectID;
-            </cfquery>
+                    from users u inner join designations d on 
+                    userID=#session.userID# and u.designationID=d.designationID; 
+                </cfquery>
+                <cfmail from="#session.email#" to="#getProjectManager.uemail#" 
+                        subject="New Remark_projectManager" type="html">
+                    <cfmailpart type="html">
+                        <html> 
+                            <head> 
+                                <style type="text/css"> 
+                                    body { 
+                                    font-family:sans-serif;
+                                    font-size:12px;
+                                    color:black;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <p>Dear #getProjectManager.fname#,</p> <br><br>
+                                A new remark added to the bug - "#bugname.bugName#" for the project "#getDetails.pname#"
+                                <br> <br>
+                                <p>Email sent by </p>               
+                                <p>#getcurrent.fname#</p>              
+                                <p>#getcurrent.dname#</p>              
+                            </body>
+                        </html>
+                    </cfmailpart>                     
+                </cfmail>
+                
+                <cfelse>
+                    <cfquery name="getProjectLead" datasource="bugTracking" result="manager"> 
+                        select u.email as uemail, u.firstName as fname, p.projectName as pname
+                        from users u inner join projects p inner
+                        join projectUsers pu where p.projectID=#url.pid#
+                        and pu.userID=u.userID
+                        and pu.isLead=1 and p.projectID=pu.projectID;
+                </cfquery>
 
-            <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
-                SELECT  u.firstName as fname, d.name as dname 
-                from users u inner join designations d on 
-                userID=#session.userID# and u.designationID=d.designationID; 
-            </cfquery>
-            <cfmail from="#session.email#" to="#getProjectLead.uemail#" subject="New Remark_projectManager" type="html">
-                <cfmailpart type="html">
-                    <html> 
-                        <head> 
-                            <style type="text/css"> 
-                                body { 
-                                font-family:sans-serif;
-                                font-size:12px;
-                                color:black;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <p>Dear #getProjectLead.fname#,</p> <br><br>
-                            A new attachment added to the project - "#getProjectLead.pname#" 
-                            <br> <br>
-                            <p>Email sent by </p>               
-                            <p>#getcurrent.fname#</p>              
-                            <p>#getcurrent.dname#</p>              
-                        </body>
-                    </html>
-                </cfmailpart>                     
-            </cfmail>
-            
-            
-            
-</cfif>
-             
+                <cfquery name="getcurrent" datasource="bugTracking" result="current"> 
+                    SELECT  u.firstName as fname, d.name as dname 
+                    from users u inner join designations d on 
+                    userID=#session.userID# and u.designationID=d.designationID; 
+                </cfquery>
+                <cfmail from="#session.email#" to="#getProjectLead.uemail#" subject="New Remark_projectManager" type="html">
+                    <cfmailpart type="html">
+                        <html> 
+                            <head> 
+                                <style type="text/css"> 
+                                    body { 
+                                    font-family:sans-serif;
+                                    font-size:12px;
+                                    color:black;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <p>Dear #getProjectLead.fname#,</p> <br><br>
+                                A new attachment added to the project - "#getProjectLead.pname#" 
+                                <br> <br>
+                                <p>Email sent by </p>               
+                                <p>#getcurrent.fname#</p>              
+                                <p>#getcurrent.dname#</p>              
+                            </body>
+                        </html>
+                    </cfmailpart>                     
+                </cfmail>           
             </cfif>
-            </cfif>
+        </cfif>
+    </cfif>
 <cfinclude template="layouts/footer.cfm">

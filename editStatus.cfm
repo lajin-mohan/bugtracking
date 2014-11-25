@@ -136,7 +136,9 @@
 			                        <div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" name="submit" 
                                                 value="Update">
-				                        <input type="submit" class="btn" name="cancel" value="Cancel">
+                                        <a href="ownBugs.cfm">
+				                            <input type="submit" class="btn" name="cancel" value="Cancel">
+                                        </a>
 			                        </div><!--- close of form-actions --->
 		                        </fieldset><!--- close of fieldset --->
 	                        </form><!--- close of fieldset --->

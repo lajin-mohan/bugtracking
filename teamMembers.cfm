@@ -3,11 +3,13 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-<cfquery name="getProjects" datasource="#Application.dataSourceName#">
-    select projectID from projectUsers 
-    where userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
-    and hide=0
+<cfset droppedStatus = "#6#" />
+<cfoutput><cfquery name="getProjects" datasource="#Application.dataSourceName#">
+    select p.projectID from projects p inner join projectUsers pu
+    on pu.projectID=p.projectID and pu.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
+    and pu.hide=0 and p.statusID!=#droppedStatus#
 </cfquery>
+</cfoutput>
 
 <cfinclude template="layouts/header.cfm"/><!--- including header --->
 <div class="container-fluid">
@@ -36,8 +38,8 @@
                                         select u.firstName fname,u.lastName lname,u.userID id,p.projectName 
                                         from users u inner join projectUsers pu inner join projects p 
                                         on u.userID=pu.userID and pu.projectID=p.projectID and 
-                                        p.projectID=
-                                        <cfqueryparam value="#getProjects.projectID#" cfsqltype="cf_sql_tinyint"/>
+                                        p.projectID=<cfqueryparam value="#getProjects.projectID#" 
+                                                                  cfsqltype="cf_sql_tinyint"/>
                                     </cfquery>
                                     <tr><td>
                                         <div class="navbar navbar-inner block-header">
