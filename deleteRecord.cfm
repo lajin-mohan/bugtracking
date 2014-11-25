@@ -90,12 +90,19 @@
         </cfquery>
         <cfquery name="getDetails" datasource="#Application.dataSourceName#" result="list">
             <!---getting detais of bug members--->
-            SELECT u.email as uemail, u.firstName as uname, p.projectName as pname,
-            b.bugName as bname from users as u inner join projects p inner join bugs b
-            inner join bugUsers bu on u.userID=bu.userID and p.projectID=
-            <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint"/>
-            and b.projectID=
-            <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint"/>
+            SELECT 
+            u.email as uemail, u.firstName as uname, p.projectName as pname,b.bugName as bname 
+            from 
+            users as u inner join projects p 
+            inner join bugs b 
+            inner join bugUsers bu 
+            inner join projectusers pu 
+            on 
+            u.userID=bu.userID and 
+            p.projectID= <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint"/> and 
+            b.bugID=  <cfqueryparam value="#url.bugID#" cfsqltype="cf_sql_tinyint"/> and 
+            u.userId=pu.userID and b.projectID=  <cfqueryparam value="#url.projectID#" cfsqltype="cf_sql_tinyint"/> and                         b.bugID=bu.bugID and 
+            p.projectID=pu.projectID;
         </cfquery>
         <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result="current">
             <!---getting details of user--->

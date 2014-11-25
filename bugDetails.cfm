@@ -16,33 +16,37 @@
         <div class="span9" id="content">
             <div class="row-fluid">
                 <div class="navbar navbar-inner block-header">
-                      <cfoutput>
-                     <div class="muted pull-left">
-                        <a href="bugProjectDetails.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline">
-                            <i class="icon-arrow-left"></i>&nbsp;My Projects
-                        </a> &nbsp;
-                        <a href="projectDetailsView.cfm?pid=#url.pid#&bug" class="btn btn-default btn-primary"                                                        style="display:inline">
+                    <cfoutput>
+                        <div class="muted pull-left">
+                            <a href="bugProjectDetails.cfm?p=#url.pid#" 
+                               class="btn btn-default btn-primary" style="display:inline">
+                                <i class="icon-arrow-left"></i>&nbsp;My Projects
+                            </a> &nbsp;
+                            <a href="projectDetailsView.cfm?pid=#url.pid#&bug" class="btn btn-default btn-primary"                                                        style="display:inline">
                             <i class="icon-plus-sign"></i>&nbsp;Project Profile
-                        </a>
-                    </div>
-                    <div class="muted pull-right">
-                        <a href="addBug.cfm?p=#url.pid#" class="btn btn-default btn-primary" style="display:inline"> </cfoutput>
+                            </a>
+                        </div>
+                        <div class="muted pull-right">
+                        <a href="addBug.cfm?p=#url.pid#" 
+                           class="btn btn-default btn-primary" style="display:inline"> 
+                    </cfoutput>
                             <i class="icon-plus-sign"></i>&nbsp;Bug
                         </a>
-                    </div>
+                        </div>
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                    <cfoutput>
-                       <div class="muted pull-left">
-                        <h3> Bugs </h3>
-                      </div>
+                        <cfoutput>
+                            <div class="muted pull-left">
+                                <h3> Bugs </h3>
+                            </div>
                         </cfoutput>
-                        <div class="muted pull-right">
-                        <cfoutput><a href="plProjectBugReport.cfm?p=#url.pid#" class="btn btn-default btn-primary muted pull-right"                                       style="display:inline">
+                    <div class="muted pull-right">
+                        <cfoutput><a href="plProjectBugReport.cfm?p=#url.pid#" 
+                                     class="btn btn-default btn-primary muted pull-right"                                                                                 style="display:inline">
                                 <i class="icon-list-alt"></i>&nbsp;Generate Report
-                             </a></cfoutput>
-                        </div>
+                                </a></cfoutput>
+                    </div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
@@ -54,11 +58,18 @@
                                     <td><strong>Status</strong></td>
                                     <td></td>
                                 </tr>
-
                                 <cfquery name="bug" datasource="#Application.dataSourceName#">
-                                    select b.bugID, b.bugName,b.projectID,b.estimatedEndDate,p.name as n ,s.name as s from bugs as                                      b inner join priorities as p inner join status as s on b.priorityID=p.priorityID and  
-                                    b.statusID=s.statusID and b.projectID=<cfqueryparam                                                                                  value="#url.pid#"cfsqltype="cf_sql_tinyint"/> and b.statusID!=6 order by b.bugName desc;
-
+                                    select 
+                                    b.bugID, b.bugName,b.projectID,b.estimatedEndDate,p.name as n ,s.name as s 
+                                    from 
+                                    bugs as b inner join priorities as p 
+                                    inner join status as s 
+                                    on 
+                                    b.priorityID=p.priorityID and  
+                                    b.statusID=s.statusID and 
+                                    b.projectID=<cfqueryparam  value="#url.pid#"cfsqltype="cf_sql_tinyint"/> and 
+                                    b.statusID!=6 
+                                    order by b.bugName desc;
                                 </cfquery>
                                 <cfoutput query="bug">
                                     <tr>

@@ -80,13 +80,11 @@ Bug Tracker - Project Details CFM
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-
                                     <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
                                         select pu.userID,u.firstName as uname from projectUsers as pu 
                                         inner join users as u on pu.projectId=<cfqueryparam value="#url.p#" 
                                         cfsqltype="cf_sql_tinyint"/> and pu.userID=u.userID;
-                                    </cfquery>
-                                                                     
+                                    </cfquery>                                                                     
                                      <div class="control-group">
 				                        <label class="control-label">
                                             Team Member
@@ -176,7 +174,7 @@ Bug Tracker - Project Details CFM
 			                        </div> <cfoutput>
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary" name="submit">Add Bug</button>
-                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn"                                                                          name="cancel">Cancel</button></a>
+                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn"                                                                 name="cancel">Cancel</button></a>
                                     </div></cfoutput>
                                 </fieldset>
                             </form>
@@ -195,11 +193,10 @@ Bug Tracker - Project Details CFM
                                             <cfqueryparam value="#form.severityID#" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#LSParseNumber(url.p)#" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>);
-                                        </cfquery>
-                                
-                        <cfquery name="getbugID" datasource="#Application.dataSourceName#">
-                select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
-                                </cfquery>
+                                        </cfquery>                                
+                                 <cfquery name="getbugID" datasource="#Application.dataSourceName#">
+                                    select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
+                                 </cfquery>
                                   <cfquery name="insertbuguser" datasource="#Application.dataSourceName#" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
@@ -215,14 +212,13 @@ Bug Tracker - Project Details CFM
                                         on u.userId=#form.teamMemberID#
                                         and p.projectID=#url.p#;
                                     </cfquery>
-
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as fname,
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="#Session.userID#" to="#getDetails.uemail#" subject="Add_bug" type="html">
+                                    <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -254,13 +250,12 @@ Bug Tracker - Project Details CFM
                                         p.projectID=#url.p# and
                                         p.userID=u.userID ;
                                     </cfquery>
-
                                     <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
                                         SELECT  u.firstName as fname, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="#Session.userID#" to="#getProjectManager.uemail#"                                                                                         subject="Add_bug_projectManager" type="html">
+                                    <cfmail from="#Session.email#" to="#getProjectManager.uemail#"                                                                             subject="Add_bug_projectManager" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -283,10 +278,9 @@ Bug Tracker - Project Details CFM
                                                 </body>
                                             </html>
                                     </cfmailpart>                     
-                                 </cfmail>
-  
+                                 </cfmail>  
                                  <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
-                                 </cfif>        
+                                   </cfif>        
                                 </cfif>
                             </cfif>
                         </div>
