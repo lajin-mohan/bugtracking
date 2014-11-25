@@ -11,7 +11,7 @@
     projects on projects.projectID = bugs.projectID inner join status on 
     timeSheet.statusID = status.statusID inner join users on timeSheet.userID = users.userID and 
     users.userID = <cfqueryparam value="#session.userID#" CFSQLType="CF_SQL_TINYINT"> and 
-    timeSheet.bugID = <cfqueryparam value="#url.bugID#" CFSQLType="CF_SQL_TINYINT">
+    timeSheet.timeSheetID = <cfqueryparam value="#url.timeID#" CFSQLType="CF_SQL_TINYINT">
 </cfquery>
 <cfquery name="getStatus" datasource="#Application.dataSourceName#">
     select * from status where statusID=4 or statusID=3 or statusID=5 or statusID=7

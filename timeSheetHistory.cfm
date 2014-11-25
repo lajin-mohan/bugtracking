@@ -89,7 +89,7 @@
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>  
-                                            <td><a href="editUserTimeSheet.cfm?bugID=#getdetails.bugID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
+                                            <td><a href="editUserTimeSheet.cfm?timeID=#getdetails.timeSheetID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
                                             <td><a href="deleteRecord.cfm?timesheetbugID=#getdetails.bugID#&timeID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td>
                                         </tr>
                                     </cfoutput>
