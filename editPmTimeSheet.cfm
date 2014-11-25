@@ -13,8 +13,8 @@
     inner join projects on projects.projectID=timeSheet.projectID 
     and timeSheet.userID=
     <cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/>
-    and timeSheet.projectID=
-    <cfqueryparam value="#url.pid#" cfsqltype="cf_sql_tinyint"/>
+    and timeSheet.timeSheetID=
+    <cfqueryparam value="#url.TimeSheetID#" cfsqltype="cf_sql_tinyint"/>
 </cfquery>
 <cfquery name="getbugs" datasource="#Application.dataSourceName#">
     select bugs.bugName,bugs.bugID from bugs inner join bugUsers on

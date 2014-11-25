@@ -97,8 +97,7 @@
                                                 <td>#workingHour#</td>
                                                 <td>#productiveHours#</td>
                                                 <td>#name#</td>  
-                                                <td>
-                                                    <a href="editPmTimeSheet.cfm?pid=#getdetails.projectID#"
+                                                <td><a href="editPmTimeSheet.cfm?TimeSheetID=#getdetails.timeSheetID#" 
                                                        class="btn  btn-mini btn-primary">
                                                         <i class="icon-edit"></i>
                                                     </a>&nbsp;&nbsp;

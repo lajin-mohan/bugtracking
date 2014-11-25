@@ -30,7 +30,7 @@
             inner join bugs on timeSheet.bugID=bugs.bugID 
             inner join projects on projects.projectID=bugs.projectID 
             inner join status on timeSheet.statusID=status.statusID 
-            inner join users on timeSheet.userID=users.userID and 
+            inner join users on timeSheet.userID=users.userID and timeSheet.hide=0 and
             users.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> 
             order by timeSheet.dateTime desc
         </cfquery>
@@ -47,7 +47,7 @@
             inner join bugs on timeSheet.bugID=bugs.bugID 
             inner join projects on projects.projectID=bugs.projectID
             inner join status on timeSheet.statusID=status.statusID
-            inner join users on timeSheet.userID=users.userID and 
+            inner join users on timeSheet.userID=users.userID and timeSheet.hide=0 and
             users.userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and                                         timeSheet.dateTime between "#fromDate#" and "#toDate#"
         </cfquery>
         <cfreturn selectBugOnDate>
