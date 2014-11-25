@@ -4,19 +4,18 @@
             Author: CF Freshers 2014
 --->
 <cfobject name="obj" component="components.user">
-<cfquery name="selectDetails" datasource="bugTracking">
-select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,bugs.bugName,status.statusID,bugs.bugID from timeSheet 
+<cfquery name="selectDetails" datasource="#Application.dataSourceName#">
+select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.workingHour,timeSheet.productiveHours,status.name,status.statusID,timeSheet.projectID,timeSheet.timeSheetID from timeSheet 
     inner join status on timeSheet.statusID=status.statusID 
     inner join projectUsers on timeSheet.userID=projectUsers.userID 
-    inner join projects on projects.projectID=timeSheet.projectID 
-    inner join bugs on timeSheet.bugID=bugs.bugID and 
+    inner join projects on projects.projectID=timeSheet.projectID and 
     timeSheet.userID="#session.userID#" and 
-   timeSheet.bugID="#url.bugID#" and timeSheet.projectID="#url.pid#"
+   timeSheet.timeSheetID="#url.pltimeSheetID#" and timeSheet.projectID="#url.pid#"
 </cfquery>
-<cfquery name="getbugs" datasource="bugTracking">
-     select bugs.bugName,bugs.bugID from bugs inner join bugUsers on bugs.bugID=bugUsers.bugID and bugUsers.userID="#session.userID#" 
+<cfquery name="getbugs" datasource="#Application.dataSourceName#">
+          select bugs.bugName,bugs.bugID,timeSheet.timeSheetID from bugs,timeSheet where timeSheet.bugID=bugs.bugID and timeSheet.projectID="#selectDetails.projectID#" and timeSheet.userID="#session.userID#" and timeSheet.timeSheetID="#selectDetails.timeSheetID#"
 </cfquery>
-<cfquery name="getStatus" datasource="bugTracking">
+<cfquery name="getStatus" datasource="#Application.dataSourceName#">
     select * from status where statusID=4 or statusID=3 or statusID=5 or statusID=7
 </cfquery>
     
@@ -54,11 +53,15 @@ select timeSheet.dateTime,projects.projectName,timeSheet.description,timeSheet.w
                                      <div class="control-group">
 				                          <label class="control-label">Bug</label>
 				                        <div class="controls">
-					                       <cfoutput> <input type="textarea" name="description" data-required="1" class="span6 m-wrap" value="#selectDetails.bugName#" disabled></cfoutput>
+                                            <cfoutput><cfif getbugs.RecordCount neq 0>
+					                           <cfoutput> <input type="textarea" name="description" data-required="1" class="span6 m-wrap" value="#getbugs.bugName#" disabled></cfoutput>
+                                                <cfelse>
+                                                    <cfoutput> <input type="textarea" name="description" data-required="1" class="span6 m-wrap" value="----" disabled></cfoutput>
+                                            </cfif></cfoutput>
 				                        </div><!--- close of control-label --->
                                         
                               <div class="muted pull-right">         
-                                  <a href="http://localhost/bugTracking/timeSheetHistory.cfm" class="btn btn-default btn-primary " style="display:inline">View Time Sheet</a></div></div>
+                                  <a href="plTimeSheetHistory.cfm" class="btn btn-default btn-primary " style="display:inline">View Time Sheet</a></div></div>
 			                       <!--- close of control-group --->
                                       <div class="control-group">
 				                        <label class="control-label">Project<span class="required">*</span></label>

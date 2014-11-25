@@ -1,7 +1,7 @@
 
 <cfdocument format="PDF">
    <cfoutput>
-       <cfquery name="getbugID" datasource="bugTracking">
+       <cfquery name="getbugID" datasource="#Application.dataSourceName#">
         select projectID from projectUsers where userID=#session.userID# and isLead=1 and hide=0
        </cfquery>
        
@@ -25,8 +25,8 @@
                                 
                                    </tr>
                          <cfloop query="getbugID">
-                            <cfquery name="selectData" datasource="bugTracking">
-                               select u.userName name,u.userID id,p.projectName, 
+                            <cfquery name="selectData" datasource="#Application.dataSourceName#">
+                               select u.firstName name,u.userID id,p.projectName, 
                                p.projectID pid,designations.name
                                from users u inner join projectUsers pu 
                                inner join projects p inner join designations

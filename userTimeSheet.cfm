@@ -38,71 +38,68 @@
                                      <div class="control-group">
                                          <label class="control-label">Bug<span class="required">*</span></label>
 				                         <div class="controls">
-                                         <select name="bug" required> 
-                                             <cfinvoke component="components.timeSheet" method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
-                                             <option value="0">Select Bugs</option>
-                                             <cfloop query="getdetails">
-                                             <cfoutput><option value="#bugID#">#bugName#</option>                                                </cfoutput>
-                                             </cfloop>
+                                             <select name="bug" required> 
+                                                <cfinvoke component="components.timeSheet" 
+                                                      method="selectUserBugs" returnVariable="getdetails"></cfinvoke>
+                                                 <option value="0">Select Bugs</option>
+                                                 <cfloop query="getdetails">
+                                                    <cfoutput><option value="#bugID#">#bugName#</option>                                                                         </cfoutput>
+                                                 </cfloop>
                                              </select><span style="display:none;color:red" class="sp">Required</span>
-                              <div class="muted pull-right">         
-                                  <a href="timeSheetHistory.cfm" class="btn btn-default btn-primary" style="display:inline">View Time Sheet</a></div></div>
-			                        </div><!--- close of control-group --->
+                                        <div class="muted pull-right">         
+                                            <a href="timeSheetHistory.cfm" 
+                                            class="btn btn-default btn-primary" style="display:inline">View Time Sheet
+                                            </a></div></div>
+			                            </div>
 			                        <div class="control-group">
 				                        <label class="control-label">Bug Description<span class="required">*</span></label>
 				                        <div class="controls">
-					                        <input type="textarea" name="description" data-required="1" class="span6 m-wrap" required>
-				                        </div><!--- close of control-label --->
-			                        </div><!--- close of control-group --->
+					                        <input type="textarea" name="description" data-required="1" 
+                                                   class="span6 m-wrap" required>
+				                        </div>
+			                        </div>
 			                        <div class="control-group">
 				                        <label class="control-label">Hours Worked<span class="required">*</span></label>
-				                    <div class="controls">
-					               <input name="hours" type="number" class="span6 m-wrap" required>
-                                           
-				                        </div><!--- close of control-label --->
-			                        </div><!--- close of control-group --->
-			                         <div class="control-group">
-				                     <label class="control-label">Productive Hours<span class="required">*</span></label>
-				                        <div class="controls">
-					                       
-                                    <input name="productiveHours" type="number" class="span6 m-wrap" required>
-				                        </div><!--- close of control-label --->
-			                        </div><!--- close of control-group ---> 
-                                      <div class="control-group">
+                                        <div class="controls">
+                                            <input name="hours" type="number" class="span6 m-wrap" required>
+                                        </div>
+			                        </div>
+			                        <div class="control-group">
+				                        <label class="control-label">Productive Hours<span class="required">*</span></label>
+				                            <div class="controls">
+                                                <input name="productiveHours" type="number" class="span6 m-wrap" required>
+                                            </div>
+                                    </div>
+                                    <div class="control-group">
 				                        <label class="control-label">Date<span class="required">*</span></label>
 				                        <div class="controls">
-					                       
                                             <input name="editedDate" type="date" class="txtdate span6 m-wrap" required/>
-				                        </div><!--- close of control-label --->
-			                        </div><!--- close of control-group ---> 
-				                       <div class="control-group">
+				                        </div>
+			                        </div>
+                                    <div class="control-group">
 				                        <label class="control-label">Status<span class="required">*</span></label>
 				                        <div class="controls">
-					                       
-                                         <select name="status" required> 
-                                                                                                                                                <option value="0">Select Status</option>
-                                             <option value="4">Ongoing</option>
-                                             <option value="3">Pending</option>
-                                             <option value="5">Testing</option>
-                                             <option value="7">Completed</option>
+                                            <select name="status" required> 
+                                                <option value="0">Select Status</option>
+                                                <option value="4">Ongoing</option>
+                                                <option value="3">Pending</option>
+                                                <option value="5">Testing</option>
+                                                <option value="7">Completed</option>
                                             </select><span style="display:none;color:red" class="sp">Required</span>
-                                           </div>
-                          
-			                        </div><!--- close of control-group --->
-			                    	                    
-			                        <div class="form-actions">
+                                        </div>
+                                    </div>
+			                    	<div class="form-actions">
 				                        <input type="submit" class="btn btn-primary" name="submit" value="Submit">
-				                       
-			                        </div><!--- close of form-actions --->
-		                        </fieldset><!--- close of fieldset --->
-	                        </form><!--- close of fieldset --->
-                	    </div><!--- close of span12 --->
-                	</div><!--- close of block-content collapse in --->
-                </div><!--- close of block --->
-            </div><!--- close of row-fluid --->
-        </div><!--- close of span9 --->
-    </div><!--- close of row-fluid --->
-</div><!--- close of container-fluid --->
+                                    </div>
+                                </fieldset>
+	                        </form>
+                	    </div>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <cfif isDefined('form.submit')>
     <cfif #form.bug# neq 0 and #form.status# neq 0>
     <cfoutput>#addDetails.addTimeSheet()#</cfoutput>

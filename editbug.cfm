@@ -1,19 +1,19 @@
-<cfquery name="sample" datasource="bugTracking">
+<cfquery name="sample" datasource="#Application.dataSourceName#">
     select b.bugID, b.bugName, b.bugDescription, b.estimatedstartDate, b.actualStartDate, 
     b.estimatedEndDate, b.actualEndDate, b.statusID as sid, b.severityID as seid, 
     b.priorityID as pid, s.name as sname, p.name as pname, se.name as sename, b.projectID as prid, 
     proj.projectName as prname  from bugs as b inner join priorities as p inner join status as s 
     inner join severities as se inner join projects as proj on b.priorityID=p.priorityID and 
     b.projectID=proj.projectID and b.statusID=s.statusID and b.severityID=se.severityID and 
-    b.bugID=#url.bgid# order by b.bugName asc;
+    b.bugID=<cfqueryparam value="#url.bgid#" cfsqltype="cf_sql_tinyint"/> order by b.bugName asc;
 </cfquery>
-<cfquery name="bugviewmember" datasource="bugTracking">
-    select u.userID as uID, u.userName as uname  from bugUsers as bu 
-    inner join users as u  on  bu.bugId=#url.bgid# and bu.userID=u.userID;
+<cfquery name="bugviewmember" datasource="#Application.dataSourceName#">
+    select u.userID as uID, u.firstName as fname  from bugUsers as bu 
+    inner join users as u  on  bu.bugId=<cfqueryparam value="#url.bgid#" cfsqltype="cf_sql_tinyint"/> and bu.userID=u.userID;
 </cfquery>
-<cfquery name="bugaddmember" datasource="bugTracking">
-    select pu.userID, u.userName as uname, pu.hide as phide from projectUsers as pu 
-    inner join users as u on pu.isLead=0 and pu.projectId=#url.p# and pu.userID=u.userID;
+<cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
+    select pu.userID, u.firstName as fname, pu.hide as phide from projectUsers as pu 
+    inner join users as u on pu.isLead=0 and pu.projectId=<cfqueryparam value="#url.p#" cfsqltype="cf_sql_tinyint"/> and pu.userID=u.userID;
 </cfquery>
 <script>
     function checkDate() {
@@ -76,13 +76,18 @@
                 </div>
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
+                        <cfoutput>
+                       <div class="muted pull-left">
+                        <h3>Edit Bug Details</h3>
+                      </div>
+                        </cfoutput>
                         <div class="muted pull-left"></div>
                     </div>
+                    <br> <br>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <legend>Edit Bug Details</legend>
                             <cfoutput>
-                                <form action="editbug.cfm?bgid=#url.bgid#&p=#url.p#" class="form-horizontal" method="post" onsubmit="return checkDate()">
+                                <form action="editbug.cfm?bgid=#url.bgid#&p=#url.p#" class="form-horizontal" method="post"                                                          onsubmit="return checkDate()">
                                     <fieldset>
                                         <div class="alert alert-error hide">
                                             <button class="close" data-dismiss="alert"></button>
@@ -96,58 +101,56 @@
                                         <div class="control-group">
                                             <label class="control-label">Bug Name:</label>
                                             <div class="controls">
-                                                <input type="text" name="bname" data-required="1" class="span6 m-wrap" value="#sample.bugName#" required/>
+                                                <input type="text" name="bname" data-required="1" class="span6 m-wrap"                                                                          value="#sample.bugName#" required/>
                                             </div>
                                         </div>
                                          <div class="control-group">
 				                        <label class="control-label">
                                             Project Member Name:
-                                         
                                         </label>
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="teamMemberID">
                                             <cfset loopName0= #bugaddmember#>
-                                                    <option value="0">#bugviewmember.uname#</option>
+                                                    <option value="0">#bugviewmember.fname#</option>
                                             <cfloop query="loopName0">
                                                 <cfoutput>
-                                                <cfif (loopname0.uname neq bugviewmember.uname) and (phide eq 0)> 
-                                                    <option value="#loopName0.userID#">#loopName0.uname#</option>
+                                                <cfif (loopname0.fname neq bugviewmember.fname) and (phide eq 0)> 
+                                                    <option value="#loopName0.userID#">#loopName0.fname#</option>
                                                 </cfif>
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
 				                        </div>
 			                        </div>
-                                        
                                           <div class="control-group">
                                             <label class="control-label">Bug Description:</label>
                                             <div class="controls">
-                                                <input type="text" name="bugdes" data-required="1" class="span6 m-wrap" value="#sample.bugDescription#" required/>
+                                                <input type="text" name="bugdes" data-required="1" class="span6 m-wrap"                                                                                     value="#sample.bugDescription#" required/>
                                             </div>
                                         </div>
                                         
                                            <div class="control-group">
                                             <label class="control-label">Project Name:</label>
                                             <div class="controls">
-                                                <input type="text" name="projectname" data-required="1" class="span6 m-wrap"  disabled value="#sample.prname#"/>
+                                                <input type="text" name="projectname" data-required="1" class="span6 m-wrap"                                                                     disabled  value="#sample.prname#"/>
                                             </div>
                                         </div>
                                              <div class="control-group">
                                             <label class="control-label">Estimated Start Date:</label>
                                             <div class="controls">
-                                                <input name="esd" type="date" class="span6 m-wrap" disabled value="#dateformat(sample.estimatedStartDate)#"/>              									
+                                                <input name="esd" type="date" class="span6 m-wrap" disabled                                                                                                     value="#dateformat(sample.estimatedStartDate)#"/> 
                                             </div>
                                         </div>
                                              <div class="control-group">
                                             <label class="control-label">Actual Start Date:</label>
                                             <div class="controls">
-                                                <input name="asd" type="date" class="txtdate span6 m-wrap"  value="#dateformat(sample.actualStartDate)#"/>              									
+                                                <input name="asd" type="date" class="txtdate span6 m-wrap"                                                                                                      value="#dateformat(sample.actualStartDate)#"/>
                                             </div>
                                         </div>
                                           <div class="control-group">
                                             <label class="control-label">Estimated End Date:</label>
                                             <div class="controls">
-                                                <input name="eed" type="date" class="span6 m-wrap" disabled value="#dateformat(sample.estimatedEndDate)#"/>              									
+                                                <input name="eed" type="date" class="span6 m-wrap" disabled                                                                                                 value="#dateformat(sample.estimatedEndDate)#"/>              									
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -157,7 +160,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="priorityID">
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
-                                                    <option value="sample.pid">#sample.pname#</option>
+                                                    <option value="#sample.pid#">#sample.pname#</option>
                                             <cfloop query="loopName2">
                                                 <cfoutput>
                                                 <cfif loopName2.priorityID neq sample.pid>
@@ -175,7 +178,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="severityID">
                                             <cfset loopName3= #addUserObject.getDesignation("severities")#>
-                                                    <option value="sample.seid">#sample.sename#</option>
+                                                    <option value="#sample.seid#">#sample.sename#</option>
                                             <cfloop query="loopName3">
                                                 <cfoutput>
                                                 <cfif loopName3.severityID neq sample.seid>
@@ -193,7 +196,7 @@
 				                        <div class="controls">
 					                        <select class="span6 m-wrap" name="statusID">
                                             <cfset loopName4= #addUserObject.getDesignation("status")#>
-                                                    <option value="sample.sid">#sample.sname#</option>
+                                                    <option value="#sample.sid#">#sample.sname#</option>
                                             <cfloop query="loopName4">
                                                 <cfoutput>
                                                 <cfif loopName4.statusID neq sample.sid>
@@ -203,21 +206,21 @@
                                             </cfloop>
 					                        </select>
 				                        </div>
-			                        </div>
+			                        </div> <br>
                                              <div class="form-actions">
                                             <input  type="submit" class="btn btn-primary" name="save" value="Save" />
-                                                 <a href="bugview.cfm?bid=#url.bgid#"><button type="button" class="btn">Cancel</button></a>
+                                                 <a href="bugview.cfm?bid=#url.bgid#"><button type="button"                                                                                  class="btn">Cancel</button></a>
                                         </div>
                                           <div class="control-group" style="visibility:hidden">
                                             <label class="control-label">Estimated End Date:</label>
                                             <div class="controls">
-                                                <input name="aed" type="text" class=" txtdate2 span6 m-wrap" value="#lsdateformat(sample.estimatedEndDate,'mm/dd/yyyy')#"/>              									
+                                                <input name="aed" type="text" class=" txtdate2 span6 m-wrap"                                                                                            value="#lsdateformat(sample.estimatedEndDate,'mm/dd/yyyy')#"/>
                                             </div>
                                         </div>
                                     </fieldset>
-                                </form>
-                            </cfoutput>
-                            </div>
+                                  </form>
+                               </cfoutput>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -232,7 +235,7 @@
             <cfset check=#updateObject.bug("#sample.bugID#")#>
     </cfoutput>
     <cfif check> 
-        <cfquery name="bugusercheck" datasource="bugTracking" result="checkbuguser">
+        <cfquery name="bugusercheck" datasource="#Application.dataSourceName#" result="checkbuguser">
              select userID from bugUsers where bugID = #sample.bugID#;
         </cfquery>
         <cfif form.teamMemberID eq 0 >
@@ -240,21 +243,24 @@
         <cfelse>
              <cfset teamMemberID = "#form.teamMemberID#" />
         </cfif>           
+
         <cfquery name="getDetails" datasource="bugTracking" result=list> 
-            SELECT u.email as uemail, u.userName as uname,
+            SELECT u.email as uemail, u.firstName as fname,
+
+       
             p.projectName as pname from users as u 
             inner join projects p on u.userId=#teamMemberID#
-            and p.projectID=#url.p#;
+            and p.projectID=<cfqueryparam value="#url.p#" cfsqltype="cf_sql_tinyint"/>;
         </cfquery>
-        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-           SELECT  u.userName as username, d.name as dname 
-           from users u inner join designations d
-           on userID=#session.userID# and u.designationID=d.designationID; 
-        </cfquery>
-      
 
-       <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
-           <cfmailpart type="html">
+        <cfquery name="getcurrent" datasource="bugTracking" result=current> 
+           SELECT  u.firstName as fname, d.name as dname 
+
+           from users u inner join designations d
+           on userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
+        </cfquery>
+            <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
+            <cfmailpart type="html">
                 <html> 
                     <head> 
                         <style type="text/css"> 
@@ -266,31 +272,32 @@
                         </style>
                     </head>
                     <body>
-                        <p>Dear #getDetails.uname#,</p> <br><br>
+                        <p>Dear #getDetails.fname#,</p> <br><br>
                         bug #form.bname#  in your  project #getDetails.pname# edited
                         <br> <br>
                         <p>Email sent by </p>               
-                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.fname#</p>              
                         <p>#getcurrent.dname#</p>              
                     </body>
                 </html>
             </cfmailpart>                     
-        </cfmail>                                   
+        </cfmail>        
+
         <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
-            SELECT u.email as uemail, u.userName as uname,
+            SELECT u.email as uemail, u.firstName as fname,
+
             p.projectName as pname from users as u 
             inner join projects p on p.projectID=#url.p#
             and p.userID=u.userID ;
         </cfquery>
+
         <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-            SELECT  u.userName as username, d.name as dname 
+            SELECT  u.firstName as fname, d.name as dname 
+
             from users u inner join designations d
-            on userID=#session.userID# and u.designationID=d.designationID; 
+                on userID=<cfqueryparam value="#session.userID#" cfsqltype="cf_sql_tinyint"/> and u.designationID=d.designationID; 
         </cfquery>
-      
-
-       <cfmail from="#Session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
-
+            <cfmail from="#Session.email#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
            <cfmailpart type="html">
                <html> 
                    <head> 
@@ -303,11 +310,11 @@
                        </style>
                     </head>
                     <body>
-                       <p>Dear #getProjectManager.uname#,</p> <br><br>
+                       <p>Dear #getProjectManager.fname#,</p> <br><br>
                         A bug - "#form.bname#" has been edited in the project "#getDetails.pname#"
                        <br> <br>
                        <p>Email sent by </p>               
-                        <p>#getcurrent.username#</p>              
+                        <p>#getcurrent.fname#</p>              
                         <p>#getcurrent.dname#</p>              
                    </body>
                </html>
@@ -317,3 +324,4 @@
     </cfif>
 </cfif>
 <cfinclude template="layouts/footer.cfm" />
+                                    

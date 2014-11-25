@@ -1,10 +1,10 @@
 <!---
-            Bug Tracker - Project Details CFM
+Bug Tracker - Project Details CFM
             October 30, 2014
             Author: CF Freshers 2014
 --->
 
-<script>
+<cfscript>
     function checkDate() {
         var EnteredDate = $(".txtdate").val();
         var year = EnteredDate.substring(0, 4);
@@ -17,14 +17,9 @@
         var month2 = EnteredDate2.substring(5, 7);
         var date2 = EnteredDate2.substring(8, 10);
         var myDate2 = new Date(year2, month2-1, date2);
-        /*var EnteredDate = $("#txtdate").val();
-        var year = EnteredDate.substring(0, 4);
-        var month = EnteredDate.substring(5, 7);
-        var date = EnteredDate.substring(8, 10)+1;
-        var myDate = new Date(year, month-1, date);*/
+
+
         var today = new Date();
-        //alert(myDate);
-        //alert(today);
         if (myDate2 >= myDate) {
             return true;
         }
@@ -33,9 +28,11 @@
             return false;
         }
     }
-</script>     
+
+</cfscript>     
+
 <cfobject name="addUserObject" component="components.user">
-<cfinclude template="layouts/header.cfm"><!--- including header --->
+<cfinclude template="layouts/header.cfm" /><!--- including header --->
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive">
@@ -57,14 +54,15 @@
                         </div>
                     </div>
                 <div class="block">
-                    <div class="navbar navbar-inner block-header"></div>
-                    <div class="block-content collapse in">
+                    <div class="navbar navbar-inner block-header">
+                     <div class="muted pull-left">
+                        <center><h3>Add Bug Details</h3></center>
+                    </div>
+                    </div>
+                    <div class="block-content collapse in"> 
                         <div class="span12">
                             <form action=" " method="post" class="form-horizontal" onsubmit="return checkDate()">
                                 <fieldset>
-                                     
-                                    
-                                    <legend>Bug Details</legend>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
                                         You have some form errors. Please check below.
@@ -82,12 +80,11 @@
                                             <input type="text" name="bugName" data-required="1" class="span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    
-                                    <cfquery name="bugaddmember" datasource="bugTracking">
-                                        select pu.userID,u.userName as uname from projectUsers as pu 
-                                        inner join users as u on pu.projectId=#url.p# and pu.userID=u.userID;
-                                    </cfquery>
-                                                                     
+                                    <cfquery name="bugaddmember" datasource="#Application.dataSourceName#">
+                                        select pu.userID,u.firstName as uname from projectUsers as pu 
+                                        inner join users as u on pu.projectId=<cfqueryparam value="#url.p#" 
+                                        cfsqltype="cf_sql_tinyint"/> and pu.userID=u.userID;
+                                    </cfquery>                                                                     
                                      <div class="control-group">
 				                        <label class="control-label">
                                             Team Member
@@ -105,15 +102,13 @@
 					                        </select>
 				                        </div>
 			                        </div>
-                                    
-                                    
                                     <div class="control-group">
                                         <label class="control-label">
                                             Bug Description
                                             <span class="required">*</span>
                                         </label>
                                         <div class="controls">
-                                            <input type="text" name="bugDescription" data-required="1" class="span6 m-wrap" required/>
+                                            <input type="text" name="bugDescription" data-required="1" class="span6 m-wrap"                                                                 required/>
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -134,8 +129,6 @@
                                             <input name="estimatedEndDate" type="date" class="txtdate2 span6 m-wrap" required/>
                                         </div>
                                     </div>
-                                    
-                                   
                                     <div class="control-group">
                                         <label class="control-label">
                                             Bug Status
@@ -181,13 +174,13 @@
 			                        </div> <cfoutput>
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary" name="submit">Add Bug</button>
-                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn" name="cancel">Cancel</button></a>
+                                        <a href="bugDetails.cfm?pid=#url.p#"><button type="button" class="btn"                                                                 name="cancel">Cancel</button></a>
                                     </div></cfoutput>
                                 </fieldset>
                             </form>
                             <cfif structkeyexists(form,"submit")>
                                 <cfif len(trim(#form.bugName#)) and trim(#form.teamMemberID#)>
-                                  <cfquery name="Bug" datasource="bugTracking" result="insertbug">
+                                  <cfquery name="Bug" datasource="#Application.dataSourceName#" result="insertbug">
                                             insert into bugs(bugName, bugDescription, estimatedStartDate, 
                                             estimatedEndDate,statusID, 
                                             priorityID , severityID ,projectID,ownerID) values(
@@ -200,33 +193,32 @@
                                             <cfqueryparam value="#form.severityID#" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#LSParseNumber(url.p)#" cfsqltype="cf_sql_tinyint"/>,
                                             <cfqueryparam value="#Session.userID#" cfsqltype="cf_sql_tinyint"/>);
-                                        </cfquery>
-                                
-                                     <cfquery name="getbugID" datasource="bugTracking">
-                                    select bugID from bugs where bugName="#form.bugName#";
-                                </cfquery>
-                                  <cfquery name="insertbuguser" datasource="bugTracking" result="insertbuser">
+                                        </cfquery>                                
+                                 <cfquery name="getbugID" datasource="#Application.dataSourceName#">
+                                    select bugID from bugs where bugName="#form.bugName#" and projectID=#url.p#;
+                                 </cfquery>
+                                  <cfquery name="insertbuguser" datasource="#Application.dataSourceName#" result="insertbuser">
                                    insert into bugUsers(bugID,userID) values (
                                       <cfqueryparam value="#getbugID.bugID#" cfsqltype="cf_sql_tinyint"/>,
                                       <cfqueryparam value="#form.teamMemberID#" cfsqltype="cf_sql_tinyint"/> );
                                 </cfquery>
                                 <cfif insertbug.recordcount eq 1 and insertbuser.recordcount eq 1 >
-                                    <cfquery name="getDetails" datasource="bugTracking" result=list>
+                                    <cfquery name="getDetails" datasource="#Application.dataSourceName#" result=list>
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as fname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p
                                         on u.userId=#form.teamMemberID#
                                         and p.projectID=#url.p#;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-                                        SELECT  u.userName as username,
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
+                                        SELECT  u.firstName as fname,
                                         d.name as dname from users u
                                         inner join designations d
                                         on userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="#Session.userID#" to="#getDetails.uemail#" subject="Add_bug" type="html">
+                                    <cfmail from="#Session.email#" to="#getDetails.uemail#" subject="Add_bug" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -239,31 +231,31 @@
                                                     </style>
                                                 </head>
                                                 <body>
-                                                    <p>Dear #getDetails.uname#,</p> <br><br>
-                                                        Added a new bug - "#form.bugName#" to your project "                                                        #getDetails.pname#"
+                                                    <p>Dear #getDetails.fname#,</p> <br><br>
+                                                        Added a new bug - "#form.bugName#" to your project " #getDetails.pname#"
                                                       <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.fname#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
                                         </cfmailpart>                     
                                     </cfmail>                                 
-                                    <cfquery name="getProjectManager" datasource="bugTracking" result=manager> 
+                                    <cfquery name="getProjectManager" datasource="#Application.dataSourceName#" result=manager> 
                                         SELECT u.email as uemail,
-                                        u.userName as uname,
+                                        u.firstName as fname,
                                         p.projectName as pname 
                                         from users as u 
                                         inner join projects p on    
                                         p.projectID=#url.p# and
                                         p.userID=u.userID ;
                                     </cfquery>
-                                    <cfquery name="getcurrent" datasource="bugTracking" result=current> 
-                                        SELECT  u.userName as username, d.name as dname 
+                                    <cfquery name="getcurrent" datasource="#Application.dataSourceName#" result=current> 
+                                        SELECT  u.firstName as fname, d.name as dname 
                                         from users u inner join designations d on 
                                         userID=#session.userID# and u.designationID=d.designationID; 
                                     </cfquery>
-                                    <cfmail from="#Session.userID#" to="#getProjectManager.uemail#" subject="Add_bug_projectManager" type="html">
+                                    <cfmail from="#Session.email#" to="#getProjectManager.uemail#"                                                                             subject="Add_bug_projectManager" type="html">
                                         <cfmailpart type="html">
                                             <html> 
                                                 <head> 
@@ -276,20 +268,19 @@
                                                     </style>
                                                 </head>
                                                 <body>
-                                                    <p>Dear #getProjectManager.uname#,</p> <br><br>
+                                                    <p>Dear #getProjectManager.fname#,</p> <br><br>
                                                         A new bug - "#form.bugName#" has been added to 
                                                         the project "#getDetails.pname#"
                                                         <br> <br>
                                                     <p>Email sent by </p>               
-                                                    <p>#getcurrent.username#</p>              
+                                                    <p>#getcurrent.fname#</p>              
                                                     <p>#getcurrent.dname#</p>              
                                                 </body>
                                             </html>
                                     </cfmailpart>                     
-                                 </cfmail>
-  
+                                 </cfmail>  
                                  <cflocation url="bugDetails.cfm?pid=#url.p#" addtoken="false"/>
-                                 </cfif>        
+                                   </cfif>        
                                 </cfif>
                             </cfif>
                         </div>
@@ -300,3 +291,4 @@
     </div><!--- close of row-fluid --->
 </div><!--- close of container-fluid --->
 <cfinclude template="layouts/footer.cfm"><!--- including footer --->
+

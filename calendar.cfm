@@ -6,25 +6,25 @@
 
 <!DOCTYPE html>
 <html>
-    
     <head>
         <title>Calendar</title>
-        <!-- Bootstrap -->
+        <!--- Bootstrap --->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="vendors/fullcalendar/fullcalendar.css" rel="stylesheet" media="screen">
         <link href="assets/styles.css" rel="stylesheet" media="screen">
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
+        <!--- HTML5 shim, for IE6-8 support of HTML5 elements --->
+        <!---[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <![endif]--->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    </head>
-    
+    </head>    
     <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <a class="btn btn-navbar"
+                       data-toggle="collapse"
+                       data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -33,12 +33,27 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i><cfoutput>&nbsp;#Session.userName#</cfoutput><i class="caret"></i>
+                                <a href=" "
+                                   role="button"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown">
+                                    <i class="icon-user">
+                                    </i>
+                                    <cfoutput>
+                                        &nbsp;
+                                        #Session.firstName#
+                                    </cfoutput>
+                                    <i class="caret">
+                                    </i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <cfoutput><a tabindex="-1" href="userView.cfm?userID=#Session.userID#">Profile</a></cfoutput>
+                                        <cfoutput>
+                                            <a tabindex="-1"
+                                               href="userView.cfm?userID=#Session.userID#">
+                                                Profile
+                                            </a>
+                                        </cfoutput>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
@@ -52,95 +67,167 @@
                                 <a href="projectManager.cfm">Bug Tracker</a>
                             </li>
                         </ul>
-                    </div><!--- close of nav-collapse --->
-                </div><!--- close of container-fluid --->
-            </div><!--- close of navbar-inner --->
-        </div><!--- close of navbar navbar-fixed-top --->
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span3" id="sidebar"><!--- sidebar for software engineer --->
+            <div class="span3" id="sidebar">
                 <cfoutput>
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">        
-                    <cfif Session.roleID eq 1>
-                        <li class="inactive">
-                            <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu2#"><i class="icon-chevron-right"></i>Projects</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                        </li>
-                        <li class="active">
-                            <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Employees</a>
-                        </li>
-                        <li class="inactive">
-                            <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                        </li>
-                        <cfelseif Session.roleID eq 2>
+                        <cfif Session.roleID eq 1>
                             <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
+                                <a href="#Session.menu1#">
+                                    <i class="icon-chevron-right"></i>
+                                    Home
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Projects</a>
+                                <a href="#Session.menu2#">
+                                    <i class="icon-chevron-right"></i>
+                                    Projects
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
+                                <a href="#Session.menu3#">
+                                    <i class="icon-chevron-right"></i>
+                                    Time Sheet
+                                    </a>
                             </li>
                             <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
+                                <a href="#Session.menu4#">
+                                    <i class="icon-chevron-right"></i>
+                                    Calendar
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
+                                <a href="#Session.menu5#">
+                                    <i class="icon-chevron-right"></i>
+                                    Employees
+                                </a>
                             </li>
                             <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
+                                <a href="#Session.menu6#">
+                                    <i class="icon-chevron-right"></i>
+                                    History
+                                </a>
                             </li>
-                        <cfelseif Session.roleID eq 3>
-                            <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Bugs</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                            </li>
-                            <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                            </li>
-                        <cfelseif Session.roleID eq 4>
-                            <li class="inactive">
-                                <a href="#Session.menu1#"><i class="icon-chevron-right"></i>Home</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu2#"><i class="icon-chevron-right"></i>My Projects</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu3#"><i class="icon-chevron-right"></i>Time Sheet</a>
-                            </li>
-                            <li class="active">
-                                <a href="#Session.menu4#"><i class="icon-chevron-right"></i>Calendar</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu5#"><i class="icon-chevron-right"></i>Team Members</a>
-                            </li>
-                            <li class="inactive">
-                                <a href="#Session.menu6#"><i class="icon-chevron-right"></i>History</a>
-                            </li>
-                    </cfif>
+                            <cfelseif Session.roleID eq 2>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Projects
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                            <cfelseif Session.roleID eq 3>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Bugs
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                            <cfelseif Session.roleID eq 4>
+                                <li class="inactive">
+                                    <a href="#Session.menu1#">
+                                        <i class="icon-chevron-right"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu2#">
+                                        <i class="icon-chevron-right"></i>
+                                        My Projects
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu3#">
+                                        <i class="icon-chevron-right"></i>
+                                        Time Sheet
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#Session.menu4#">
+                                        <i class="icon-chevron-right"></i>
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu5#">
+                                        <i class="icon-chevron-right"></i>
+                                        Team Members
+                                    </a>
+                                </li>
+                                <li class="inactive">
+                                    <a href="#Session.menu6#">
+                                        <i class="icon-chevron-right"></i>
+                                        History
+                                    </a>
+                                </li>
+                        </cfif>
                     </ul>
                 </cfoutput>
-            </div><!--- close of sidebar --->
+            </div>
             <cfif Session.roleID eq 1>
                     <div class="row-fluid">
                         <div class="span9" id="content">
@@ -151,7 +238,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                    <div class="fc-day-number"
+                         style="visibility:hidden"
+                         onload="return retrieveDate()"></div>
                 </div>
                 <hr/>
                 <footer>
@@ -200,47 +289,7 @@
                                         true // make the event "stick"
                                     );
                                     var dateString=String(start);
-                                    var year = dateString.substring(11, 15);
-                                    var monthName = dateString.substring(4, 7);
-                                    var day = dateString.substring(8, 10);
-                                    if(monthName="Jan"){
-                                        month=01;
-                                    }
-                                    if(monthName="Feb"){
-                                        month=02;
-                                    }
-                                    if(monthName="Mar"){
-                                        month=03;
-                                    }
-                                    if(monthName="Apr"){
-                                        month=04;
-                                    }
-                                    if(monthName="May"){
-                                        month=05;
-                                    }
-                                    if(monthName="Jun"){
-                                        month=06;
-                                    }
-                                    if(monthName="Jul"){
-                                        month=07;
-                                    }
-                                    if(monthName="Aug"){
-                                        month=08;
-                                    }
-                                    if(monthName="Sep"){
-                                        month=09;
-                                    }
-                                    if(monthName="Oct"){
-                                        month=10;
-                                    }
-                                    if(monthName="Nov"){
-                                        month=11;
-                                    }
-                                    if(monthName="Dec"){
-                                        month=12;
-                                    }
-                                    var date = new Date(year, month-2, day);
-                                    window.location.href = 'events.cfm?projectManager&name='+title+'&date='+date;
+                                    window.location.href='events.cfm?name='+title+'&date='+dateString;
                                 }
                                 $('#calendar').fullCalendar('unselect');
                             },
@@ -262,7 +311,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                        <div class="fc-day-number"
+                             style="visibility:hidden"
+                             onload="return retrieveDate()"></div>
                     </div>
                     <hr/>
                     <footer>
@@ -311,47 +362,7 @@
                                             true // make the event "stick"
                                         );
                                         var dateString=String(start);
-                                        var year = dateString.substring(11, 15);
-                                        var monthName = dateString.substring(4, 7);
-                                        var day = dateString.substring(8, 10);
-                                        if(monthName="Jan"){
-                                            month=01;
-                                        }
-                                        if(monthName="Feb"){
-                                            month=02;
-                                        }
-                                        if(monthName="Mar"){
-                                            month=03;
-                                        }
-                                        if(monthName="Apr"){
-                                            month=04;
-                                        }
-                                        if(monthName="May"){
-                                            month=05;
-                                        }
-                                        if(monthName="Jun"){
-                                            month=06;
-                                        }
-                                        if(monthName="Jul"){
-                                            month=07;
-                                        }
-                                        if(monthName="Aug"){
-                                            month=08;
-                                        }
-                                        if(monthName="Sep"){
-                                            month=09;
-                                        }
-                                        if(monthName="Oct"){
-                                            month=10;
-                                        }
-                                        if(monthName="Nov"){
-                                            month=11;
-                                        }
-                                        if(monthName="Dec"){
-                                            month=12;
-                                        }
-                                        var date = new Date(year, month-2, day);
-                                        window.location.href = 'events.cfm?name='+title+'&date='+date;
+                                        window.location.href='events.cfm?name='+title+'&date='+dateString;
                                     }
                                     $('#calendar').fullCalendar('unselect');
                                 },
@@ -373,7 +384,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                            <div class="fc-day-number"
+                                 style="visibility:hidden"
+                                 onload="return retrieveDate()"></div>
                         </div>
                         <hr/>
                         <footer>
@@ -422,47 +435,7 @@
                                                 true // make the event "stick"
                                             );
                                             var dateString=String(start);
-                                            var year = dateString.substring(11, 15);
-                                            var monthName = dateString.substring(4, 7);
-                                            var day = dateString.substring(8, 10);
-                                            if(monthName="Jan"){
-                                                month=01;
-                                            }
-                                            if(monthName="Feb"){
-                                                month=02;
-                                            }
-                                            if(monthName="Mar"){
-                                                month=03;
-                                            }
-                                            if(monthName="Apr"){
-                                                month=04;
-                                            }
-                                            if(monthName="May"){
-                                                month=05;
-                                            }
-                                            if(monthName="Jun"){
-                                                month=06;
-                                            }
-                                            if(monthName="Jul"){
-                                                month=07;
-                                            }
-                                            if(monthName="Aug"){
-                                                month=08;
-                                            }
-                                            if(monthName="Sep"){
-                                                month=09;
-                                            }
-                                            if(monthName="Oct"){
-                                                month=10;
-                                            }
-                                            if(monthName="Nov"){
-                                                month=11;
-                                            }
-                                            if(monthName="Dec"){
-                                                month=12;
-                                            }
-                                            var date = new Date(year, month-2, day);
-                                            window.location.href = 'events.cfm?name='+title+'&date='+date;
+                                            window.location.href='events.cfm?name='+title+'&date='+dateString;
                                         }
                                         $('#calendar').fullCalendar('unselect');
                                     },
@@ -484,7 +457,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="fc-day-number" style="visibility:hidden" onload="return retrieveDate()"></div>
+                            <div class="fc-day-number"
+                                 style="visibility:hidden"
+                                 onload="return retrieveDate()"></div>
                         </div>
                         <hr/>
                         <footer>
@@ -533,47 +508,7 @@
                                                 true // make the event "stick"
                                             );
                                             var dateString=String(start);
-                                            var year = dateString.substring(11, 15);
-                                            var monthName = dateString.substring(4, 7);
-                                            var day = dateString.substring(8, 10);
-                                            if(monthName="Jan"){
-                                                month=01;
-                                            }
-                                            if(monthName="Feb"){
-                                                month=02;
-                                            }
-                                            if(monthName="Mar"){
-                                                month=03;
-                                            }
-                                            if(monthName="Apr"){
-                                                month=04;
-                                            }
-                                            if(monthName="May"){
-                                                month=05;
-                                            }
-                                            if(monthName="Jun"){
-                                                month=06;
-                                            }
-                                            if(monthName="Jul"){
-                                                month=07;
-                                            }
-                                            if(monthName="Aug"){
-                                                month=08;
-                                            }
-                                            if(monthName="Sep"){
-                                                month=09;
-                                            }
-                                            if(monthName="Oct"){
-                                                month=10;
-                                            }
-                                            if(monthName="Nov"){
-                                                month=11;
-                                            }
-                                            if(monthName="Dec"){
-                                                month=12;
-                                            }
-                                            var date = new Date(year, month-2, day);
-                                            window.location.href = 'events.cfm?projectManager&name='+title+'&date='+date;
+                                            window.location.href='events.cfm?name='+title+'&date='+dateString;
                                         }
                                         $('#calendar').fullCalendar('unselect');
                                     },

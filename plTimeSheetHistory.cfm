@@ -24,10 +24,10 @@
 				                    <form action="plTimeSheetHistory.cfm" method="post">
 				                        <div class="controls">
                                     <select name="project"> 
-                                            <cfquery name="selectProject" datasource="bugTracking">
+                                            <cfquery name="selectProject" datasource="#Application.dataSourceName#">
                                                 select projects.projectName,projects.projectID from projects inner join projectUsers on projectUsers.projectID=projects.projectID and projectUsers.userID="#session.userID#" 
                                              </cfquery>
-                                             <option>Projects</option>
+                                             <option>Select Project</option>
                                              <cfloop query="selectProject">
                                              <cfoutput><option value="#projectID#">#projectName#</option></cfoutput>
                                              </cfloop>
@@ -81,7 +81,7 @@
                                 
                             <cfif #getdetails.RecordCount# GT 0>
                                 <cfloop query="getdetails">
-                                     <cfquery name="bug" datasource="bugTracking">
+                                     <cfquery name="bug" datasource="#Application.dataSourceName#">
                                    select bugs.bugName,bugs.bugID,timeSheet.timeSheetID from bugs,timeSheet where timeSheet.bugID=bugs.bugID and timeSheet.projectID="#getdetails.projectID#" and timeSheet.userID="#session.userID#" and timeSheet.timeSheetID="#getdetails.timeSheetID#"
                                </cfquery>
                                     <cfoutput>
@@ -97,8 +97,8 @@
                                             <td>#workingHour#</td>
                                             <td>#productiveHours#</td>
                                             <td>#name#</td>    
-                                        <td><a href="editPlTimeSheet.cfm?bugID=#bug.bugID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
-                                            <td><a href="deleteRecord.cfm?pltimesheetbID=#bug.bugID#&pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
+                                        <td><a href="editPlTimeSheet.cfm?pltimeSheetID=#getdetails.timeSheetID#&pid=#getdetails.projectID#" class="btn  btn-mini btn-primary"><i class="icon-edit"></i></a>&nbsp;&nbsp;</td>
+                                            <td><a href="deleteRecord.cfm?pltimesheetprojectID=#getdetails.projectID#&pltimeSheetID=#getdetails.timeSheetID#" class="btn btn-mini btn-danger" onclick="return confirmDelete()"><i class="icon-remove"></i></a></td></tr>
                                     </cfoutput>
                                  </cfloop>
                                 <cfelse>
