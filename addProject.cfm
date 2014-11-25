@@ -3,7 +3,6 @@
             October 30, 2014
             Author: CF Freshers 2014
 --->
-
 <cfobject name="addUserObject" component="components.user"/>
 <cfinclude template="layouts/header.cfm"/><!---including header--->
 <div class="container-fluid">
@@ -36,7 +35,8 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form action="addProject.cfm" method="post" class="form-horizontal">
+                            <form action="addProject.cfm" method="post" class="form-horizontal" 
+                                  id="register-form" novalidate="novalidate">
                                 <!---form to add project--->
                                 <fieldset>
                                     <div class="alert alert-error hide">
@@ -95,6 +95,7 @@
                                         <div class="controls">
                                             <input type="text" value="Pending" class="span6 m-wrap" disabled/>
                                         </div>
+                                        
                                     </div>
                                     <div class="control-group">
 				                        <label class="control-label">
@@ -102,7 +103,7 @@
                                             <span class="required">*</span>
                                         </label>
 				                        <div class="controls">
-					                        <select class="span6 m-wrap" name="priorityID">
+					                        <select class="span6 m-wrap" name="priorityID" id="priorityID">
                                             <cfset loopName2= #addUserObject.getDesignation("priorities")#>
                                                     <option value="">Select.....</option>
                                             <cfloop query="loopName2">
@@ -113,6 +114,7 @@
                                                 </cfoutput>
                                             </cfloop>
 					                        </select>
+                                                 
 				                        </div>
 			                        </div>
                                     <div class="form-actions">
@@ -123,6 +125,7 @@
                                     </div>
                                 </fieldset>
                             </form>
+                               
                             <cfif structkeyexists(form,"submit")>
                                 <cfquery result="checkEmail" datasource="#Application.dataSourceName#">
                                     select projectName from projects where projectName=
