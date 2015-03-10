@@ -24,7 +24,7 @@ footer {
 </style>
         <footer>
             <hr>
-            <center><p>&copy;Techversant Infotech 2014</p></center>
+            <center><p>&copy;Techversant Infotech <cfoutput>#DateFormat(now(),"yyyy")#</cfoutput></p></center>
         </footer><!--- close of footer --->
     </body>
 </html>
