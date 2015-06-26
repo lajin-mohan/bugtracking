@@ -5,17 +5,19 @@
 --->
 
 <cfoutput>
-    <cfquery name="lead" datasource="bugtracking" result="l">
-        update projectUsers set islead=1 where userID=#url.userID#
+    <cfquery name="lead" datasource="#Application.dataSourceName#" result="l">
+        update projectUsers set islead=1 where 
+        userID = <cfqueryparam value='#url.userID#' CFSQLType='CF_SQL_TINYINT'>
     </cfquery>
-    <cfquery name="lead2" datasource="bugtracking" result="l2">
-        update projectUsers set islead=0 where userID!=#url.userID#
+    <cfquery name="lead2" datasource="#Application.dataSourceName#" result="l2">
+        update projectUsers set islead=0 where 
+        userID!=<cfqueryparam value='#url.userID#' CFSQLType='CF_SQL_TINYINT'>
     </cfquery>
     <cfif l.recordcount>
         <cfif isdefined('flag')>
             <cflocation url="editProject.cfm?projectID=#url.projectID#&flag" addtoken="false"/>
-            <cfelse>
-                <cflocation url="editProject.cfm?projectID=#url.projectID#" addtoken="false"/>
+        <cfelse>
+            <cflocation url="editProject.cfm?projectID=#url.projectID#" addtoken="false"/>
         </cfif>
     </cfif>
 </cfoutput>

@@ -3,21 +3,23 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <div class="container-fluid">
     <div class="row-fluid">
-        <cfset Session.highlight1="inactive">
-        <cfset Session.highlight2="inactive">
-        <cfset Session.highlight3="inactive">
-        <cfset Session.highlight4="active">
+        <cfset Session.highlight1="inactive"/>
+        <cfset Session.highlight2="inactive"/>
+        <cfset Session.highlight3="inactive"/>
+        <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="active"/>
         <cfinclude template="layouts/sidebar.cfm"><!--- including sidebar --->
 
         <div class="span9" id="content">
             <div class="row-fluid"> 
-                <div class="block"> <!-- block -->
+                <div class="block"> <!--- block --->
                     <div class="navbar navbar-inner block-header">
                         <div class="muted pull-left">Tester History</div>
                     </div>
                 <div class="block-content collapse in">
                     <div class="span12">
-		              <!-- BEGIN FORM-->
+		              <!--- BEGIN FORM--->
                     <form method="post" action="testerHistory.cfm"  class="form-horizontal">
                         <fieldset>
                             <div class="control-group">
@@ -58,15 +60,15 @@
                             </tr> 
                         </cfloop>        
                     </table>             
-		<!-- END FORM-->
+		<!--- END FORM--->
 		            </div>
 	            </div>
-                </div>  <!-- /block -->
+                </div>  <!--- /block --->
             </div>
         </div>                    	
     </div>
 </div>
-                     <!-- End of Add Project dtails -->
+                     <!--- End of Add Project dtails --->
     
 <cfinclude template="layouts/footer.cfm">   
 

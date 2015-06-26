@@ -1,9 +1,9 @@
  <cffunction name="bug" returnType="any">
         <cfargument name="tempbugID" >
-        <cfquery name="bugcheck" datasource="bugTracking" result="checkbug">
+        <cfquery name="bugcheck" datasource="#Application.dataSourceName#" result="checkbug">
             select * from bugs where bugID = "#tempbugID#";
         </cfquery>
-        <cfquery name="bugusercheck" datasource="bugTracking" result="checkbuguser">
+        <cfquery name="bugusercheck" datasource="#Application.dataSourceName#" result="checkbuguser">
             select userID from bugusers where bugID = "#tempbugID#";
         </cfquery>
            
@@ -33,7 +33,7 @@
             
             
         
-        <cfquery name="updatebug" datasource="bugTracking" result="updatedbug">
+        <cfquery name="updatebug" datasource="#Application.dataSourceName#" result="updatedbug">
             update bugs set
             bugName = <cfqueryparam value="#form.bname#" CFSQLType="CF_SQL_VARCHAR">,
             bugDescription = <cfqueryparam value="#form.bugdes#" CFSQLType="CF_SQL_VARCHAR">,
@@ -46,7 +46,7 @@
         </cfquery>
            
                 
-         <cfquery name="updatebugUser" datasource="bugTracking" result="updatedbuguser">
+         <cfquery name="updatebugUser" datasource="#Application.dataSourceName#" result="updatedbuguser">
             update bugusers set
             userID= <cfqueryparam value="#form.teamMemberID#" CFSQLType="CF_SQL_TINYINT" >  
            where bugID="#tempbugID#";

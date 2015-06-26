@@ -3,9 +3,11 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <cfset Session.highlight1="inactive"/>
-        <cfset Session.highlight2="active"/>
+        <cfset Session.highlight2="inactive"/>
         <cfset Session.highlight3="inactive"/>
         <cfset Session.highlight4="inactive"/>
+        <cfset Session.highlight5="inactive"/>
+        <cfset Session.highlight6="active"/>
         <cfinclude template="layouts/sidebar.cfm"/><!--- including sidebar --->
         <div class="span9" id="content">
             <div class="row-fluid">
@@ -22,13 +24,13 @@
                                         <label class="control-label">Bugs<span class="required"></span></label>
                                         <div class="controls">
                                             <select class="span6 m-wrap" name="category" id="slct">
-                                                <cfinvoke component="components.projectDetails" 
+                                                <cfinvoke component="components.projectDtls" 
                                                           method="selectStatus"  returnVariable="getdetails">
                                                 </cfinvoke> 
                                                 <option value="0">All</option>
                                                 <cfloop query="getdetails">
                                                     <cfif statusID eq 2 or statusID eq 6>
-                                                        <cfoutput><option value="#statusID#">#name#</option></cfoutput>
+                                                        <cfoutput><option value="#statusID#">#name#                                                     </option></cfoutput>
                                                     </cfif>
                                                 </cfloop>
                                             </select>
@@ -38,11 +40,38 @@
                                 </fieldset>
                             </form>
                             <cfif isDefined("form.category") and #form.category# GT 0>
-                                <cfinvoke component="components.projectDetails" 
-                                          method="bugStatus" value="#form.category#" returnVariable="getdetails">
+                                <cfinvoke component="components.projectDtls" 
+                                method="teamLeadProjectDetailsOnStatus" value="#form.category#"                                     returnVariable="getdetails">
                                 </cfinvoke>
                                 <cfelseif !isDefined("form.category") or #form.category# EQ 0>
-                                    <cfinvoke component="components.projectDetails" 
+                                    <cfinvoke component="components.projectDtls" 
+                                    method="teamLeadProjectDetails" returnVariable="getdetails">
+                                    </cfinvoke> 
+                            </cfif>
+                                 <table class="table table-bordered">
+                                <th><strong>Project</strong></th>
+                                <th><strong>Estimated Start Date</strong></th>
+                                <th><strong>Actual End Date</strong></th>
+                                <th><strong>Status</strong></th>
+                              
+                                <cfloop query="getdetails">
+                                    <tr>
+                                        <cfoutput>
+                                            <td><a href="projectBugs.cfm?projectID=#projectID#">#projectName#</a></td>
+                                            <td>#lsDateFormat(estimatedStartDate)#</td>
+                                            <td>#lsDateFormat(actualEndDate)#</td>
+                                            <td>#name#</td>
+                                          
+                                        </cfoutput>
+                                    </tr>
+                                </cfloop>
+                            </table>
+                            <!---<cfif isDefined("form.category") and #form.category# GT 0>
+                                <cfinvoke component="components.projectDtls" 
+                                          method="bugStatus" value="#form.category#"                                                         returnVariable="getdetails">
+                                </cfinvoke>
+                                <cfelseif !isDefined("form.category") or #form.category# EQ 0>
+                                    <cfinvoke component="components.projectDtls" 
                                               method="selectBug" returnVariable="getdetails">
                                     </cfinvoke> 
                             </cfif>
@@ -63,7 +92,7 @@
                                         </cfoutput>
                                     </tr>
                                 </cfloop>
-                            </table>
+                            </table>--->
                         </div>
                     </div>
                 </div>
